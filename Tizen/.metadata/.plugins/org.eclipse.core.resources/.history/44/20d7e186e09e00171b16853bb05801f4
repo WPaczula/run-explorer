@@ -1,0 +1,187 @@
+(function(){
+	var myapp = {
+			// constatns
+			SECOND_TO_MILISECOND: 1000,
+			
+			// preference keys
+	        PREFERENCE_KEY_IS_RUNNING: 'isRunning',
+	        PREFERENCE_KEY_SPEED: 'speed',
+	        PREFERENCE_KEY_LOCATION: 'location',
+			
+			// main page
+			MAIN_PAGE: 'main-page',
+			MAIN_SPEED: 'content-speed',
+			MAIN_LOCATION: 'content-location',
+			MAIN_ERROR: 'content-error',
+				
+			// used data	
+			data: {
+				speed: 0,
+				location: {},
+				sampleInterval: 1,
+				callbackInterval: 250
+			},
+			
+			// ui elements
+			ui: {
+				mainpage: {
+					speed: {},
+					location: {},
+					error: {}
+				}
+			},
+			
+			// speed listener
+			SpeedChangeListener: {
+				set: {},
+				onChange: {}
+			},
+			
+			// geolocation listener
+			GeolocationChangeListener: {
+				watch: {},
+				set: {},
+				onChange: {}
+			},
+			
+			// on error and exit
+			onerror: {},
+			exit: {}
+	};
+	
+	var init = function() {
+		var self = this;
+		
+		/**
+		 * Setting 'isRunning' as false and exits the app.
+		 */
+		self.exit = function() {
+			try {
+				tizen.preference.setValue(self.PREFERENCE_KEY_IS_RUNNING, false);
+				tizen.application.getCurrentApplication().exit();
+			}catch (ignore) {}
+		};
+
+		/**
+		 * Sets speed variable
+		 */
+		self.ui.mainpage.speed = (function(id){
+			return document.getElementById(id);
+		})(self.MAIN_SPEED);
+		
+		/**
+		 * Sets location variable
+		 */
+		self.ui.mainpage.location = (function(id){
+			return document.getElementById(id);
+		})(self.MAIN_LOCATION);
+		
+		/**
+		 * Sets error variable
+		 */
+		self.ui.mainpage.error = (function(id){
+			return document.getElementById(id);
+		})(self.MAIN_ERROR);
+		
+		/**
+		 * Sets on error action which shows error's name
+		 * @param {Tizen.WebAPIError} err - error to handle
+		 */
+		self.onerror = function(err) {
+			self.ui.mainpage.error.innerHTML = err.name;
+		};
+		
+		/**
+		 * Function setting up geolocation watch
+		 */
+		self.GeolocationChangeListener.set = function(){
+			if(navigator.geolocation) {
+				self.GeolocationChangeListener.watch = navigator.geolocation.watchPosition(
+																self.GeolocationChangeListener.onChange,
+																self.onerror,
+																{maximumAge: 1000});
+				console.log(self.GeolocationChangeListener.watch);
+			} else {
+				self.ui.mainpage.location.innerHTML = 'Location not supported';
+			}
+		};
+		
+		/**
+		 * Gets devices current location
+		 */
+		self.GeolocationChangeListener.onChange = function(position){
+			console.log(position);
+			self.ui.mainpage.location.innerHTML = 'Latitude: ' + position.coords.latitude +
+            										'<br/>Longitude: ' + position.coords.longitude;
+		};
+		
+		
+		/**
+		 * Get device's current speed
+		 * @param {Number} sampleInterval - the interval to set in seconds.
+         * @param {Number} callbackInterval - the interval to set in seconds.
+		 */
+		self.SpeedChangeListener.set = function (sampleInterval, callbackInterval) {
+            try {
+                var options = {};
+                options.sampleInterval = sampleInterval * self.SECOND_TO_MILLISECOND;
+                options.callbackInterval = callbackInterval * self.SECOND_TO_MILLISECOND;
+                tizen.humanactivitymonitor.start('GPS', self.SpeedChangeListener.onchange, self.onerror, options);
+            } catch (error) {
+                self.onerror(error);
+            }
+        };
+        
+        /**
+         *  A change callback to handle every time the GPS data of the device is updated.
+         *  Data is shared with widget by Preference API on PREFERENCE_KEY_SPEED and PREFERENCE_KEY_LOCATION
+         *  respectively.
+         */
+        self.SpeedChangeListener.onchange = function (info) {
+            for (var idx = 0; idx < info.gpsInfo.length; ++idx) {
+            	var newData = info.gpsInfo[idx];
+                self.data.speed = newData.speed;
+                self.ui.mainpage.speed.innerHTML = self.data.speed;
+                
+                try {
+                    tizen.preference.setValue(self.PREFERENCE_KEY_SPEED, self.data.speed);
+                } catch (error) {
+                    self.onerror(error);
+                }
+            }
+        };
+	};
+	
+	/**
+     *  Sets a function for window.onload .
+     */
+    window.onload = function () {
+
+        init.call(myapp);
+
+        window.addEventListener('tizenhwkey', function (ev) {
+
+            if (ev.keyName === "back") {
+                var page = document.getElementsByClassName( 'ui-page-active' )[0],
+                    pageid = page ? page.id : "";
+                if (pageid === myapp.MAIN_PAGE) {
+                    myapp.exit();
+                } else {
+                    window.history.back();
+                }
+            }
+
+        });
+        
+        /**
+         *  Sets a flag to share the information about whether the UI application is running with a widget application.
+         *  The flag is saved as myapp.PREFERENCE_KEY_IS_RUNNING in application preferences.
+         */
+        tizen.preference.setValue(myapp.PREFERENCE_KEY_IS_RUNNING, true);
+        
+        /**
+         *  Sets a listener to retrieve the current speed of the device.
+         */
+        myapp.GPSChangeListener.set(myapp.data.sampleInterval, myapp.data.callbackInterval);
+    };
+})();

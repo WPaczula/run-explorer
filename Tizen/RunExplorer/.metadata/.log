@@ -1,0 +1,32 @@
+!SESSION 2017-09-21 19:11:49.729 -----------------------------------------------
+eclipse.buildId=1.2 
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-09-21 19:12:30.078
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Wojtek'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.tizen.common.ui.Startup 1 0 2017-09-21 19:12:31.655
+!MESSAGE SDK Information: Path [C:\tizen-studio], Data Path [C:\tizen-studio-data], Platform Path [C:\tizen-studio\platforms\tizen-3.0\wearable]
+!SESSION 2017-09-21 19:15:14.233 -----------------------------------------------
+eclipse.buildId=1.2 
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\Wojtek\Desktop\Wesole_Programowanie\RunExplorer\Tizen\RunExplorer
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-09-21 19:15:25.202
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Wojtek'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.tizen.common.ui.Startup 1 0 2017-09-21 19:15:25.437
+!MESSAGE SDK Information: Path [C:\tizen-studio], Data Path [C:\tizen-studio-data], Platform Path [C:\tizen-studio\platforms\tizen-3.0\wearable]
