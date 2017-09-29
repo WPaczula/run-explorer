@@ -58,9 +58,10 @@
 					location: {},
 					heartRate: {},
 					mapButton: {},
-					error: {}
+					error: {},
 				},
 				mappage: {
+					backButton: {},
 					map: {}
 				}
 			},
@@ -123,13 +124,18 @@
 		self.ui.mainpage.mapButton = document.getElementById(self.MAIN_MAP_BUTTON);
 		
 		self.ui.mappage.map = document.getElementById(self.MAP_DIV);
+//		self.ui.mappage.backButton = document.getElementById(self.MAP_BACK_BUTTON);
 		
 		/**
 		 * Sets up map button navigation
 		 */
 		self.ui.mainpage.mapButton.addEventListener('click', function() {
 			tau.changePage("#" + self.MAP_PAGE);
+			self.map.init();
 		});
+//		self.ui.mappage.backButton.addEventListener('click', function() {
+//			tau.changePage("#" + self.MAIN_PAGE);
+//		});
 		
 		/**
 		 * Sets on error action which shows error's name
@@ -166,7 +172,7 @@
 		 */
 		self.sensors.GeolocationChangeListener.onChange = function(position){
 			self.data.main.position = {lat: position.coords.latitude, lng: position.coords.longitude};
-			self.map.updatePosition(self.data.map.myMap, self.data.main.position);
+			checkPage(self.MAP_PAGE, self.map.updatePosition.bind(self, self.data.map.myMap, self.data.main.position));
 		};
 		
 		/**
@@ -261,6 +267,50 @@
 	};
 
 	var initMap = function() {
+		var self = this;
+		var createMarker = function(map, position){
+			var marker = new google.maps.Marker({
+				position: position,
+				map: map
+			});
+			return marker;
+		};
+		
+		var moveCameraToMarker = function(map, marker){
+			map.panTo(marker.getPosition());
+		};
+		
+		self.map.init = function(){
+			self.data.map.myMap = new google.maps.Map(self.ui.mappage.map, {
+		        zoom: 17,
+		        center: self.data.main.position || {lat: 50.24, lng: 18.56},
+				disableDefaultUI: true
+		    });
+			self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position || {lat: 50.24, lng: 18.56});
+		};
+		
+		self.map.updatePosition = function(map, position){
+			console.log(position);
+			var toBeDeleted = self.data.map.currentPositionMarker;
+			self.data.map.currentPositionMarker = createMarker(map, position);
+			moveCameraToMarker(map, self.data.map.currentPositionMarker);
+			toBeDeleted.setMap(null);
+		};
+	};
+	
+	/**
+	 * Checks if given page is active and uses right callback
+	 */
+	var checkPage = function(name, onTrue, onFalse){
+		var page = document.getElementsByClassName('ui-page-active')[0],
+			pageid = page ? page.id : "";
+		if(pageid === name){
+			onTrue();
+		}else{
+			if(onFalse !== undefined){
+				onFalse();
+			}
+		}
 	};
 	
 	/**
@@ -276,21 +326,18 @@
     	myapp.sensors.start();
         
         window.addEventListener('tizenhwkey', function (ev) {
-
             if (ev.keyName === "back") {
-                var page = document.getElementsByClassName( 'ui-page-active' )[0],
-                    pageid = page ? page.id : "";
-                if (pageid === myapp.MAIN_PAGE) {
-                    myapp.exit();
-                } else {
-                    window.history.back();
-                }
+            	var page = document.getElementsByClassName('ui-page-active')[0],
+    			pageid = page ? page.id : "";
+	    		if(pageid === myapp.MAIN_PAGE){
+	    			myapp.exit();
+	    		}else{
+	    			window.history.back();
+	    		}
             }
         });
         
         
         tizen.preference.setValue(myapp.PREFERENCE_KEY_IS_RUNNING, true);
-        
-        console.log(myapp.data.map.currentPositionMarker);
     };
 })();
