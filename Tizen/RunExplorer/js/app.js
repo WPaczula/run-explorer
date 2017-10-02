@@ -14,13 +14,11 @@
 			MAIN_SPEED: 'content-speed',
 			MAIN_LOCATION: 'content-location',
 			MAIN_HEARTRATE: 'content-heartrate',
-			MAIN_MAP_BUTTON: 'map-button',
 			MAIN_ERROR: 'content-error',
 			
 			// map page
 			MAP_PAGE: 'map-page',
 			MAP_DIV: 'map',
-			MAP_BACK_BUTTON: 'back-button',
 				
 			// used data	
 			data: {
@@ -31,24 +29,17 @@
 					sampleInterval: 1000,
 					callbackInterval: 1000,
 					heartCallbackInterval: 3000,
-					gpsMaxAge: 1000
+					gpsMaxAge: 5000
 				},
 				map:{
 					myMap: {},
-					checkpointPositions: [
-						{lat: 50.250253, lng: 18.566550},
-						{lat: 50.250253, lng: 18.566552},
-						{lat: 50.250415, lng: 18.566706},
-						{lat: 50.250747, lng: 18.566952},
-						{lat: 50.250722, lng: 18.567749},
-						{lat: 50.250677, lng: 18.568315}
-					],
 					currentPositionMarker: {},
-					wholeRoute: {},
-					passedRoute: {},
-					wholeRoutesMarkers: [],
-					passedRoutesMarkers: []
 				}
+			},
+			
+			// page navigation
+			navigation: {
+				rotarydetentHandler: {}
 			},
 			
 			// ui elements
@@ -57,11 +48,9 @@
 					speed: {},
 					location: {},
 					heartRate: {},
-					mapButton: {},
 					error: {},
 				},
 				mappage: {
-					backButton: {},
 					map: {}
 				}
 			},
@@ -121,21 +110,9 @@
 		self.ui.mainpage.location = document.getElementById(self.MAIN_LOCATION);
 		self.ui.mainpage.heartRate = document.getElementById(self.MAIN_HEARTRATE);
 		self.ui.mainpage.error = document.getElementById(self.MAIN_ERROR);
-		self.ui.mainpage.mapButton = document.getElementById(self.MAIN_MAP_BUTTON);
 		
 		self.ui.mappage.map = document.getElementById(self.MAP_DIV);
-//		self.ui.mappage.backButton = document.getElementById(self.MAP_BACK_BUTTON);
-		
-		/**
-		 * Sets up map button navigation
-		 */
-		self.ui.mainpage.mapButton.addEventListener('click', function() {
-			tau.changePage("#" + self.MAP_PAGE);
-			self.map.init();
-		});
-//		self.ui.mappage.backButton.addEventListener('click', function() {
-//			tau.changePage("#" + self.MAIN_PAGE);
-//		});
+	
 		
 		/**
 		 * Sets on error action which shows error's name
@@ -145,12 +122,33 @@
 			self.ui.mainpage.error.innerHTML = err.name;
 		};
 		
+		
+		self.navigation.rotarydetentHandler = function(e) {
+			var pages = [self.MAIN_PAGE, self.MAP_PAGE];
+			var change = false;
+			var currentIndex = pages.findIndex(function(name){
+													return checkPage(name);
+												});
+			
+			if(e.detail.direction === 'CW'){
+				if(currentIndex !== pages.length-1){
+					tau.changePage("#" + pages[currentIndex+1]);
+					change=true;
+				}
+			}else if(currentIndex !== 0){
+				tau.changePage("#" + pages[currentIndex-1]);
+				change=true;
+			}
+			
+			if(currentIndex === pages.indexOf(self.MAP_PAGE) && change){
+				self.map.init();
+			}
+		};
 		console.log('UI set');
 	};
 	
 	var initSensors = function() {
 		var self = this;
-		var heartInitialized = false;
 		
 		/**
 		 * Function setting up geolocation watch
@@ -172,7 +170,9 @@
 		 */
 		self.sensors.GeolocationChangeListener.onChange = function(position){
 			self.data.main.position = {lat: position.coords.latitude, lng: position.coords.longitude};
-			checkPage(self.MAP_PAGE, self.map.updatePosition.bind(self, self.data.map.myMap, self.data.main.position));
+			if(checkPage(self.MAP_PAGE) && self.data.map.myMap !== undefined){
+				self.map.updatePosition(self.data.map.myMap, self.data.main.position);
+			}
 		};
 		
 		/**
@@ -267,8 +267,23 @@
 	};
 
 	var initMap = function() {
-		var self = this;
-		var createMarker = function(map, position){
+		var self = this,
+			routesCheckpointsMarkers = [],
+			routesCheckpointsMarkersPassed = [],
+			routeToBeat,
+			routeBet,
+			blue = "#0000FF",
+			green = "#00FF00",
+			pathLatLng = [
+		                  {lat: 50.250253, lng: 18.566550},
+		                  {lat: 50.250253, lng: 18.566552},
+		                  {lat: 50.250415, lng: 18.566706},
+		                  {lat: 50.250747, lng: 18.566952},
+		                  {lat: 50.250722, lng: 18.567749},
+		                  {lat: 50.250677, lng: 18.568315}
+		                  ];
+		
+		function createMarker(map, position){
 			var marker = new google.maps.Marker({
 				position: position,
 				map: map
@@ -276,9 +291,42 @@
 			return marker;
 		};
 		
-		var moveCameraToMarker = function(map, marker){
+		function moveCameraToMarker(map, marker){
 			map.panTo(marker.getPosition());
 		};
+		
+		
+		function convertPositionsForInvisibleMarkersOnMap(markersPositions, map){
+		    var routesConsecutiveMarkers = [];
+
+		    for (var i = 0; i < markersPositions.length; i++) {
+		        var position = markersPositions[i];
+		        var marker = new google.maps.Marker({
+		            position: position,
+		            map: map,
+		            visible: false
+		        });
+		        routesConsecutiveMarkers.push(marker);    
+		    }
+		    return routesConsecutiveMarkers;
+		}
+		
+		function drawARouteBetweenMarkersOnMap(map, markers, color, zIndex){
+		    var route = new google.maps.Polyline({
+		        path: markers.map(function(marker){
+		            return marker.getPosition();
+		        }),
+		        geodesic: true,
+		        strokeColor: color,
+		        strokeOpacity: 1.0,
+		        strokeWeight: 10
+		    });
+
+		    route.set('zIndex', zIndex);
+
+		    route.setMap(map);
+		    return route;
+		}
 		
 		self.map.init = function(){
 			self.data.map.myMap = new google.maps.Map(self.ui.mappage.map, {
@@ -286,6 +334,10 @@
 		        center: self.data.main.position || {lat: 50.24, lng: 18.56},
 				disableDefaultUI: true
 		    });
+			
+			routesCheckpointsMarkers = convertPositionsForInvisibleMarkersOnMap(pathLatLng, self.data.map.myMap);
+			routeToBeat = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkers, blue, 0);
+			
 			self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position || {lat: 50.24, lng: 18.56});
 		};
 		
@@ -301,16 +353,10 @@
 	/**
 	 * Checks if given page is active and uses right callback
 	 */
-	var checkPage = function(name, onTrue, onFalse){
+	var checkPage = function(name){
 		var page = document.getElementsByClassName('ui-page-active')[0],
 			pageid = page ? page.id : "";
-		if(pageid === name){
-			onTrue();
-		}else{
-			if(onFalse !== undefined){
-				onFalse();
-			}
-		}
+		return pageid === name;
 	};
 	
 	/**
@@ -324,19 +370,18 @@
     	initSensors.call(myapp);
     	
     	myapp.sensors.start();
-        
+
+    	window.addEventListener('rotarydetent', myapp.navigation.rotarydetentHandler);
         window.addEventListener('tizenhwkey', function (ev) {
             if (ev.keyName === "back") {
-            	var page = document.getElementsByClassName('ui-page-active')[0],
-    			pageid = page ? page.id : "";
-	    		if(pageid === myapp.MAIN_PAGE){
+            	
+	    		if(checkPage(myapp.MAIN_PAGE)){
 	    			myapp.exit();
 	    		}else{
 	    			window.history.back();
 	    		}
             }
         });
-        
         
         tizen.preference.setValue(myapp.PREFERENCE_KEY_IS_RUNNING, true);
     };
