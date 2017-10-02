@@ -28,6 +28,7 @@
 .metadata/.plugins/org.eclipse.wst.jsdt.ui/QualifiedTypeNameHistory.xml__DEL__tBu5/K7Np4pv2KSPxFKUGASzyWcnuYMwMqfPuv3JCF0=
 .metadata/version.ini__DEL__JRSM/VlK6YEIu919v2e3rMFNXUPjC7M1hyMYVGiZ5qc=
 config.xml__DEL__pMTzJjD0Ph9XSFSlMp5bQQZjtwSuPif77fBJ88lp9wo=
+css/style.css__DEL__C0RmK+6EDhXFgmE4YJ4HNdsyh2UM4bBuzxdC4hoD1vg=
 icon.png__DEL__vPjxjOppORd6hn9Bw4sh06gqtDoJzoFbV/8e9FyIdvk=
 lib/tau/LICENSE.Flora__DEL__R4988xI3tkQMAcLGLOROY5Wp8YTDrI0X90uMvrydtQw=
 lib/tau/VERSION__DEL__NNwL10gCpu8DCYYpDaectUanXQBclaS+wcI8Atm98p4=
@@ -309,7 +310,9 @@ lib/tau/wearable/theme/default/tau.css__DEL__tCJNzFYPrbSP5AuxubNr8fddKho9geMWgOQ
 lib/tau/wearable/theme/default/tau.min.css__DEL__qnnCAIPGsW3IDww1aliQWt68MoJpWlpXHjAcageWrHM=
 lib/tau/wearable/theme/default/tau.min.template__DEL__pMbNqgPMw2Wi+7A6WpjsUttxF24ELM4vVvJHlNCew3E=
 lib/tau/wearable/theme/default/tau.template__DEL__6G1+BW7cnojrMTmoZuo0V6ytOpdJfXfIOLJDBQh9x04=
-author-signature.xml__DEL__2QjFV96nVtAg5+L1099R4FSgqYzKk3peHFKN/T4dHLc=
-css/style.css__DEL__C0RmK+6EDhXFgmE4YJ4HNdsyh2UM4bBuzxdC4hoD1vg=
-index.html__DEL__DSum8Q+wyU0iMHHGPetLQEBFvLIhieJtaZwsHFWrIXQ=
-js/app.js__DEL__GfnRug+7e2zyqor4fhdMjwmcvQlyYrNqL8CyCBd5qec=
+author-signature.xml__DEL__C7n5cNNrJlAdjppsN33ImdMuzlokHrDnAQahpOC6nhY=
+index.html__DEL__GJCtHX+aHFpMNaywawvTGDm8XbGFmmE6KlMjBc0E5o4=
+js/app.js__DEL__vdHQ7Ri9BZNHrRvBwQL94hJGn6uOVoaeLmSR0/9KpEw=
+js/ui.js__DEL__TKi9zajVau5EY9DG76o+UyNZ5Mm0kercLI/zTjQ7k98=
+js/sensors.js__DEL__NrP9B5PiyTcImPn2d7kM/ievxbVOOc4Rd/5PkxV/kkk=
+js/map.js__DEL__/X8kYCWZ6+g6d/iX3c0NBgU0c7k4p9PNIH5kfsKBCrs=
