@@ -2,6 +2,51 @@ var initSensors = function() {
 		var self = this;
 		
 		/**
+		 * Function setting stopwatch
+		 */
+		self.sensors.StopWatch.set = function(){
+			self.sensors.StopWatch.watch = setInterval(self.sensors.StopWatch.onChange, 1000);
+		}
+		
+		/**
+		 * Function updating stopwatch display
+		 */
+		self.sensors.StopWatch.onChange = function(){
+			
+			function convertToTime(secondsSum){
+				var seconds = secondsSum % 60,
+					minutes = parseInt(secondsSum / 60),
+					hours = parseInt(secondsSum / 3600);
+				
+				console.log(seconds, minutes, hours);
+				
+				return displayAsTime(hours) + ':' + 
+						displayAsTime(minutes) + ':' +  
+						displayAsTime(seconds) ;
+			}
+			
+			function displayAsTime(number){
+				if(number === 0 ){
+					return '00';
+				}
+				else{
+					return number>0 ? number : '0'+number;
+				}
+					
+			}
+			
+			self.sensors.StopWatch.time += 1;
+			self.ui.mainpage.stopwatch.innerHTML = convertToTime(self.sensors.StopWatch.time);
+		}
+		
+		/**
+		 * Function invoked on finishing run 
+		 */
+		self.sensors.StopWatch.exit = function(){
+			clearInterval(self.sensors.StopWatch.watch);
+		}
+		
+		/**
 		 * Function setting up geolocation watch
 		 */
 		self.sensors.GeolocationChangeListener.set = function(callbackInterval){
@@ -100,6 +145,7 @@ var initSensors = function() {
          * Starts all sensors at once
          */
         self.sensors.start = function(){
+        	self.sensors.StopWatch.set();
         	self.sensors.SpeedChangeListener.set(self.data.main.sampleInterval, self.data.main.callbackInterval);
         	self.sensors.GeolocationChangeListener.set(self.data.main.gpsMaxAge);
         	self.sensors.HeartRateChangeListener.set(self.data.main.heartCallbackInterval);
@@ -109,6 +155,7 @@ var initSensors = function() {
          * Stops all sensors at once
          */
         self.sensors.stop = function() {
+        	self.sensors.StopWatch.exit();
         	self.sensors.SpeedChangeListener.exit();
 			self.sensors.GeolocationChangeListener.exit();
 			self.sensors.HeartRateChangeListener.exit();

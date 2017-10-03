@@ -15,6 +15,7 @@
 			MAIN_LOCATION: 'content-location',
 			MAIN_HEARTRATE: 'content-heartrate',
 			MAIN_ERROR: 'content-error',
+			MAIN_STOPWATCH: 'content-stopwatch',
 			
 			// map page
 			MAP_PAGE: 'map-page',
@@ -48,6 +49,7 @@
 					speed: {},
 					location: {},
 					heartRate: {},
+					stopWatch: {},
 					error: {},
 				},
 				mappage: {
@@ -58,6 +60,16 @@
 			sensors: {
 				start: {},
 				stop: {},
+				
+				// stopwatch
+				StopWatch: {
+					set: {},
+					onChange: {},
+					exit: {},
+					watch: {},
+					time: 0
+				},
+				
 				// speed listener
 				SpeedChangeListener: {
 					set: {},
