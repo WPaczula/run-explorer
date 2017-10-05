@@ -20,6 +20,12 @@
 			// map page
 			MAP_PAGE: 'map-page',
 			MAP_DIV: 'map',
+			
+			// controls page
+			CONTROLS_PAGE: 'controls-page',
+			CONTROLS_PAUSE_BUTTON: 'pause-button',
+			CONTROLS_STOP_BUTTON: 'stop-button',
+			CONTROLS_START_BUTTON: 'start-button',
 				
 			// used data	
 			data: {
@@ -54,6 +60,11 @@
 				},
 				mappage: {
 					map: {}
+				},
+				controlspage: {
+					stopButton: {},
+					startButton: {},
+					pauseButton: {}
 				}
 			},
 			

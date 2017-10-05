@@ -5,9 +5,9 @@ INDEX VERSION 1.3+C:\Users\Wojtek\Desktop\Wesole_Programowanie\run-explorer\Tize
 3477797215.index
 1790718567.index
 2635903036.index
-4071230527.index
-3130257133.index
 2527552886.index
+3130257133.index
+4071230527.index
 1835047094.index
 3112546417.index
 3510993162.index

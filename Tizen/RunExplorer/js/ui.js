@@ -21,7 +21,10 @@ var initUI = function() {
 	self.ui.mainpage.stopwatch = document.getElementById(self.MAIN_STOPWATCH);
 	
 	self.ui.mappage.map = document.getElementById(self.MAP_DIV);
-
+	
+	self.ui.controlspage.stopButton = document.getElementById(self.CONTROLS_STOP_BUTTON);
+	self.ui.controlspage.startButton = document.getElementById(self.CONTROLS_START_BUTTON);
+	self.ui.controlspage.pauseButton = document.getElementById(self.CONTROLS_PAUSE_BUTTON);
 	
 	/**
 	 * Sets on error action which shows error's name
@@ -33,7 +36,7 @@ var initUI = function() {
 	
 	
 	self.navigation.rotarydetentHandler = function(e) {
-		var pages = [self.MAIN_PAGE, self.MAP_PAGE];
+		var pages = [self.CONTROLS_PAGE, self.MAIN_PAGE, self.MAP_PAGE];
 		var change = false;
 		var currentIndex = pages.findIndex(function(name){
 												return checkPage(name);

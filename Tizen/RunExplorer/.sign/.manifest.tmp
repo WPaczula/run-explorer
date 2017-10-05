@@ -28,7 +28,6 @@
 .metadata/.plugins/org.eclipse.wst.jsdt.ui/QualifiedTypeNameHistory.xml__DEL__tBu5/K7Np4pv2KSPxFKUGASzyWcnuYMwMqfPuv3JCF0=
 .metadata/version.ini__DEL__JRSM/VlK6YEIu919v2e3rMFNXUPjC7M1hyMYVGiZ5qc=
 config.xml__DEL__pMTzJjD0Ph9XSFSlMp5bQQZjtwSuPif77fBJ88lp9wo=
-css/style.css__DEL__C0RmK+6EDhXFgmE4YJ4HNdsyh2UM4bBuzxdC4hoD1vg=
 icon.png__DEL__vPjxjOppORd6hn9Bw4sh06gqtDoJzoFbV/8e9FyIdvk=
 lib/tau/LICENSE.Flora__DEL__R4988xI3tkQMAcLGLOROY5Wp8YTDrI0X90uMvrydtQw=
 lib/tau/VERSION__DEL__NNwL10gCpu8DCYYpDaectUanXQBclaS+wcI8Atm98p4=
@@ -310,9 +309,10 @@ lib/tau/wearable/theme/default/tau.css__DEL__tCJNzFYPrbSP5AuxubNr8fddKho9geMWgOQ
 lib/tau/wearable/theme/default/tau.min.css__DEL__qnnCAIPGsW3IDww1aliQWt68MoJpWlpXHjAcageWrHM=
 lib/tau/wearable/theme/default/tau.min.template__DEL__pMbNqgPMw2Wi+7A6WpjsUttxF24ELM4vVvJHlNCew3E=
 lib/tau/wearable/theme/default/tau.template__DEL__6G1+BW7cnojrMTmoZuo0V6ytOpdJfXfIOLJDBQh9x04=
-author-signature.xml__DEL__b9Y6xcs9B2CodO9Z1kv2krAaESRn9V/HElY88DhK/vI=
-index.html__DEL__eEBeo32tCupYMBCUQTC6QZpDBTpj43QlBtwuaosLkwM=
-js/app.js__DEL__DRfMZ7YTplRtQ+QOMzbDUthnPjEpR/JripmEr/9yhYs=
+author-signature.xml__DEL__C4Dl/7+NV63/Yt+QnWsmalRe1zON1tTZF2NcoHu8Jnw=
 js/map.js__DEL__ttiGHteHB9wvt0WWuoaQaH+SOL+nF3XZkENMNqEJ0+0=
-js/ui.js__DEL__HtI0DIdss2YSgSDXmpfP0oHpKDgJZ3cvsSyPB2d4kPg=
 js/sensors.js__DEL__SbdV4+Qd8nGBYIBhsgakRwt4p4YJj4PPDC08oCxFSTw=
+css/style.css__DEL__JOA8KyKnr3J2fAb/E7QZCKZ6O0l+doZ4Kli9q9HFEws=
+index.html__DEL__3MCISwPqAT+CsTBPc35txJQXfOJxQZ5jUa9jxbsMFBA=
+js/app.js__DEL__fut0dfQIFxwlNM8QBeqp4oy4PqWYq+/nFqRZRHPhveI=
+js/ui.js__DEL__OeIxF7e2rV8mb1oZa5D2lYAdQPbjo4SqbdQ09iAqOYY=
