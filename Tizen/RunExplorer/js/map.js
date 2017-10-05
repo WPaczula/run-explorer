@@ -107,4 +107,10 @@ var initMap = function() {
 		tryToGetNextCheckpoint(routesCheckpointsMarkers, routesCheckpointsMarkersPassed, routeBet, position);
 		toBeDeleted.setMap(null);
 	};
+	
+	self.map.reset = function(){
+		routesCheckpointsMarkersPassed = [];
+		routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
+		
+	}
 };

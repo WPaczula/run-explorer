@@ -70,6 +70,7 @@
 			
 			sensors: {
 				start: {},
+				pause: {},
 				stop: {},
 				
 				// stopwatch
@@ -105,7 +106,8 @@
 			
 			map: {
 				init: {},
-				updatePosition: {}
+				updatePosition: {},
+				reset: {}
 			},
 			
 			// on error and exit
@@ -118,12 +120,12 @@
      */
     window.onload = function () {
     	console.log('Load start');
-    	
-    	initUI.call(myapp);
+        
+        initUI.call(myapp);
     	initMap.call(myapp);
     	initSensors.call(myapp);
+    	initControls.call(myapp);
     	
-    	myapp.sensors.start();
     	myapp.map.init();
     	
     	window.addEventListener('rotarydetent', myapp.navigation.rotarydetentHandler);
@@ -137,7 +139,7 @@
 	    		}
             }
         });
-        
+    	
         tizen.preference.setValue(myapp.PREFERENCE_KEY_IS_RUNNING, true);
     };
 })();

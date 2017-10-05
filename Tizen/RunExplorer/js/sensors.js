@@ -30,7 +30,7 @@ var initSensors = function() {
 					return '00';
 				}
 				else{
-					return number>0 ? number : '0'+number;
+					return number>9 ? number : '0'+number;
 				}
 					
 			}
@@ -43,6 +43,14 @@ var initSensors = function() {
 		 * Function invoked on finishing run 
 		 */
 		self.sensors.StopWatch.exit = function(){
+			self.sensors.StopWatch.time = 0;
+			clearInterval(self.sensors.StopWatch.watch);
+		}
+		
+		/**
+		 * Function invoked on pausing run
+		 */
+		self.sensors.StopWatch.pause = function(){
 			clearInterval(self.sensors.StopWatch.watch);
 		}
 		
@@ -149,6 +157,13 @@ var initSensors = function() {
         	self.sensors.SpeedChangeListener.set(self.data.main.sampleInterval, self.data.main.callbackInterval);
         	self.sensors.GeolocationChangeListener.set(self.data.main.gpsMaxAge);
         	self.sensors.HeartRateChangeListener.set(self.data.main.heartCallbackInterval);
+        };
+        
+        /**
+         * Pauses all sensors at once
+         */
+        self.sensors.pause = function() {
+        	self.sensors.StopWatch.pause();
         };
         
         /**
