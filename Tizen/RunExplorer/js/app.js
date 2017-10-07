@@ -106,6 +106,7 @@
 			
 			map: {
 				init: {},
+				resize: {},
 				updatePosition: {},
 				reset: {}
 			},

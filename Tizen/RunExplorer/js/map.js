@@ -99,6 +99,10 @@ var initMap = function() {
 		self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position || {lat: 50.24, lng: 18.56});
 	};
 	
+	self.map.resize = function() {
+		setTimeout(google.maps.event.trigger(self.data.map.myMap, 'resize'), 1000);
+	}
+	
 	self.map.updatePosition = function(map, position){
 		console.log(position);
 		var toBeDeleted = self.data.map.currentPositionMarker;

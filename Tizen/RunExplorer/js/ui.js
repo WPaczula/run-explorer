@@ -55,7 +55,7 @@ var initUI = function() {
 		}
 		
 		if(currentIndex === pages.indexOf(self.MAP_PAGE) && change){
-			self.map.init();
+			self.map.resize();
 		}
 	};
 	console.log('UI set');
