@@ -101,7 +101,7 @@ var initMap = function() {
 	
 	self.map.resize = function() {
 		setTimeout(google.maps.event.trigger(self.data.map.myMap, 'resize'), 1000);
-	}
+	};
 	
 	self.map.updatePosition = function(map, position){
 		console.log(position);
@@ -115,6 +115,5 @@ var initMap = function() {
 	self.map.reset = function(){
 		routesCheckpointsMarkersPassed = [];
 		routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
-		
-	}
+	};
 };

@@ -42,7 +42,7 @@
                 <children xsi:type="advanced:Placeholder" xmi:id="_CAmpRZ7wEeePEO4vYU3F4w" elementId="org.eclipse.ui.views.ContentOutline" ref="_CAgioJ7wEeePEO4vYU3F4w"/>
               </children>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_CAmpRp7wEeePEO4vYU3F4w" containerData="8350" selectedElement="_CAmpTZ7wEeePEO4vYU3F4w" horizontal="true">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_CAmpRp7wEeePEO4vYU3F4w" containerData="8350" selectedElement="_CAmpR57wEeePEO4vYU3F4w" horizontal="true">
               <children xsi:type="basic:PartSashContainer" xmi:id="_CAmpR57wEeePEO4vYU3F4w" containerData="8100" selectedElement="_CAmpSJ7wEeePEO4vYU3F4w">
                 <children xsi:type="advanced:Placeholder" xmi:id="_CAmpSJ7wEeePEO4vYU3F4w" elementId="org.eclipse.ui.editorss" containerData="7500" ref="_CAQrAJ7wEeePEO4vYU3F4w"/>
                 <children xsi:type="basic:PartStack" xmi:id="_CAmpSZ7wEeePEO4vYU3F4w" elementId="org.eclipse.ui.views.ProblemViewMStack" containerData="2500" selectedElement="_CAmpSp7wEeePEO4vYU3F4w">
@@ -52,7 +52,6 @@
                 </children>
               </children>
               <children xsi:type="basic:PartStack" xmi:id="_CAmpTZ7wEeePEO4vYU3F4w" elementId="org.tizen.common.connection.explorer.ConnectionExplorerMStack" containerData="1900" selectedElement="_CAmpTp7wEeePEO4vYU3F4w">
-                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_CAmpTp7wEeePEO4vYU3F4w" elementId="org.tizen.common.connection.explorer.ConnectionExplorer" ref="_CAhJsJ7wEeePEO4vYU3F4w"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_CAmpT57wEeePEO4vYU3F4w" elementId="org.tizen.common.lv.view" ref="_CAiX0J7wEeePEO4vYU3F4w"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_CAmpUJ7wEeePEO4vYU3F4w" elementId="org.tizen.web.unittest.views.resultView" ref="_CAi-4J7wEeePEO4vYU3F4w"/>
@@ -83,11 +82,14 @@
       <children xsi:type="basic:PartStack" xmi:id="_CAQrAZ7wEeePEO4vYU3F4w" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_MkGdMJ7wEeePEO4vYU3F4w">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
+        <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_MkGdMJ7wEeePEO4vYU3F4w" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="RunExplorer.wgt" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;zipeditor.ZipEditor&quot; name=&quot;RunExplorer.wgt&quot; partName=&quot;RunExplorer.wgt&quot; title=&quot;RunExplorer.wgt&quot; tooltip=&quot;C:\Users\Wojtek\Desktop\Wesole_Programowanie\RunExplorer\Tizen\RunExplorer\RunExplorer.wgt&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/C:/Users/Wojtek/Desktop/Wesole_Programowanie/RunExplorer/Tizen/RunExplorer/RunExplorer.wgt&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>zipeditor.ZipEditor</tags>
           <tags>removeOnHide</tags>
+          <tags>active</tags>
+          <tags>activeOnClose</tags>
         </children>
       </children>
     </sharedElements>
@@ -115,8 +117,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:Tizen</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_CpU2IJ7wEeePEO4vYU3F4w" elementId="org.tizen.common.connection.explorer.ConnectionExplorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -156,7 +156,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_B3l3MJ7wEeePEO4vYU3F4w" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_cdohsJ7wEeeK79SKUAhy0Q" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_ASycsJ7wEeePEO4vYU3F4w"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_q-dwZ6xCEee9sfvfPx1RJQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_ASycsJ7wEeePEO4vYU3F4w"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_B3meQJ7wEeePEO4vYU3F4w" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -171,7 +171,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_B3meRJ7wEeePEO4vYU3F4w" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_cdtaMJ7wEeeK79SKUAhy0Q" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_ASwnYZ7wEeePEO4vYU3F4w"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_q-m6WaxCEee9sfvfPx1RJQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_ASwnYZ7wEeePEO4vYU3F4w"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_B3nFUJ7wEeePEO4vYU3F4w" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

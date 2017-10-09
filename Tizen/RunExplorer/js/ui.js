@@ -20,6 +20,7 @@ var initUI = function() {
 		self.ui.mainpage.heartRate = document.getElementById(self.MAIN_HEARTRATE);
 		self.ui.mainpage.error = document.getElementById(self.MAIN_ERROR);
 		self.ui.mainpage.stopwatch = document.getElementById(self.MAIN_STOPWATCH);
+		self.ui.mainpage.distance = document.getElementById(self.MAIN_DISTANCE);
 		
 		self.ui.mappage.map = document.getElementById(self.MAP_DIV);
 		

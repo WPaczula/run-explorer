@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <profiles version="3.0">
-<profile name="WPaczulaWatchCertificate">
-<profileitem ca="" distributor="0" key="C:\Users\Wojtek\SamsungCertificate\WPaczulaWatchCertificate\author.p12" password="cTAD4It8+KdzSQgdk/zqrg==" rootca=""/>
-<profileitem ca="" distributor="1" key="C:\Users\Wojtek\SamsungCertificate\WPaczulaWatchCertificate\distributor.p12" password="cTAD4It8+KdzSQgdk/zqrg==" rootca=""/>
+<profile name="RunExplorer">
+<profileitem ca="" distributor="0" key="C:\Users\Wojtek\SamsungCertificate\RunExplorer\author.p12" password="cTAD4It8+KciUjlqRJfXrg==" rootca=""/>
+<profileitem ca="" distributor="1" key="C:\Users\Wojtek\SamsungCertificate\RunExplorer\distributor.p12" password="cTAD4It8+KciUjlqRJfXrg==" rootca=""/>
 <profileitem ca="" distributor="2" key="" password="xmEcrXPl1ss=" rootca=""/>
 </profile>
 </profiles>

@@ -16,6 +16,7 @@
 			MAIN_HEARTRATE: 'content-heartrate',
 			MAIN_ERROR: 'content-error',
 			MAIN_STOPWATCH: 'content-stopwatch',
+			MAIN_DISTANCE: 'content-distance',
 			
 			// map page
 			MAP_PAGE: 'map-page',
@@ -32,6 +33,7 @@
 				main: {
 					speed: 0,
 					location: {},
+					distance: 0,
 					heartRate: 0,
 					sampleInterval: 1000,
 					callbackInterval: 1000,
@@ -56,6 +58,7 @@
 					location: {},
 					heartRate: {},
 					stopWatch: {},
+					distance: {},
 					error: {},
 				},
 				mappage: {
@@ -72,36 +75,6 @@
 				start: {},
 				pause: {},
 				stop: {},
-				
-				// stopwatch
-				StopWatch: {
-					set: {},
-					onChange: {},
-					exit: {},
-					watch: {},
-					time: 0
-				},
-				
-				// speed listener
-				SpeedChangeListener: {
-					set: {},
-					onChange: {},
-					exit: {}
-				},
-				
-				// geolocation listener
-				GeolocationChangeListener: {
-					watch: {},
-					set: {},
-					onChange: {},
-					exit: {}
-				},
-				
-				HeartRateChangeListener: {
-					set: {},
-					onChange: {},
-					exit: {}
-				}
 			},
 			
 			map: {

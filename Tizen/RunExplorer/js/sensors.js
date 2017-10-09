@@ -1,17 +1,48 @@
 var initSensors = function() {
 		var self = this;
 		
+		// stopwatch
+		var StopWatch = {
+			set: {},
+			onChange: {},
+			exit: {},
+			watch: {},
+			time: 0
+		},
+		
+		// speed listener
+		SpeedDistanceChangeListener = {
+			bootDistance: 0,
+			set: {},
+			onChange: {},
+			exit: {}
+		},
+		
+		// geolocation listener
+		GeolocationChangeListener = {
+			watch: {},
+			set: {},
+			onChange: {},
+			exit: {}
+		},
+		
+		HeartRateChangeListener = {
+			set: {},
+			onChange: {},
+			exit: {}
+		};
+		
 		/**
 		 * Function setting stopwatch
 		 */
-		self.sensors.StopWatch.set = function(){
-			self.sensors.StopWatch.watch = setInterval(self.sensors.StopWatch.onChange, 1000);
-		}
+		StopWatch.set = function(){
+			StopWatch.watch = setInterval(StopWatch.onChange, 1000);
+		};
 		
 		/**
 		 * Function updating stopwatch display
 		 */
-		self.sensors.StopWatch.onChange = function(){
+		StopWatch.onChange = function(){
 			
 			function convertToTime(secondsSum){
 				var seconds = secondsSum % 60,
@@ -35,31 +66,31 @@ var initSensors = function() {
 					
 			}
 			
-			self.sensors.StopWatch.time += 1;
-			self.ui.mainpage.stopwatch.innerHTML = convertToTime(self.sensors.StopWatch.time);
-		}
+			StopWatch.time += 1;
+			self.ui.mainpage.stopwatch.innerHTML = convertToTime(StopWatch.time);
+		};
 		
 		/**
 		 * Function invoked on finishing run 
 		 */
-		self.sensors.StopWatch.exit = function(){
-			self.sensors.StopWatch.time = 0;
-			clearInterval(self.sensors.StopWatch.watch);
-		}
+		StopWatch.exit = function(){
+			StopWatch.time = 0;
+			clearInterval(StopWatch.watch);
+		};
 		
 		/**
 		 * Function invoked on pausing run
 		 */
-		self.sensors.StopWatch.pause = function(){
-			clearInterval(self.sensors.StopWatch.watch);
-		}
+		StopWatch.pause = function(){
+			clearInterval(StopWatch.watch);
+		};
 		
 		/**
 		 * Function setting up geolocation watch
 		 */
-		self.sensors.GeolocationChangeListener.set = function(callbackInterval){
+		GeolocationChangeListener.set = function(){
 			if(navigator.geolocation) {
-				self.sensors.GeolocationChangeListener.watch = navigator.geolocation.watchPosition(self.sensors.GeolocationChangeListener.onChange, self.onerror);
+				GeolocationChangeListener.watch = navigator.geolocation.watchPosition(GeolocationChangeListener.onChange, self.onerror);
 				console.log('Geolocation sensor set');
 			} else {
 				self.ui.mainpage.location.innerHTML = 'Location not supported';
@@ -69,7 +100,7 @@ var initSensors = function() {
 		/**
 		 * Gets devices current location
 		 */
-		self.sensors.GeolocationChangeListener.onChange = function(position){
+		GeolocationChangeListener.onChange = function(position){
 			self.data.main.position = {lat: position.coords.latitude, lng: position.coords.longitude};
 			console.log(position);
 			if(checkPage(self.MAP_PAGE) && self.data.map.myMap !== undefined){
@@ -80,54 +111,57 @@ var initSensors = function() {
 		/**
 		 * Closes navigator watch
 		 */
-		self.sensors.GeolocationChangeListener.exit = function(){
+		GeolocationChangeListener.exit = function(){
 			if(navigator.geolocation){
-				navigator.geolocation.clearWatch(self.sensors.GeolocationChangeListener.watch);
+				navigator.geolocation.clearWatch(GeolocationChangeListener.watch);
 				console.log('Geolocation sensor exit');
 			}
 		};
 		
 		/**
-		 * Get device's current speed
+		 * Get device's current speed and accumulative pedometer data
 		 */
-		self.sensors.SpeedChangeListener.set = function (sampleInterval, callbackInterval) {
+		SpeedDistanceChangeListener.set = function () {
             try {
-                var options = {
-                	'sampleInterva': sampleInterval * self.SECOND_TO_MILLISECOND,
-                	'callbackInterval': callbackInterval * self.SECOND_TO_MILLISECOND
-                };
-                tizen.humanactivitymonitor.start('GPS', self.sensors.SpeedChangeListener.onChange, self.onerror, options);
-                console.log('Speed sensor set');
+            	tizen.humanactivitymonitor.setAccumulativePedometerListener(SpeedDistanceChangeListener.onChange);
+                console.log('Speed/distance sensor set');
             } catch (error) {
                 self.onerror(error);
             }
         };
         
         /**
-         *  A change callback to handle every time the GPS data of the device is updated.
+         *  A change callback to handle every time the pedometer data of the device is updated.
          */
-        self.sensors.SpeedChangeListener.onChange = function (info) {
-            	var newData = info.gpsInfo[info.gpsInfo.length-1];
-            	console.log('Pace', newData.speed);
-                self.data.main.speed = newData.speed;
-                self.ui.mainpage.speed.innerHTML = "Pace: " + self.data.main.speed + "km/h";
+        SpeedDistanceChangeListener.onChange = function (info) {
+        	function round(n){
+        		return Math.round(n*100)/100;
+        	}
+        	
+            self.data.main.speed = info.speed;
+            if(SpeedDistanceChangeListener.bootDistance === 0)
+            	SpeedDistanceChangeListener.bootDistance = info.accumulativeDistance;
+            self.data.main.distance = info.accumulativeDistance - SpeedDistanceChangeListener.bootDistance;
+            console.log("SpeedDistance: ", info);
+            self.ui.mainpage.speed.innerHTML = "Pace: " + self.data.main.speed + "km/h";
+            self.ui.mainpage.distance.innerHTML = "Distance: " + round(self.data.main.distance / 1000) + "km";
         };
         
         /**
          * Stops gps speed sensor
          */
-        self.sensors.SpeedChangeListener.exit = function(){
-        	tizen.humanactivitymonitor.stop('GPS');
+        SpeedDistanceChangeListener.exit = function(){
+        	tizen.humanactivitymonitor.unsetAccumulativePedometerListener();
         	console.log('Speed sensor exit');
         };
         
         /**
          * Sets up heart rate listener
          */
-        self.sensors.HeartRateChangeListener.set = function(interval){
+        HeartRateChangeListener.set = function(interval){
         	if(tizen.systeminfo.getCapability('http://tizen.org/feature/sensor.heart_rate_monitor')){
-        		var callback = tizen.humanactivitymonitor.start.bind(self, 'HRM', self.sensors.HeartRateChangeListener.onChange);
-        		self.sensors.HeartRateChangeListener.watch = setInterval(callback, interval);
+        		var callback = tizen.humanactivitymonitor.start.bind(self, 'HRM', HeartRateChangeListener.onChange);
+        		HeartRateChangeListener.watch = setInterval(callback, interval);
         		console.log('Heart rate sensor set');
         	} else {
         		self.ui.mainpage.heartRate.innerHTML = 'Heart rate not supported';
@@ -137,7 +171,7 @@ var initSensors = function() {
         /**
          * Handles heart rate changes, saves values bigger than 0
          */
-        self.sensors.HeartRateChangeListener.onChange = function(heartRateInfo){
+        HeartRateChangeListener.onChange = function(heartRateInfo){
     		self.data.main.heartRate = heartRateInfo.heartRate;
         	self.ui.mainpage.heartRate.innerHTML = "HR: " + (self.data.main.heartRate > 0 ? self.data.main.heartRate : 0);
         };
@@ -145,7 +179,7 @@ var initSensors = function() {
         /**
          * Stops gps speed sensor
          */
-        self.sensors.HeartRateChangeListener.exit = function(){
+        HeartRateChangeListener.exit = function(){
         	tizen.humanactivitymonitor.stop('HRM');
         };
         
@@ -153,26 +187,26 @@ var initSensors = function() {
          * Starts all sensors at once
          */
         self.sensors.start = function(){
-        	self.sensors.StopWatch.set();
-        	self.sensors.SpeedChangeListener.set(self.data.main.sampleInterval, self.data.main.callbackInterval);
-        	self.sensors.GeolocationChangeListener.set(self.data.main.gpsMaxAge);
-        	self.sensors.HeartRateChangeListener.set(self.data.main.heartCallbackInterval);
+        	StopWatch.set();
+        	SpeedDistanceChangeListener.set(self.data.main.sampleInterval, self.data.main.callbackInterval);
+        	GeolocationChangeListener.set(self.data.main.gpsMaxAge);
+        	HeartRateChangeListener.set(self.data.main.heartCallbackInterval);
         };
         
         /**
          * Pauses all sensors at once
          */
         self.sensors.pause = function() {
-        	self.sensors.StopWatch.pause();
+        	StopWatch.pause();
         };
         
         /**
          * Stops all sensors at once
          */
         self.sensors.stop = function() {
-        	self.sensors.StopWatch.exit();
-        	self.sensors.SpeedChangeListener.exit();
-			self.sensors.GeolocationChangeListener.exit();
-			self.sensors.HeartRateChangeListener.exit();
+        	StopWatch.exit();
+        	SpeedDistanceChangeListener.exit();
+			GeolocationChangeListener.exit();
+			HeartRateChangeListener.exit();
         };
 	};
