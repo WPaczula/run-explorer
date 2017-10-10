@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,user-scalable=no">
+        <title>Run</title>
+        <link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.min.css">
+        <link rel="stylesheet" media="all and (-tizen-geometric-shape: circle)" href="lib/tau/wearable/theme/default/tau.circle.min.css">
+        <link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+		<div id="controls-page" class="ui-page ui-page-active" data-enable-page-scroll="false">
+			<header class="ui-header">
+                <h3 class="ui-title">Controls</h3>
+            </header>
+            <div class="ui-content">
+                <button id="stop-button">STOP</button>
+                <button id="start-button">START</button>
+                <button id="pause-button" class="invisible">PAUSE</button>
+            </div>
+		</div>
+		<div id="main-page" class="ui-page" data-enable-page-scroll="false">
+			<header class="ui-header">
+                <h3 class="ui-title">Sensors</h3>
+            </header>
+            <div class="ui-content">
+                <div id="content-speed">Pace: 0km/h</div>
+                <div id="content-stopwatch">00:00:00</div>
+                <div id="content-distance">Distance: 0km</div>
+                <div id="content-heartrate">HR: 0</div>
+                <div id="content-error"></div>
+            </div>
+            
+		</div>
+		<div id="map-page" class="ui-page"  data-enable-page-scroll="false">
+			<div id="no-info">No location found yet</div>
+			<div id="map"></div>
+		</div>
+		
+		<script type="text/javascript" src="lib/tau/wearable/js/tau.min.js"></script>
+		<script type="text/javascript" src="js/run/app.js"></script>
+        <script type="text/javascript" src="js/run/ui.js"></script>
+        <script type="text/javascript" src="js/run/sensors.js"></script>
+        <script type="text/javascript" src="js/run/map.js"></script>
+        <script type="text/javascript" src="js/run/controls.js"></script>
+        <script type="text/javascript"src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6R8pZwSKkYapVSeFfuqxUVPOx8vioIB0"></script>
+	</body>
+</html>

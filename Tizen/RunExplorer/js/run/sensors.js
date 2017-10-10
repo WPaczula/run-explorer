@@ -1,4 +1,4 @@
-var initSensors = function() {
+var initSensors = function(mapInit) {
 		var self = this;
 		
 		// stopwatch
@@ -102,8 +102,12 @@ var initSensors = function() {
 		 */
 		GeolocationChangeListener.onChange = function(position){
 			self.data.main.position = {lat: position.coords.latitude, lng: position.coords.longitude};
+			if(!self.map.ready){
+				mapInit();
+				self.map.init();
+			}
 			console.log(position);
-			if(checkPage(self.MAP_PAGE) && self.data.map.myMap !== undefined){
+			if(checkPage(self.MAP_PAGE) && self.map.ready){
 				self.map.updatePosition(self.data.map.myMap, self.data.main.position);
 			}
 		};
@@ -198,6 +202,9 @@ var initSensors = function() {
          */
         self.sensors.pause = function() {
         	StopWatch.pause();
+        	SpeedDistanceChangeListener.exit();
+			GeolocationChangeListener.exit();
+			HeartRateChangeListener.exit();
         };
         
         /**

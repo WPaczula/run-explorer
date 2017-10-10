@@ -24,6 +24,8 @@ var initControls = function(){
 	
 	function stop(){
 		self.sensors.stop();
+		if(self.map.ready)
+			self.map.reset();
 		hideButton(self.ui.controlspage.pauseButton);
 		showButton(self.ui.controlspage.startButton);
 	}

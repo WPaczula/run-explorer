@@ -78,6 +78,7 @@
 			},
 			
 			map: {
+				ready: false,
 				init: {},
 				resize: {},
 				updatePosition: {},
@@ -96,11 +97,8 @@
     	console.log('Load start');
         
         initUI.call(myapp);
-    	initMap.call(myapp);
-    	initSensors.call(myapp);
+    	initSensors.bind(myapp, initMap.bind(myapp))();
     	initControls.call(myapp);
-    	
-    	myapp.map.init();
     	
     	window.addEventListener('rotarydetent', myapp.navigation.rotarydetentHandler);
         window.addEventListener('tizenhwkey', function (ev) {

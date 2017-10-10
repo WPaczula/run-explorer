@@ -52,11 +52,11 @@ var initUI = function() {
 			}
 		}else if(currentIndex !== 0){
 			tau.changePage("#" + pages[currentIndex-1]);
-			change=true;
 		}
 		
-		if(currentIndex === pages.indexOf(self.MAP_PAGE) && change){
-			self.map.resize();
+		if(currentIndex + 1 === pages.indexOf(self.MAP_PAGE) && change){
+			if(self.map.ready)
+				self.map.resize();
 		}
 	};
 	console.log('UI set');
