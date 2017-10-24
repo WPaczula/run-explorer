@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <application name="RunExplorerProvider" >
+        <serviceProfile
+            id="/engineer/runexplorer"
+            name="RunExplorerProvider"
+            autoLaunchAppId="rg1bhMKB2d.RunExplorer"
+            role="provider"
+            version="1.0"
+            serviceLimit="ANY"
+                serviceTimeout="10">
+            <supportedTransports>
+                <transport type="TRANSPORT_BT" />
+                <transport type="TRANSPORT_WIFI"/>
+            </supportedTransports>
+            <serviceChannel
+                id="123"
+                dataRate="low"
+                priority="low"
+                reliability= "enable"/>
+        </serviceProfile>
+    </application>
+</resources>

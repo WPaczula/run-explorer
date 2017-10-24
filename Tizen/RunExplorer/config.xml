@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/GoogleMapsView" version="1.0.0" viewmodes="maximized">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="/engineer/RunExplorer" version="1.0.0" viewmodes="maximized">
     <access origin="*" subdomains="true"></access>
-    <tizen:application id="rg1bhMKB2d.GoogleMapsView" package="rg1bhMKB2d" required_version="2.3.2"/>
+    <tizen:application id="rg1bhMKB2d.RunExplorer" package="rg1bhMKB2d" required_version="2.2"/>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <feature name="http://tizen.org/feature/network.internet"/>
@@ -11,12 +11,15 @@
     <feature name="tizen.org/feature/humanactivitymonitor"/>
     <feature name="tizen.org/feature/location.gps"/>
     <feature name="tizen.org/feature/sensor.heart_rate_monitor"/>
+    <feature name="http://developer.samsung.com/tizen/feature/network.accessory_protocol"/>
     <icon src="icon.png"/>
     <name>RunExp</name>
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <tizen:privilege name="http://tizen.org/privilege/healthinfo"/>
     <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
     <tizen:privilege name="http://tizen.org/privilege/location"/>
+    <tizen:metadata key="AccessoryServicesLocation" value="res/xml/accesoryservices.xml"/>
+    <tizen:privilege name="http://developer.samsung.com/privilege/accessoryprotocol"/>
     <tizen:profile name="wearable"/>
-    <tizen:setting hwkey-event="enable" background-support="enable"/>
+    <tizen:setting background-support="enable" hwkey-event="enable"/>
 </widget>
