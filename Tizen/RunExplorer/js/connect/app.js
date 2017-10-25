@@ -53,10 +53,8 @@ connectionListener = {
             }
             
             /* Send new data to Consumer */
-            var newData = 'DATA...';
-            SASocket.sendData(SAAgent.channelIds[0], newData);
-            createHTML("Send massage:<br />" +
-            		newData);
+            localStorage.setItem('route', data);
+            SASocket.sendData(SAAgent.channelIds[0], 'Route set');
         };
 
         /* Set listener for incoming data from Consumer */
