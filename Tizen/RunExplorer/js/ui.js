@@ -39,6 +39,11 @@ var initUI = function() {
 	
 	
 	self.navigation.rotarydetentHandler = function(e) {
+		if(checkPage(self.CONNECTION_PAGE)){
+			console.log('not connected');
+			return;
+		}
+		
 		var pages = [self.CONTROLS_PAGE, self.MAIN_PAGE, self.MAP_PAGE];
 		var change = false;
 		var currentIndex = pages.findIndex(function(name){

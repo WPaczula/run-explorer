@@ -14,6 +14,11 @@ var initMap = function() {
 //	                  {lat: 50.250722, lng: 18.567749},
 //	                  {lat: 50.250677, lng: 18.568315}
 	                  ];
+	var routeData = localStorage.getItem('route');
+	console.log(routeData);
+	if(routeData !== undefined){
+		pathLatLng = JSON.parse(routeData).route;
+	}
 	
 	function createMarker(map, position){
 		var marker = new google.maps.Marker({

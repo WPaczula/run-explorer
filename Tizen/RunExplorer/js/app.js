@@ -9,6 +9,9 @@
 	        PREFERENCE_KEY_LOCATION: 'location',
 	        PREFERENCE_KEY_HEARTRATE: 'heartrate',
 			
+	        // connection page
+	        CONNECTION_PAGE: 'connection-page',
+	        
 			// main page
 			MAIN_PAGE: 'main-page',
 			MAIN_SPEED: 'content-speed',
@@ -27,7 +30,14 @@
 			CONTROLS_PAUSE_BUTTON: 'pause-button',
 			CONTROLS_STOP_BUTTON: 'stop-button',
 			CONTROLS_START_BUTTON: 'start-button',
-				
+			
+			// connection objects
+			connection: {
+				SAAgent: {},
+			    SASocket: {},
+			    connectionListener: {},
+			},
+	
 			// used data	
 			data: {
 				main: {
@@ -95,7 +105,8 @@
      */
     window.onload = function () {
     	console.log('Load start');
-        
+    	
+    	initConnection.call(myapp);
         initUI.call(myapp);
     	initSensors.bind(myapp, initMap.bind(myapp))();
     	initControls.call(myapp);
@@ -103,7 +114,7 @@
     	window.addEventListener('rotarydetent', myapp.navigation.rotarydetentHandler);
         window.addEventListener('tizenhwkey', function (ev) {
             if (ev.keyName === "back") {
-            	
+            	console.log(myapp.connection.SAAgent, myapp.connection.SASocket, myapp.connection.connectionListener);
 	    		if(checkPage(myapp.MAIN_PAGE)){
 	    			myapp.exit();
 	    		}else{
