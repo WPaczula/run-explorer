@@ -9,21 +9,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import org.w3c.dom.Text;
 
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.SAAService.ConsumerService;
 
 public class RunActivity extends AppCompatActivity {
 
-    private String JSON = "{\"route\": [{\"lat\": 50.249930, \"lng\": 18.565919}," +
+    private String JSON = "{\"type\":\"start\"," +
+            "\"route\": [{\"lat\": 50.249930, \"lng\": 18.565919}," +
             "{\"lat\": 50.250253, \"lng\": 18.566552}," +
             "{\"lat\": 50.250415, \"lng\": 18.566706}," +
             "{\"lat\": 50.250747, \"lng\": 18.566952}," +
             "{\"lat\": 50.250722, \"lng\": 18.567749}," +
             "{\"lat\": 50.250677, \"lng\": 18.568315}]}";
+    private String stopJSON = "{\"type\":\"stop\"}";
     private boolean isBound = false;
     private ConsumerService consumerService = null;
 
@@ -50,14 +55,20 @@ public class RunActivity extends AppCompatActivity {
         }
     };
 
-    public void sendJSON(View view){
-        //consumerService.findPeers();
-        if(consumerService.sendData(JSON)){
-            Toast.makeText(getApplicationContext(), "SENT", Toast.LENGTH_SHORT).show();
+    public void stop(View view){
+        if(isBound && consumerService.sendData(stopJSON)){
+            Toast.makeText(getApplicationContext(), "STOPPED", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void start(View view){
+        if(isBound && consumerService.sendData(JSON)){
+            Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();
         }else
         {
             Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

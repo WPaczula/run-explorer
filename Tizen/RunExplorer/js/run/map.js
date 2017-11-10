@@ -17,7 +17,7 @@ var initMap = function() {
 	var routeData = localStorage.getItem('route');
 	console.log(routeData);
 	if(routeData !== undefined){
-		pathLatLng = JSON.parse(routeData).route;
+		pathLatLng = JSON.parse(routeData);
 	}
 	
 	function createMarker(map, position){
@@ -66,6 +66,8 @@ var initMap = function() {
 	                var path = routeBet.getPath();
 	                path.push(nextCheckpoint.getPosition());
 	        }
+	    } else {
+	    	self.map.completedGivenRoute = true;
 	    }
 	}
 		

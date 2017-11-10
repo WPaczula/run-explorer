@@ -48,11 +48,13 @@
 					sampleInterval: 1000,
 					callbackInterval: 1000,
 					heartCallbackInterval: 3000,
-					gpsMaxAge: 3000
+					gpsMaxAge: 3000,
+					timePerHundredMeters: [],
 				},
 				map:{
 					myMap: {},
 					currentPositionMarker: {},
+					completedGivenRoute: false,
 				}
 			},
 			

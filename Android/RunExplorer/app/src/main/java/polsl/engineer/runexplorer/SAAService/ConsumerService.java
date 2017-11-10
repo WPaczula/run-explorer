@@ -126,6 +126,7 @@ public class ConsumerService extends SAAgent {
         @Override
         public void onReceive(int channelId, byte[] data) {
             final String message = new String(data);
+            Log.i("SMARTWATCH", "onReceive: " + message);
         }
 
         @Override

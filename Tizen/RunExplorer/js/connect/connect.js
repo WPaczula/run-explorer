@@ -52,10 +52,28 @@ var initConnection = function(){
 	            }
 	            
 	            /* Send new data to Consumer */
-	            localStorage.setItem('route', data);
-	            self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], 'Route set');
-	            tau.changePage('#controls-page');
-	            console.log('jump brah');
+	            var dataObject = JSON.parse(data); 
+	            console.log(dataObject);
+            	if(dataObject.type === 'start'){
+            		console.log('start');
+            		localStorage.setItem('route', JSON.stringify(dataObject.route));
+            		self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], 'Route set');
+    	            tau.changePage('#' + self.CONTROLS_PAGE);
+            	} else if(dataObject.type === 'stop'){
+            		console.log('stop command given');
+            		var timeArray = JSON.stringify({
+            			times: self.data.main.timePerHundredMeters,
+            			wasGivenRouteFinished: self.map.completedGivenRoute
+            			});
+            		console.log(timeArray);
+            		self.sensors.stop();
+            		self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], timeArray);
+            		tau.changePage('#' + self.MAIN_PAGE);
+            		console.log('stop operations executed');
+            	} else {
+            		self.connection.SASocket.sendData(self.connection.SAAgent.cancelIds[0], 'Error: unknown type')
+            	}
+
 	        };
 
 	        /* Set listener for incoming data from Consumer */

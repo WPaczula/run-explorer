@@ -1,8 +1,10 @@
 var initSensors = function(mapInit) {
-		var self = this;
-		
+		var self = this,
+			segmentDistance,
+			lastSegmentTime,
+			
 		// stopwatch
-		var StopWatch = {
+			StopWatch = {
 			set: {},
 			onChange: {},
 			exit: {},
@@ -129,6 +131,8 @@ var initSensors = function(mapInit) {
             try {
             	tizen.humanactivitymonitor.setAccumulativePedometerListener(SpeedDistanceChangeListener.onChange);
                 console.log('Speed/distance sensor set');
+            	segmentDistance = 20;
+            	lastSegmentTime = 0;
             } catch (error) {
                 self.onerror(error);
             }
@@ -141,11 +145,20 @@ var initSensors = function(mapInit) {
         	function round(n){
         		return Math.round(n*100)/100;
         	}
-        	
             self.data.main.speed = info.speed;
             if(SpeedDistanceChangeListener.bootDistance === 0)
             	SpeedDistanceChangeListener.bootDistance = info.accumulativeDistance;
             self.data.main.distance = info.accumulativeDistance - SpeedDistanceChangeListener.bootDistance;
+            
+            if(self.data.main.distance > segmentDistance){
+            	self.data.main.timePerHundredMeters.push({
+            		time: StopWatch.time - lastSegmentTime,
+            		location: self.data.main.position
+            		});
+            	lastSegmentTime = StopWatch.time;
+            	segmentDistance += segmentDistance;
+            }
+            
             console.log("SpeedDistance: ", info);
             self.ui.mainpage.speed.innerHTML = "Pace: " + self.data.main.speed + "km/h";
             self.ui.mainpage.distance.innerHTML = "Distance: " + round(self.data.main.distance / 1000) + "km";
