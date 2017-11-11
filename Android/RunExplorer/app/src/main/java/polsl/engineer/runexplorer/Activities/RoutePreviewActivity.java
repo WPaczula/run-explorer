@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer;
+package polsl.engineer.runexplorer.Activities;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -14,9 +14,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import polsl.engineer.runexplorer.R;
 
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {
 

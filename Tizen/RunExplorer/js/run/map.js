@@ -68,6 +68,7 @@ var initMap = function() {
 	        }
 	    } else {
 	    	self.map.completedGivenRoute = true;
+	    	self.sensors.pause();
 	    }
 	}
 		

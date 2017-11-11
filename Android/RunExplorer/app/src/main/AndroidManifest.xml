@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,11 +36,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".RoutePreviewActivity"
+            android:name=".Activities.RoutePreviewActivity"
             android:label="@string/title_activity_route_preview">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="polsl.engineer.runexplorer.MainActivity" />
+                android:value="polsl.engineer.runexplorer.Activities.MainActivity" />
         </activity>
 
         <meta-data
@@ -66,7 +66,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".RunActivity"></activity>
+        <activity android:name=".Activities.RunActivity" />
+        <activity android:name=".Activities.MyRoutesActivity"></activity>
     </application>
 
 </manifest>

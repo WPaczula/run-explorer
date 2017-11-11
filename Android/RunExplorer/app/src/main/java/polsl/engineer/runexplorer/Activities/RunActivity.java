@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer;
+package polsl.engineer.runexplorer.Activities;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,14 +7,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import org.w3c.dom.Text;
 
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.SAAService.ConsumerService;

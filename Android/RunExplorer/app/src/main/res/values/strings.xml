@@ -9,4 +9,5 @@
     <string name="ConnectionFailure">Connection failure</string>
     <string name="start">start</string>
     <string name="stop">stop</string>
+    <string name="choose_route">GO</string>
 </resources>

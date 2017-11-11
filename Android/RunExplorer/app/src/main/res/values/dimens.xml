@@ -3,4 +3,7 @@
     <dimen name="text_size">16sp</dimen>
     <dimen name="activity_horizontal_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">50dp</dimen>
+    <dimen name="tv_horizontal_padding">2dp</dimen>
+    <dimen name="tv_vertical_padding">3dp</dimen>
+
 </resources>
