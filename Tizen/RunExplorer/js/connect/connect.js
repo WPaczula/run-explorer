@@ -63,10 +63,11 @@ var initConnection = function(){
             		console.log('stop command given');
             		var timeArray = JSON.stringify({
             			times: self.data.main.timePerHundredMeters,
+            			distance: self.data.main.distance,
             			wasGivenRouteFinished: self.map.completedGivenRoute
             			});
             		console.log(timeArray);
-            		self.sensors.stop();
+            		self.controls.stop();
             		self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], timeArray);
             		tau.changePage('#' + self.MAIN_PAGE);
             		console.log('stop operations executed');

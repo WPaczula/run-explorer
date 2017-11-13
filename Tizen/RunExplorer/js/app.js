@@ -58,6 +58,13 @@
 				}
 			},
 			
+			// controls
+			controls: {
+				start: {},
+				stop: {},
+				pause: {},
+			},
+			
 			// page navigation
 			navigation: {
 				rotarydetentHandler: {}

@@ -104,7 +104,7 @@ var initSensors = function(mapInit) {
 		 */
 		GeolocationChangeListener.onChange = function(position){
 			self.data.main.position = {lat: position.coords.latitude, lng: position.coords.longitude};
-			if(!self.map.ready){
+			if(!self.map.ready && checkPage(self.MAP_PAGE)){
 				mapInit();
 				self.map.init();
 			}

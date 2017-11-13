@@ -15,39 +15,32 @@ var initMap = function() {
 //	                  {lat: 50.250677, lng: 18.568315}
 	                  ];
 	var routeData = localStorage.getItem('route');
-	console.log(routeData);
 	if(routeData !== undefined){
 		pathLatLng = JSON.parse(routeData);
 	}
 	
 	function createMarker(map, position){
-		var marker = new google.maps.Marker({
-			position: position,
-			map: map
-		});
+		var marker = L.marker(position).addTo(map);
 		return marker;
 	}
 	
 	function moveCameraToMarker(map, marker){
-		map.panTo(marker.getPosition());
+		map.panTo(marker);
+		setTimeout(function(){ map.invalidateSize();}, 400);
 	}
 	
 	function didPassCheckpoint(currentPosition, checkpointPosition){
-	    var latDifference = Math.abs(currentPosition.lat() - checkpointPosition.lat());
-	    var lngDifference = Math.abs(currentPosition.lng() - checkpointPosition.lng());
+		var latDifference = Math.abs(currentPosition[0] - checkpointPosition[0]);
+	    var lngDifference = Math.abs(currentPosition[1] - checkpointPosition[1]);
 	    return latDifference < 0.0001 && lngDifference < 0.0001;
 	}
 	
 	function convertPositionsForInvisibleMarkersOnMap(markersPositions, map){
-	    var routesConsecutiveMarkers = [];
+		var routesConsecutiveMarkers = [];
 
 	    for (var i = 0; i < markersPositions.length; i++) {
 	        var position = markersPositions[i];
-	        var marker = new google.maps.Marker({
-	            position: position,
-	            map: map,
-	            visible: false
-	        });
+	        var marker = [position.lat, position.lng];
 	        routesConsecutiveMarkers.push(marker);    
 	    }
 	    return routesConsecutiveMarkers;
@@ -57,14 +50,17 @@ var initMap = function() {
 	    return checkpointsToBeat.length === checkpointsPassed.length;
 	}
 	
+	function normalizePosition(position){
+		return [position.lat, position.lng];
+	}
+	
 	function tryToGetNextCheckpoint(routesCheckpointsMarkers, routesCheckpointsMarkersPassed, routeBet, currentPosition){
 	    if(isFinished(routesCheckpointsMarkers, routesCheckpointsMarkersPassed) !== true){
 	        var nextCheckpoint = routesCheckpointsMarkers[routesCheckpointsMarkersPassed.length];
-	        if(didPassCheckpoint(convertPosition(currentPosition),
-	            nextCheckpoint.getPosition())){
-	                routesCheckpointsMarkersPassed.push(nextCheckpoint);
-	                var path = routeBet.getPath();
-	                path.push(nextCheckpoint.getPosition());
+	        if(didPassCheckpoint(normalizePosition(currentPosition),
+	        		normalizePosition(nextCheckpoint))){
+		        	routesCheckpointsMarkersPassed.push(nextCheckpoint);
+	                routeBet.addLatLng(nextCheckpoint);
 	        }
 	    } else {
 	    	self.map.completedGivenRoute = true;
@@ -73,47 +69,22 @@ var initMap = function() {
 	}
 		
 	function drawNewCheckpoint(map, routesCheckpointsMarkersPassed, routeBet, position){
-		var marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            visible: false
-        });
-		routesCheckpointsMarkersPassed.push(marker);
-		var path = routeBet.getPath();
-		path.push(marker.getPosition());
-	}
-	
-	function convertPosition(position){
-		return {lat: function(){return position.lat;},
-				lng: function(){return position.lng;}};
+		var marker = L.marker(position).addTo(map);
+		routesCheckpointsMarkersPassed.push(position);
+		routeBet.addLatLng(position);
 	}
 	
 	function drawARouteBetweenMarkersOnMap(map, markers, color, zIndex){
-	    var route = new google.maps.Polyline({
-	        path: markers.map(function(marker){
-	            return marker.getPosition();
-	        }),
-	        geodesic: true,
-	        strokeColor: color,
-	        strokeOpacity: 1.0,
-	        strokeWeight: 10
-	    });
-
-	    route.set('zIndex', zIndex);
-
-	    route.setMap(map);
-	    return route;
+		var route = L.polyline(markers, {color: color, weight: 10}).addTo(map);
+        return route;
 	}
 	
 	function moveMarker(map, marker, position){
-		var toBeDeleted = marker//self.data.map.currentPositionMarker;
-		marker = createMarker(map, position);
-		toBeDeleted.setMap(null);
+        marker.setLatLng(position);
 		return marker;
 	}
 	
 	function followThePath(map, position){
-		console.log(position);
 		self.data.map.currentPositionMarker = moveMarker(map, self.data.map.currentPositionMarker, position);
 		tryToGetNextCheckpoint(routesCheckpointsMarkers, routesCheckpointsMarkersPassed, routeBet, position);
 	}
@@ -131,17 +102,15 @@ var initMap = function() {
 	}
 	
 	function makeOwnPath(map, position){
-		console.log(position);
 		self.data.map.currentPositionMarker = moveMarker(map, self.data.map.currentPositionMarker, position);
 		drawNewCheckpoint(map, routesCheckpointsMarkersPassed, routeBet, position);
 	}
 	
 	self.map.init = function(){
-		self.data.map.myMap = new google.maps.Map(self.ui.mappage.map, {
-	        zoom: 17,
-	        center: self.data.main.position,
-			disableDefaultUI: true
-	    });
+		self.data.map.myMap = L.map(self.ui.mappage.map, normalizePosition(self.data.main.position), 17);
+		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	    }).addTo(self.data.map.myMap);
 		if(pathLatLng.length === 0){
 			routesCheckpointsMarkersPassed = convertPositionsForInvisibleMarkersOnMap([self.data.main.position], self.data.map.myMap);
 		}
@@ -149,20 +118,22 @@ var initMap = function() {
 		routeToBeat = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkers, blue, 0);
 		routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
 		self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position);
-		moveCameraToMarker(self.data.map.myMap, self.data.map.currentPositionMarker);
+		self.data.map.myMap.setView(normalizePosition(self.data.main.position), 17);
+		moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
 		self.map.ready = true;
 	};
 	
 	self.map.resize = function() {
-		setTimeout(google.maps.event.trigger(self.data.map.myMap, 'resize'), 1000);
-		moveCameraToMarker(self.data.map.myMap, self.data.map.currentPositionMarker);
+		moveCameraToMarker(self.data.map.myMap, 
+				self.data.map.currentPositionMarker.getLatLng()
+				);
 	};
 	
 	self.map.updatePosition = (pathLatLng.length !== 0) ? followThePath : makeOwnPath;
 	
 	self.map.reset = function(){
 		routesCheckpointsMarkersPassed = [];
-		routeBet.setMap(null);
+		routeBet.remove();
 		routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
 	};
 };

@@ -1,3 +1,33 @@
+/**
+ * Checks if given page is active and uses right callback
+ */
+function checkPage(name){
+	var page = document.getElementsByClassName('ui-page-active')[0],
+		pageid = page ? page.id : "";
+	return pageid === name;
+};
+
+/**
+ * findIndex polyfill
+ */
+Array.prototype.findIndex = Array.prototype.findIndex || function(callback) {
+	  if (this === null) {
+	    throw new TypeError('Array.prototype.findIndex called on null or undefined');
+	  } else if (typeof callback !== 'function') {
+	    throw new TypeError('callback must be a function');
+	  }
+	  var list = Object(this);
+	  // Makes sures is always has an positive integer as length.
+	  var length = list.length >>> 0;
+	  var thisArg = arguments[1];
+	  for (var i = 0; i < length; i++) {
+	    if ( callback.call(thisArg, list[i], i, list) ) {
+	      return i;
+	    }
+	  }
+	  return -1;
+};
+
 var initUI = function() {
 	var self = this;
 	
@@ -27,6 +57,7 @@ var initUI = function() {
 		self.ui.controlspage.stopButton = document.getElementById(self.CONTROLS_STOP_BUTTON);
 		self.ui.controlspage.startButton = document.getElementById(self.CONTROLS_START_BUTTON);
 		self.ui.controlspage.pauseButton = document.getElementById(self.CONTROLS_PAUSE_BUTTON);
+		
 	})();
 	
 	/**
@@ -65,15 +96,4 @@ var initUI = function() {
 		}
 	};
 	console.log('UI set');
-};
-
-
-
-/**
- * Checks if given page is active and uses right callback
- */
-var checkPage = function(name){
-	var page = document.getElementsByClassName('ui-page-active')[0],
-		pageid = page ? page.id : "";
-	return pageid === name;
 };

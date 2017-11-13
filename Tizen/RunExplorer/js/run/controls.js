@@ -30,6 +30,9 @@ var initControls = function(){
 		showButton(self.ui.controlspage.startButton);
 	}
 	
+	self.controls.start = start;
+	self.controls.stop = stop;
+	self.controls.pause = pause;
 	self.ui.controlspage.stopButton.onclick = stop;
 	self.ui.controlspage.startButton.onclick = start;
 	self.ui.controlspage.pauseButton.onclick = pause;
