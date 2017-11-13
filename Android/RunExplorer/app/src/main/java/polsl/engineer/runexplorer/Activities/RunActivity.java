@@ -57,6 +57,11 @@ public class RunActivity extends AppCompatActivity {
         }
     }
 
+    private String mess;
+    public static void getInfo(String message){
+        mess
+    }
+
     public void start(View view){
         if(isBound && consumerService.sendData(JSON)){
             Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();

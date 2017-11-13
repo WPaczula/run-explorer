@@ -2,8 +2,8 @@
     <string name="app_name">RunExplorer</string>
     <string name="title_activity_route_preview">Map</string>
     <string name="route_preview">Route</string>
-    <string name="distance">distance</string>
-    <string name="time">time</string>
+    <string name="distance">distance: </string>
+    <string name="time">time: </string>
     <string name="send_route_data">GO</string>
     <string name="NoPeersFound">No peers found</string>
     <string name="ConnectionFailure">Connection failure</string>

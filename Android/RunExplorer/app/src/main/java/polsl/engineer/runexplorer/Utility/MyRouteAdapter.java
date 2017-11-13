@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import polsl.engineer.runexplorer.Activities.RoutePreviewActivity;
-import polsl.engineer.runexplorer.Activities.RunActivity;
 import polsl.engineer.runexplorer.Data.RouteTitleInfo;
 import polsl.engineer.runexplorer.R;
 
@@ -28,6 +30,8 @@ public class MyRouteAdapter extends RecyclerView.Adapter<MyRouteAdapter.ViewHold
 
     private Context context;
     private List<RouteTitleInfo> routeData;
+    private DateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,15 +41,18 @@ public class MyRouteAdapter extends RecyclerView.Adapter<MyRouteAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.name.setText(routeData.get(position).getName());
-        holder.date.setText(routeData.get(position).getDate().toString());
-        holder.time.setText(routeData.get(position).getTime().toString());
-        holder.distance.setText(String.valueOf(routeData.get(position).getDistance()));
+        holder.name.append(routeData.get(position).getName());
+        holder.date.append(dayFormat.format(routeData.get(position).getDate()));
+        holder.time.append(timeFormat.format(routeData.get(position).getTime()));
+        holder.distance.append((String.valueOf(routeData.get(position).getDistance()/1000) + "km"));
         holder.chooseRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RoutePreviewActivity.class);
-                intent.putExtra("id", routeData.get(position).getId());
+                RouteTitleInfo chosenRoute = routeData.get(position);
+                intent.putExtra("id", chosenRoute.getId());
+                intent.putExtra("distance", chosenRoute.getDistance());
+                intent.putExtra("time", chosenRoute.getTime());
                 context.startActivity(intent);
             }
         });

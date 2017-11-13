@@ -48,6 +48,9 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         initUI();
+
+        Intent intent = getIntent();
+        //TODO: shoot to the server with given ID
     }
 
     @Override
