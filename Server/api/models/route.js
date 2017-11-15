@@ -2,8 +2,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
 var RouteSchema = new Schema({
+    routeId: {
+        type: String,
+        required: true,
+    },
     points: [{
         lat : Number,
         lng : Number,
@@ -22,4 +25,4 @@ var RouteSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Routes', TaskSchema);
+module.exports = mongoose.model('Routes', RouteSchema);

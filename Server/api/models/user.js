@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 
 
@@ -14,16 +14,14 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
-  routesIds: [
+  usersRoutes: [
     {
         routeId: {
             type: Number,
             required: true
         },
         timesPer100: [
-            {
-                type: Number
-            }
+            { type: Number }
         ]
     }
   ]
@@ -59,3 +57,26 @@ UserSchema.methods.comparePassword = function(password, cb) {
 };
 
 module.exports = mongoose.model('Users', UserSchema);
+
+
+
+
+let json = {
+	points: [
+        {lat: 20, lng: 20},
+        {lat: 21, lng: 21},
+        {lat: 22, lng: 22},
+    ],
+    time: 36000,
+    distance: 1000,
+    times: [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+    ]
+}

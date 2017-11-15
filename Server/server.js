@@ -1,10 +1,12 @@
 var express = require('express'),
-app = express(),
-bodyParser = require('body-parser'),
-passport = require('passport'),
-config = require('./config/database'),
-mongoose = require('mongoose'),
-port = process.env.PORT || 3000;
+    app = express(),
+    bodyParser = require('body-parser'),
+    passport = require('passport'),
+    config = require('./config/database'),
+    mongoose = require('mongoose'),
+    port = process.env.PORT || 3000;
+    require('./api/models/user');
+    require('./api/models/route');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
