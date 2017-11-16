@@ -13,7 +13,8 @@ module.exports = function(app) {
     .get(controller.getAllUsers);
 
   app.route('/Routes/:username', passport.authenticate('jwt', {session: false}))
-    .get(controller.getUsersRoutes);
+    .get(controller.getUsersRoutes)
+    .post(controller.postAnotherRun);
 
   app.route('/SignUp')
     .post(controller.signUp);

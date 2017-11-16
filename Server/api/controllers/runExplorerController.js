@@ -113,11 +113,13 @@ exports.getAllUsers = function(req, res) {
 }
 
 exports.getUsersRoutes = function(req, res) {
-    User.find({username: req.params.username}, function(err, user){
+    User.findOne({username: req.params.username}, function(err, user){
         if(err)
             return res.json({success: false, msg: 'No user found'});
         const skipNumber = req.query.skip;
-        const userRoutesData = user[0].usersRoutes.map(r => ({
+        if(skipNumber === undefined)
+            skipNumber = 0;
+        const userRoutesData = user.usersRoutes.map(r => ({
             routeId: r.routeId, 
             date: r.date,
             time: r.time,
@@ -142,6 +144,24 @@ exports.getUsersRoutes = function(req, res) {
                 })
             })
             return res.json({success: true, routes: routesData});
+        })
+    })
+}
+
+exports.postAnotherRun = function(req, res) {
+    User.findOne({username: req.params.username}, function(err, user){
+        if(err)
+            return res.json({success: false, msg: 'No user found'});
+        user.usersRoutes.push({
+            routeId: req.body.routeId,
+            timesPer100: req.body.timesPer100,
+            date: req.body.date,
+            time: req.body.time,
+        });
+        user.save(function(err){
+            if(err)
+                return res.json({success: false, msg: 'Cant add new run'});
+            return res.json({success: true, msg: 'New run added'});
         })
     })
 }
