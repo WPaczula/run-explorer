@@ -67,13 +67,19 @@ exports.addRoute = function(req, res) {
                 });
                 newRoute.save(function(err){
                     if(err){
-                        return res.json({success: false, msg: 'Cant save route ' + err});
+                        return res.json({success: false, msg: 'Cant save route '});
                     } else {
                         user.usersRoutes.push({
                             routeId: id, 
-                            timesPer100: req.body.times
+                            timesPer100: req.body.times,
+                            date: req.body.date,
+                            time: req.body.time,
                         });
-                        return res.json({success: true, msg: 'Route added'});
+                        user.save(function(err){
+                            if(err)
+                                return res.json({success: false, msg: 'Cant update user data' + err});
+                            return res.json({success: true, msg: 'Route added'});
+                        })
                     }
                 });
             }
@@ -90,8 +96,53 @@ exports.getAllRoutes = function(req, res) {
         if(routes.length === 0)
             return res.json({success: false, msg: 'No routes found'});
         else{
-            return res.json({routes: routes});
+            return res.json({success: false, routes: routes});
         }
+    })
+}
+
+exports.getAllUsers = function(req, res) {
+    User.find({}, function(err, users){
+        if(err)
+            throw err;
+        if(users.length === 0)
+            return res.json({success: false, msg: 'No users found'});
+        else
+            return res.json({success: true, users: users});
+    })
+}
+
+exports.getUsersRoutes = function(req, res) {
+    User.find({username: req.params.username}, function(err, user){
+        if(err)
+            return res.json({success: false, msg: 'No user found'});
+        const skipNumber = req.query.skip;
+        const userRoutesData = user[0].usersRoutes.map(r => ({
+            routeId: r.routeId, 
+            date: r.date,
+            time: r.time,
+        }));
+        Route.find({routeId: { $in:
+            userRoutesData.map(r => r.routeId)
+            }
+        }, 
+        function(err, routes){
+            if(err)
+                return res.json({success: false, msg: 'Can not find routes'});
+            const routesData = [];
+            if(routes.length === 0)
+                return res.json({success: true, routes: []});
+            userRoutesData.forEach(usersRoute => {
+                const foundRoute = routes.find(function(route) {return route.routeId === usersRoute.routeId});
+                routesData.push({
+                    id: foundRoute.routeId,
+                    date: usersRoute.date,
+                    time: usersRoute.time,
+                    distance: foundRoute.distance,
+                })
+            })
+            return res.json({success: true, routes: routesData});
+        })
     })
 }
 

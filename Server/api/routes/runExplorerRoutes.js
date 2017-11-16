@@ -9,6 +9,12 @@ module.exports = function(app) {
     .post(controller.addRoute)
     .get(controller.getAllRoutes);
 
+  app.route('/Users')
+    .get(controller.getAllUsers);
+
+  app.route('/Routes/:username', passport.authenticate('jwt', {session: false}))
+    .get(controller.getUsersRoutes);
+
   app.route('/SignUp')
     .post(controller.signUp);
 
@@ -20,3 +26,4 @@ module.exports = function(app) {
         res.json({success: true, msg: 'dummy route'});
     });
 };
+

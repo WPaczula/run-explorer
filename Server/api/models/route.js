@@ -6,6 +6,8 @@ var RouteSchema = new Schema({
     routeId: {
         type: String,
         required: true,
+        unique: true,
+        index: true,
     },
     points: [{
         lat : Number,

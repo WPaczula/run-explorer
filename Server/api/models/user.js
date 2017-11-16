@@ -17,12 +17,20 @@ var UserSchema = new Schema({
   usersRoutes: [
     {
         routeId: {
-            type: Number,
+            type: String,
             required: true
         },
         timesPer100: [
             { type: Number }
-        ]
+        ],
+        date: {
+            type: Number,
+            required: true,
+        },
+        time: {
+            type: Number,
+            require: true,
+        }
     }
   ]
 });
