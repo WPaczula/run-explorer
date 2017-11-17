@@ -7,7 +7,7 @@ module.exports = function(app) {
   // todoList Routes
   app.route('/Routes', passport.authenticate('jwt', {session: false}))
     .post(controller.addRoute)
-    .get(controller.getAllRoutes);
+    .get(controller.getRoute);
 
   app.route('/Users')
     .get(controller.getAllUsers);
@@ -16,6 +16,9 @@ module.exports = function(app) {
     .get(controller.getUsersRoutes)
     .post(controller.postAnotherRun);
 
+  app.route('/Search', passport.authenticate('jwt', {session: false}))
+    .get(controller.search);
+  
   app.route('/SignUp')
     .post(controller.signUp);
 
@@ -24,7 +27,7 @@ module.exports = function(app) {
 
   app.route('/')
     .get(function(req, res){
-        res.json({success: true, msg: 'dummy route'});
+        res.json({success: true, msg: 'Run Explorer server'});
     });
 };
 
