@@ -26,10 +26,10 @@ exports.signUp = function(req, res) {
 
 exports.authenticate = function(req, res) {
     User.findOne({
-        name: req.body.name
+        username: req.body.username
     }, function(err, user) {
-        if(err) throw err
-
+        if(err)
+            res.status(500).json({success: false, msg: 'Server error'});
         if(!user){
             return res.status(403).json({success: false, msg: 'Authentication failed. User not found'});
         } else {
@@ -52,8 +52,8 @@ exports.addRoute = function(req, res) {
         User.findOne({
             name: decoded.username
         }, function(err, user){
-            if(err) throw err;
-
+            if(err)
+                res.status(500).json({success: false, msg: 'Server error'});
             if(!user){
                 return res.status(403).json({success: false, msg: 'Authentication failed, no user found'});
             } else {
@@ -106,7 +106,7 @@ exports.getRoute = function(req, res) {
 exports.getAllUsers = function(req, res) {
     User.find({}, function(err, users){
         if(err)
-            throw err;
+            res.status(500).json({success: false, msg: 'Server error'});
         if(users.length === 0)
             return res.json({success: false, msg: 'No users found'});
         else

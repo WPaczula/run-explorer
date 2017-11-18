@@ -9,9 +9,6 @@ module.exports = function(app) {
     .post(controller.addRoute)
     .get(controller.getRoute);
 
-  app.route('/Users')
-    .get(controller.getAllUsers);
-
   app.route('/Routes/:username', passport.authenticate('jwt', {session: false}))
     .get(controller.getUsersRoutes)
     .post(controller.postAnotherRun);
