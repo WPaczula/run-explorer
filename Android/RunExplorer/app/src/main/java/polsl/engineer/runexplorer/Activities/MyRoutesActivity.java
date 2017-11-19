@@ -11,13 +11,13 @@ import java.util.Arrays;
 import java.util.List;
 import polsl.engineer.runexplorer.Data.RouteTitleInfo;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Utility.MyRouteAdapter;
+import polsl.engineer.runexplorer.Utility.RouteAdapter;
 
 public class MyRoutesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private MyRouteAdapter adapter;
+    private RouteAdapter adapter;
     private List<RouteTitleInfo> routeList;
 
     @Override
@@ -34,7 +34,7 @@ public class MyRoutesActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new MyRouteAdapter(this, routeList);
+        adapter = new RouteAdapter(this, routeList);
         recyclerView.setAdapter(adapter);
     }
 }

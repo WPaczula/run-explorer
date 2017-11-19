@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import polsl.engineer.runexplorer.Activities.RoutePreviewActivity;
 import polsl.engineer.runexplorer.Data.RouteTitleInfo;
@@ -22,8 +21,8 @@ import polsl.engineer.runexplorer.R;
  * Created by Wojtek on 11.11.2017.
  */
 
-public class MyRouteAdapter extends RecyclerView.Adapter<MyRouteAdapter.ViewHolder>{
-    public MyRouteAdapter(Context context, List<RouteTitleInfo> routeData) {
+public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
+    public RouteAdapter(Context context, List<RouteTitleInfo> routeData) {
         this.context = context;
         this.routeData = routeData;
     }

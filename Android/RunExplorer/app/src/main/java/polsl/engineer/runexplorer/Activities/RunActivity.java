@@ -12,8 +12,9 @@ import android.widget.Toast;
 
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.SAAService.ConsumerService;
+import polsl.engineer.runexplorer.SAAService.DataRecieveListener;
 
-public class RunActivity extends AppCompatActivity {
+public class RunActivity extends AppCompatActivity implements DataRecieveListener {
 
     private String JSON = "{\"type\":\"start\"," +
             "\"route\": [{\"lat\": 50.249930, \"lng\": 18.565919}," +
@@ -22,6 +23,7 @@ public class RunActivity extends AppCompatActivity {
             "{\"lat\": 50.250747, \"lng\": 18.566952}," +
             "{\"lat\": 50.250722, \"lng\": 18.567749}," +
             "{\"lat\": 50.250677, \"lng\": 18.568315}]}";
+
     private String stopJSON = "{\"type\":\"stop\"}";
     private boolean isBound = false;
     private ConsumerService consumerService = null;
@@ -57,17 +59,18 @@ public class RunActivity extends AppCompatActivity {
         }
     }
 
-    private String mess;
-    public static void getInfo(String message){
-        mess
-    }
-
     public void start(View view){
         if(isBound && consumerService.sendData(JSON)){
+            consumerService.addOnDataRecieveListener(this);
             Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();
         }else
         {
             Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void OnRecieve(String data) {
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
     }
 }

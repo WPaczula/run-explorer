@@ -115,8 +115,14 @@ public class ConsumerService extends SAAgent {
     }
 
     public class ServiceConnection extends SASocket {
+        private DataEmmiter dataEmmiter = new DataEmmiter();
+
         public ServiceConnection() {
             super(ServiceConnection.class.getName());
+        }
+
+        public void addListener(DataRecieveListener listener){
+            dataEmmiter.addListener(listener);
         }
 
         @Override
@@ -126,7 +132,7 @@ public class ConsumerService extends SAAgent {
         @Override
         public void onReceive(int channelId, byte[] data) {
             final String message = new String(data);
-            Log.i("SMARTWATCH", "onReceive: " + message);
+            dataEmmiter.EmitData(message);
         }
 
         @Override
@@ -139,6 +145,10 @@ public class ConsumerService extends SAAgent {
         public ConsumerService getService() {
             return ConsumerService.this;
         }
+    }
+
+    public void addOnDataRecieveListener(DataRecieveListener listener){
+        mConnectionHandler.addListener(listener);
     }
 
     public void findPeers() {

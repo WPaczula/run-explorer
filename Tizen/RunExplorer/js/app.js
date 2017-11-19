@@ -49,7 +49,8 @@
 					callbackInterval: 1000,
 					heartCallbackInterval: 3000,
 					gpsMaxAge: 3000,
-					timePerHundredMeters: [],
+					checkpoints: [],
+					time: 0,
 				},
 				map:{
 					myMap: {},

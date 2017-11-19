@@ -6,14 +6,7 @@ var initMap = function() {
 		routeBet,
 		blue = "#0000FF",
 		green = "#00FF00",
-		pathLatLng = [
-//	                  {lat: 50.249930, lng: 18.565919},
-//	                  {lat: 50.250253, lng: 18.566552},
-//	                  {lat: 50.250415, lng: 18.566706},
-//	                  {lat: 50.250747, lng: 18.566952},
-//	                  {lat: 50.250722, lng: 18.567749},
-//	                  {lat: 50.250677, lng: 18.568315}
-	                  ];
+		pathLatLng = [];
 	var routeData = localStorage.getItem('route');
 	if(routeData !== undefined){
 		pathLatLng = JSON.parse(routeData);
@@ -74,7 +67,7 @@ var initMap = function() {
 		routeBet.addLatLng(position);
 	}
 	
-	function drawARouteBetweenMarkersOnMap(map, markers, color, zIndex){
+	function drawARouteBetweenMarkersOnMap(map, markers, color){
 		var route = L.polyline(markers, {color: color, weight: 10}).addTo(map);
         return route;
 	}

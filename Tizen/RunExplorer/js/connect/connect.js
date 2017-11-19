@@ -62,10 +62,11 @@ var initConnection = function(){
             	} else if(dataObject.type === 'stop'){
             		console.log('stop command given');
             		var timeArray = JSON.stringify({
-            			times: self.data.main.timePerHundredMeters,
+            			checkpoints: self.data.main.checkpoints,
             			distance: self.data.main.distance,
-            			wasGivenRouteFinished: self.map.completedGivenRoute
-            			});
+            			time: self.data.main.time,
+            			shouldBeSavedAsNew: !self.map.completedGivenRoute
+            		});
             		console.log(timeArray);
             		self.controls.stop();
             		self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], timeArray);
