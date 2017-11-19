@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import butterknife.OnClick;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.SAAService.ConsumerService;
 import polsl.engineer.runexplorer.SAAService.DataRecieveListener;
@@ -51,6 +52,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         }
     };
 
+    @OnClick(R.id.stop_btn)
     public void stop(View view){
         if(isBound && consumerService.sendData(stopJSON)){
             Toast.makeText(getApplicationContext(), "STOPPED", Toast.LENGTH_SHORT).show();
@@ -59,6 +61,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         }
     }
 
+    @OnClick(R.id.start_btn)
     public void start(View view){
         if(isBound && consumerService.sendData(JSON)){
             consumerService.addOnDataRecieveListener(this);

@@ -1,5 +1,6 @@
 package polsl.engineer.runexplorer.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -19,9 +20,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Utility.TimeAdapter;
 import polsl.engineer.runexplorer.Utility.TimeConverter;
@@ -29,12 +34,6 @@ import polsl.engineer.runexplorer.Utility.TimeConverter;
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Button takeRouteButton;
-    private TextView distanceValue;
-    private TextView timeValue;
-    private RecyclerView timesRecyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private TimeAdapter adapter;
 
     private LatLng[] routePoints = {
             new LatLng(50.249930, 18.565919),
@@ -48,22 +47,19 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     private int distance = 1000;
     private int time = 21002102;
 
+    @SuppressLint("SetTextI18n")
     private void initUI(){
-        takeRouteButton = (Button)findViewById(R.id.challenge_route_btn);
-        distanceValue = (TextView)findViewById(R.id.distance_value_tv);
-        timeValue = (TextView)findViewById(R.id.time_value_tv);
-        timesRecyclerView = (RecyclerView) findViewById(R.id.times_rv);
-
-        distanceValue.setText(String.valueOf(distance));
+        TextView distanceValue = (TextView) findViewById(R.id.distance_value_tv);
+        TextView timeValue = (TextView) findViewById(R.id.time_value_tv);
+        distanceValue.setText(String.valueOf(distance/1000) + "km");
         timeValue.setText(TimeConverter.convertToTimeString(time));
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        RecyclerView timesRecyclerView = (RecyclerView) findViewById(R.id.times_rv);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         timesRecyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new TimeAdapter(this, times);
+        TimeAdapter adapter = new TimeAdapter(this, times);
         timesRecyclerView.setAdapter(adapter);
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
