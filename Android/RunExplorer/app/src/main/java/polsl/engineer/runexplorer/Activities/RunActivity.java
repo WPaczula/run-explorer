@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.SAAService.ConsumerService;
@@ -33,6 +34,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run);
+        ButterKnife.bind(this);
         Object[] route =  getIntent().getParcelableArrayExtra("route");
         isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
     }

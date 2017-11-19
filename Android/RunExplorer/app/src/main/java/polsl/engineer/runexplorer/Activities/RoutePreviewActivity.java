@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Utility.TimeAdapter;
@@ -34,6 +35,10 @@ import polsl.engineer.runexplorer.Utility.TimeConverter;
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    @BindView(R.id.distance_value_tv)
+    public TextView distanceValue;
+    @BindView(R.id.time_value_tv)
+    public TextView timeValue;
 
     private LatLng[] routePoints = {
             new LatLng(50.249930, 18.565919),
@@ -49,8 +54,6 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
 
     @SuppressLint("SetTextI18n")
     private void initUI(){
-        TextView distanceValue = (TextView) findViewById(R.id.distance_value_tv);
-        TextView timeValue = (TextView) findViewById(R.id.time_value_tv);
         distanceValue.setText(String.valueOf(distance/1000) + "km");
         timeValue.setText(TimeConverter.convertToTimeString(time));
         RecyclerView timesRecyclerView = (RecyclerView) findViewById(R.id.times_rv);
@@ -65,9 +68,10 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_preview);
+        ButterKnife.bind(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.preview_map);
         mapFragment.getMapAsync(this);
         initUI();
 
@@ -105,6 +109,7 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         return polylineOptions;
     }
 
+    @OnClick(R.id.challenge_route_btn)
     public void startRoute(View view){
         Intent intent = new Intent(RoutePreviewActivity.this, RunActivity.class);
         Bundle bundle = new Bundle();

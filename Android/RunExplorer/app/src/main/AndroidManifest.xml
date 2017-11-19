@@ -67,7 +67,10 @@
         </receiver>
 
         <activity android:name=".Activities.RunActivity" />
-        <activity android:name=".Activities.MyRoutesActivity"></activity>
+        <activity android:name=".Activities.MyRoutesActivity" />
+        <activity
+            android:name=".Activities.RouteSearchActivity"
+            android:label="@string/title_activity_route_search"></activity>
     </application>
 
 </manifest>

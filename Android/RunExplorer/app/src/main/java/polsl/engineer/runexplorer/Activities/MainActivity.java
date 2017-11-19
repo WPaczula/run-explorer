@@ -7,16 +7,23 @@ import android.view.View;
 import android.widget.Button;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 import polsl.engineer.runexplorer.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    @OnClick(R.id.route_preview_button)
-    public void previewRoute(View view){
+    public void routeLists(View view){
         Intent intent = new Intent(MainActivity.this, MyRoutesActivity.class);
         startActivity(intent);
     }
+
+    public void searchRoute(View view){
+        Intent intent = new Intent(MainActivity.this, RouteSearchActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
