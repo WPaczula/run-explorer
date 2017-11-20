@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -20,16 +18,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Utility.TimeAdapter;
+import polsl.engineer.runexplorer.Layout.TimeAdapter;
 import polsl.engineer.runexplorer.Utility.TimeConverter;
 
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {

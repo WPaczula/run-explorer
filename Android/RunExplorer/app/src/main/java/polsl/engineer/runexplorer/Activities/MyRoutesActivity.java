@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import polsl.engineer.runexplorer.Data.RouteTitleInfo;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Utility.RouteAdapter;
+import polsl.engineer.runexplorer.Layout.RouteAdapter;
 
 public class MyRoutesActivity extends AppCompatActivity {
 

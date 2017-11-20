@@ -14,4 +14,11 @@
     <string name="title_activity_route_search">Map</string>
     <string name="user">user</string>
     <string name="search">search</string>
+    <string name="hint_username">username</string>
+    <string name="hint_password">password</string>
+    <string name="login_btn_text">login</string>
+    <string name="register_text">No account yet? Click here to register</string>
+    <string name="hint_repeat_password">repeat password</string>
+    <string name="register_btn">register</string>
+    <string name="logout_btn">logout</string>
 </resources>

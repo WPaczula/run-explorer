@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Utility;
+package polsl.engineer.runexplorer.Layout;
 
 import android.content.Context;
 import android.content.Intent;
