@@ -25,7 +25,7 @@
 
 
         <EditText
-            android:id="@+id/et_rlogin"
+            android:id="@+id/rlogin_et"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
             android:drawableStart="@drawable/ic_login"
@@ -33,20 +33,20 @@
 
 
         <EditText
-            android:id="@+id/et_rpassword"
+            android:id="@+id/rpassword_et"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
-            android:layout_below="@id/et_rlogin"
+            android:layout_below="@id/rlogin_et"
             android:drawableStart="@drawable/ic_lock"
             android:hint="@string/hint_password"
             android:inputType="textPassword" />
 
 
         <EditText
-            android:id="@+id/et_confirm_password"
+            android:id="@+id/confirm_password_et"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
-            android:layout_below="@id/et_rpassword"
+            android:layout_below="@id/rpassword_et"
             android:drawableStart="@drawable/ic_lock"
             android:hint="@string/hint_repeat_password"
             android:inputType="textPassword" />
@@ -59,7 +59,7 @@
         android:layout_weight="5">
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/register_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

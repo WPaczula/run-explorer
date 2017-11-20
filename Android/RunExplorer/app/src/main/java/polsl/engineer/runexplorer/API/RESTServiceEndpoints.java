@@ -1,6 +1,7 @@
 package polsl.engineer.runexplorer.API;
 
 import polsl.engineer.runexplorer.API.Data.JWT;
+import polsl.engineer.runexplorer.API.Data.Message;
 import polsl.engineer.runexplorer.API.Data.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,4 +16,8 @@ public interface RESTServiceEndpoints {
     @Headers("content-type: application/json")
     @POST("/Authenticate")
     Call<JWT> authenticate(@Body User user);
+
+    @Headers("content-type: application/json")
+    @POST("/SignUp")
+    Call<Message> signUp(@Body User user);
 }

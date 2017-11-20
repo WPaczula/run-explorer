@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.orhanobut.hawk.Hawk;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view){
+        Hawk.deleteAll();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
@@ -33,5 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Hawk.init(this).build();
     }
 }
