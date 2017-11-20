@@ -62,7 +62,6 @@ var initMap = function() {
 	}
 		
 	function drawNewCheckpoint(map, routesCheckpointsMarkersPassed, routeBet, position){
-		var marker = L.marker(position).addTo(map);
 		routesCheckpointsMarkersPassed.push(position);
 		routeBet.addLatLng(position);
 	}

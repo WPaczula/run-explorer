@@ -21,4 +21,6 @@
     <string name="hint_repeat_password">repeat password</string>
     <string name="register_btn">register</string>
     <string name="logout_btn">logout</string>
+    <string name="new_route_btn">New route</string>
+    <string name="reconnect">reconnect</string>
 </resources>
