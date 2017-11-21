@@ -34,6 +34,8 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
     private boolean isBound = false;
     private ConsumerService consumerService = null;
     private String ID;
+    private TizenRouteData routeData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,15 +82,12 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         }
     }
 
-    @OnClick(R.id.reconnect_btn)
-    public void reconnect(View view){
-        isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
-    }
-
     @Override
     public void OnRecieve(String data) {
         Gson gson = new Gson();
-        TizenRouteData routeData = gson.fromJson(data, TizenRouteData.class);
+        if(!data.equals("Route set")){
+            routeData = gson.fromJson(data, TizenRouteData.class);
+        }
         Toast.makeText(this, data, Toast.LENGTH_LONG).show();
     }
 }

@@ -30,9 +30,13 @@
 config.xml__DEL__nRcfdNy7rpVS72n8aPoBk082jkfxXb9i5zhMMww8yyc=
 css/style.css__DEL__h2LMtsU6GMhBVTuu9JQi3NpMpqQqIxoKpPQ7bRXlj10=
 icon.png__DEL__vPjxjOppORd6hn9Bw4sh06gqtDoJzoFbV/8e9FyIdvk=
+index.html__DEL__EW1KQBWiDL5fKIrlSDBDjhbs+DTp8U+OJf2Xy03LncA=
 js/app.js__DEL__IBMXBhdthyRDV8Wjn6H4OyNMS+9seq5LM9ns4A4gGu8=
-js/connect/connect.js__DEL__Jr/fC1U+RFAJkh8IGsXmbOUyk3PS+za2zATqn7YoMmM=
+js/connect/connect.js__DEL__zrvGUQpg2HBTu+jizhPH1FsquRbah/OjWSlgaA7Dcbw=
+js/run/controls.js__DEL__lyS0JHe5LjFvuRNt2jjCy7MOwOUzKAU3n2dawOsWo9U=
 js/run/map.js__DEL__F/z2/B+AIGVf6gpWl1isodRiYuWegY0fOzWDgURFJC0=
+js/run/sensors.js__DEL__z2wFzZif4ed2FX+pu4WJokzcltcvwCEzvk+hZeyMaFE=
+js/ui.js__DEL__ASfFuZfmAUTwObBduIwv/1mlOIlgJMtwsoc9M7nDlT8=
 lib/tau/LICENSE.Flora__DEL__R4988xI3tkQMAcLGLOROY5Wp8YTDrI0X90uMvrydtQw=
 lib/tau/VERSION__DEL__NNwL10gCpu8DCYYpDaectUanXQBclaS+wcI8Atm98p4=
 lib/tau/wearable/js/tau.js__DEL__BKZArIMwrEVdaZtyxdMsmKxJbSnvV6mYuTKAB1bX2uk=
@@ -314,8 +318,4 @@ lib/tau/wearable/theme/default/tau.min.css__DEL__qnnCAIPGsW3IDww1aliQWt68MoJpWlp
 lib/tau/wearable/theme/default/tau.min.template__DEL__pMbNqgPMw2Wi+7A6WpjsUttxF24ELM4vVvJHlNCew3E=
 lib/tau/wearable/theme/default/tau.template__DEL__6G1+BW7cnojrMTmoZuo0V6ytOpdJfXfIOLJDBQh9x04=
 res/xml/accesoryservices.xml__DEL__midVk6nj0uG/6U03Avyc47LxQU1rVLxAAulbmsESiTM=
-author-signature.xml__DEL__HGdqXvhn1/uYV3OD1ysk5y1Y/36QS3WJDwasxPMerq4=
-index.html__DEL__EW1KQBWiDL5fKIrlSDBDjhbs+DTp8U+OJf2Xy03LncA=
-js/run/controls.js__DEL__lyS0JHe5LjFvuRNt2jjCy7MOwOUzKAU3n2dawOsWo9U=
-js/run/sensors.js__DEL__FvL83El8OexFJuTIpVfYXofJxOj3tGDTjSHIKZk6HOE=
-js/ui.js__DEL__ASfFuZfmAUTwObBduIwv/1mlOIlgJMtwsoc9M7nDlT8=
+author-signature.xml__DEL__u8E+QN1ZZHpuhpudJiSnvvZrQoBjvPmXCwWkIJiBHBs=

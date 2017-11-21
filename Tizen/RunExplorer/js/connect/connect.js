@@ -62,10 +62,27 @@ var initConnection = function(){
             	} else if(dataObject.type === 'stop'){
             		console.log('stop command given');
             		var timeArray = JSON.stringify({
+            			checkpoints: [
+										{lat:50.249596, lng:18.566320, time: 20},
+										{lat:50.249912, lng:18.566585, time: 21},
+										{lat:50.250214, lng:18.566835, time: 22},
+										{lat:50.250564, lng:18.567073, time: 23},
+										{lat:50.250738, lng:18.567341, time: 24},
+										{lat:50.250683, lng:18.567989, time: 25},
+										{lat:50.250632, lng:18.568616, time: 26},
+										{lat:50.250701, lng:18.569203, time: 27},
+										{lat:50.251173, lng:18.569625, time: 28},
+										{lat:50.251557, lng:18.569965, time: 29},
+										{lat:50.251876, lng:18.570234, time: 30}
+            			             ],
+            			distance: 300,
+            			time: 240,
+            			shouldBeSavedAsNew: true
+            			/*
             			checkpoints: self.data.main.checkpoints,
             			distance: self.data.main.distance,
             			time: self.data.main.time,
-            			shouldBeSavedAsNew: !self.map.completedGivenRoute
+            			shouldBeSavedAsNew: !self.map.completedGivenRoute*/
             		});
             		console.log(timeArray);
             		self.controls.stop();

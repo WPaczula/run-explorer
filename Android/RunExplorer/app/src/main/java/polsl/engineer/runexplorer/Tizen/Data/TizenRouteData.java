@@ -7,17 +7,17 @@ import java.util.List;
  */
 
 public class TizenRouteData {
-    private List<TizenCheckpoint> checkpointList;
+    private List<TizenCheckpoint> checkpoints;
     private int distance;
     private int time;
     private boolean shouldBeSavedAsNew;
 
     public List<TizenCheckpoint> getCheckpointList() {
-        return checkpointList;
+        return checkpoints;
     }
 
     public void setCheckpointList(List<TizenCheckpoint> checkpointList) {
-        this.checkpointList = checkpointList;
+        this.checkpoints = checkpointList;
     }
 
     public int getDistance() {
