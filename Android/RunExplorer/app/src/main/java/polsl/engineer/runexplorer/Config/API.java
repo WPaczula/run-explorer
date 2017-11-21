@@ -5,6 +5,6 @@ package polsl.engineer.runexplorer.Config;
  */
 
 public class API {
-    public static String Url = "http://192.168.5.10:3000";
+    public static String Url = "http://c24bd8d8.ngrok.io";
     public static String tokenKey = "token";
 }

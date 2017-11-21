@@ -18,7 +18,11 @@ var UserSchema = new Schema({
     {
         routeId: {
             type: String,
-            required: true
+            required: true,
+        },
+        name: {
+            type: String,
+            required: false,
         },
         timesPer100: [
             { type: Number }

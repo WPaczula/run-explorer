@@ -130,7 +130,7 @@ var initSensors = function(mapInit) {
             try {
             	tizen.humanactivitymonitor.setAccumulativePedometerListener(SpeedDistanceChangeListener.onChange);
                 console.log('Speed/distance sensor set');
-            	segmentDistance = 0;
+            	segmentDistance = 20;
             	lastSegmentTime = 0;
             } catch (error) {
                 self.onerror(error);

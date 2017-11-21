@@ -9,16 +9,16 @@ var mongoose = require('mongoose'),
 
 exports.signUp = function(req, res) {
     if(!req.body.username || !req.body.password){
-        return res.json({success: false, msg: 'Please pass name and password.'});
+        return res.json({success: false, message: 'Please pass name and password.'});
     } else {
         var newUser =  new User({
             username: req.body.username,
             password: req.body.password
         }).save(function(err){
             if(err){
-                return res.json({success: false, msg: 'Username already exists'});
+                return res.json({success: false, message: 'Username already exists'});
             } else {
-                return res.json({success: true, msg: 'Successfully created'});
+                return res.json({success: true, message: 'Successfully created'});
             }
         })
     }
@@ -29,16 +29,16 @@ exports.authenticate = function(req, res) {
         username: req.body.username
     }, function(err, user) {
         if(err)
-            res.status(500).json({success: false, msg: 'Server error'});
+            res.status(500).json({success: false, message: 'Server error'});
         if(!user){
-            return res.status(403).json({success: false, msg: 'Authentication failed. User not found'});
+            return res.status(403).json({success: false, message: 'Authentication failed. User not found'});
         } else {
             user.comparePassword(req.body.password, function(err, isMatch){
                 if(isMatch && !err){
                     var token = jwt.encode({name: user.username}, config.secret);
                     return res.json({success: true, token: 'JWT ' + token});
                 } else {
-                    return res.status(403).json({success: false, msg: 'Authentication failed. Wrong password'});
+                    return res.status(403).json({success: false, message: 'Authentication failed. Wrong password'});
                 }
             })
         }
@@ -53,9 +53,9 @@ exports.addRoute = function(req, res) {
             name: decoded.username
         }, function(err, user){
             if(err)
-                res.status(500).json({success: false, msg: 'Server error'});
+                res.status(500).json({success: false, message: 'Server error'});
             if(!user){
-                return res.status(403).json({success: false, msg: 'Authentication failed, no user found'});
+                return res.status(403).json({success: false, message: 'Authentication failed, no user found'});
             } else {
                 var id = generateId();
                 var newRoute = new Route({
@@ -67,36 +67,37 @@ exports.addRoute = function(req, res) {
                 });
                 newRoute.save(function(err){
                     if(err){
-                        return res.json({success: false, msg: 'Cant save route '});
+                        return res.json({success: false, message: 'Cant save route '});
                     } else {
                         user.usersRoutes.push({
                             routeId: id, 
-                            timesPer100: req.body.times,
+                            name: req.body.name,
+                            times: req.body.times,
                             date: req.body.date,
                             time: req.body.time,
                         });
                         user.save(function(err){
                             if(err)
-                                return res.json({success: false, msg: 'Cant update user data' + err});
-                            return res.json({success: true, msg: 'Route added'});
+                                return res.json({success: false, message: 'Cant update user data' + err});
+                            return res.json({success: true, message: 'Route added'});
                         })
                     }
                 });
             }
         });
     } else {
-        return res.status(403).json({success: false, msg: 'Authentication failed. Wrong password'});
+        return res.status(403).json({success: false, message: 'Authentication failed. Wrong password'});
     }
 }
 
 exports.getRoute = function(req, res) {
     if(req.query.routeId === undefined)
-        return res.json({success: false, msg: 'No routes found'});
+        return res.json({success: false, message: 'No routes found'});
     Route.findOne({routeId: req.query.routeId}, function(err, route) {
         if(err)
             throw err;
         if(route === undefined)
-            return res.json({success: false, msg: 'No routes found'});
+            return res.json({success: false, message: 'No routes found'});
         else{
             return res.json({success: true, route: route});
         }
@@ -106,9 +107,9 @@ exports.getRoute = function(req, res) {
 exports.getAllUsers = function(req, res) {
     User.find({}, function(err, users){
         if(err)
-            res.status(500).json({success: false, msg: 'Server error'});
+            res.status(500).json({success: false, message: 'Server error'});
         if(users.length === 0)
-            return res.json({success: false, msg: 'No users found'});
+            return res.json({success: false, message: 'No users found'});
         else
             return res.json({success: true, users: users});
     })
@@ -117,35 +118,42 @@ exports.getAllUsers = function(req, res) {
 exports.getUsersRoutes = function(req, res) {
     User.findOne({username: req.params.username}, function(err, user){
         if(err)
-            return res.json({success: false, msg: 'No user found'});
-        let skipNumber = req.query.skip;
+            return res.json({success: false, message: 'No user found'});
+        let skipNumber = Number.parseInt(req.query.skip);
         if(skipNumber === undefined)
             skipNumber = 0;
         const userRoutesData = user.usersRoutes.map(r => ({
-            routeId: r.routeId, 
+            routeId: r.routeId,
+            name: r.name,
             date: r.date,
             time: r.time,
         }));
+        if(skipNumber>userRoutesData.length){
+            return res.json({routes: []});
+        }
         Route.find({routeId: { $in:
             userRoutesData.map(r => r.routeId)
             }
         }, 
         function(err, routes){
             if(err)
-                return res.json({success: false, msg: 'Can not find routes'});
+                return res.json({success: false, message: 'Can not find routes'});
             const routesData = [];
             if(routes.length === 0)
-                return res.json({success: true, routes: []});
-            userRoutesData.forEach(usersRoute => {
-                const foundRoute = routes.find(function(route) {return route.routeId === usersRoute.routeId});
-                routesData.push({
-                    id: foundRoute.routeId,
-                    date: usersRoute.date,
-                    time: usersRoute.time,
-                    distance: foundRoute.distance,
-                })
+                return res.json({routes: []});
+            let count = 0;
+            const max = 3;
+            userRoutesData.slice(skipNumber, skipNumber+max).forEach(usersRoute => {
+                const foundRoute = routes.find(function(route) {return route.routeId === usersRoute.routeId});                
+                    routesData.push({
+                        id: foundRoute.routeId,
+                        date: usersRoute.date,
+                        time: usersRoute.time,
+                        name: usersRoute.name,
+                        distance: foundRoute.distance,
+                    })
             })
-            return res.json({success: true, routes: routesData});
+            return res.json({all: userRoutesData.length, routes: routesData});
         })
     })
 }
@@ -153,30 +161,31 @@ exports.getUsersRoutes = function(req, res) {
 exports.postAnotherRun = function(req, res) {
     User.findOne({username: req.params.username}, function(err, user){
         if(err)
-            return res.json({success: false, msg: 'No user found'});
+            return res.json({success: false, message: 'No user found'});
         user.usersRoutes.push({
             routeId: req.body.routeId,
-            timesPer100: req.body.timesPer100,
+            name: req.body.name,
+            times: req.body.times,
             date: req.body.date,
             time: req.body.time,
         });
         user.save(function(err){
             if(err)
-                return res.json({success: false, msg: 'Cant add new run'});
+                return res.json({success: false, message: 'Cant add new run'});
             Route.findOne({routeId: req.body.routeId}, function(err, route){
                 if(err)
-                    return res.json({success: false, msg: 'Cant find given route'});
+                    return res.json({success: false, message: 'Cant find given route'});
                 if(route.bestTime > req.body.time){
                     route.bestTime = req.body.time;
                     route.bestUser = req.params.username;
                     route.save(function(err){
                         if(err){
-                            return res.json({success: false, msg: 'Cant update route'});
-                        return res.json({success: true, msg: 'New routes record!'});
+                            return res.json({success: false, message: 'Cant update route'});
+                        return res.json({success: true, message: 'New routes record!'});
                         }
                     })
                 }
-                return res.json({success: true, msg: 'New run added'});
+                return res.json({success: true, message: 'New run added'});
             })
         })
     })
