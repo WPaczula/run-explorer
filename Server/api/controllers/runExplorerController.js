@@ -142,7 +142,7 @@ exports.getUsersRoutes = function(req, res) {
             if(routes.length === 0)
                 return res.json({routes: []});
             let count = 0;
-            const max = 3;
+            const max = 5;
             userRoutesData.slice(skipNumber, skipNumber+max).forEach(usersRoute => {
                 const foundRoute = routes.find(function(route) {return route.routeId === usersRoute.routeId});                
                     routesData.push({
@@ -153,7 +153,7 @@ exports.getUsersRoutes = function(req, res) {
                         distance: foundRoute.distance,
                     })
             })
-            return res.json({all: userRoutesData.length, routes: routesData});
+            return res.json({totalCount: userRoutesData.length, routes: routesData});
         })
     })
 }

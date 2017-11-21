@@ -23,4 +23,8 @@
     <string name="logout_btn">logout</string>
     <string name="new_route_btn">New route</string>
     <string name="reconnect">reconnect</string>
+    <string name="name_title">name:</string>
+    <string name="date_title">date:</string>
+    <string name="time_title">time:</string>
+    <string name="distance_title">distance:</string>
 </resources>

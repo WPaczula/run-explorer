@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_btn)
     public void onLogin(View view){
-        String username = usernameTextView.getText().toString().trim();
+        final String username = usernameTextView.getText().toString().trim();
         String password = passwordTextView.getText().toString().trim();
         if(username.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Fill username and password", Toast.LENGTH_LONG).show();
@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<JWT> call, Response<JWT> response) {
                     Hawk.put(API.tokenKey, response.body().getToken());
+                    Hawk.put(API.username, username);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
