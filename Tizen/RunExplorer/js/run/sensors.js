@@ -152,7 +152,8 @@ var initSensors = function(mapInit) {
             if(self.data.main.distance > segmentDistance){
             	self.data.main.checkpoints.push({
             		time: self.data.main.time - lastSegmentTime,
-            		location: self.data.main.position
+            		lat: self.data.main.position.lat,
+			lng: self.data.main.position.lng,
             		});
             	lastSegmentTime = self.data.main.time;
             	segmentDistance += segmentDistance;

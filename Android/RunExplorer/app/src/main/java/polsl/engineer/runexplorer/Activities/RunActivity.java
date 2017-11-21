@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.SAAService.ConsumerService;
-import polsl.engineer.runexplorer.SAAService.DataRecieveListener;
+import polsl.engineer.runexplorer.Tizen.Data.TizenRouteData;
+import polsl.engineer.runexplorer.Tizen.SAAService.ConsumerService;
+import polsl.engineer.runexplorer.Tizen.SAAService.DataRecieveListener;
 
 public class RunActivity extends AppCompatActivity implements DataRecieveListener {
 
@@ -84,6 +87,8 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
 
     @Override
     public void OnRecieve(String data) {
+        Gson gson = new Gson();
+        TizenRouteData routeData = gson.fromJson(data, TizenRouteData.class);
         Toast.makeText(this, data, Toast.LENGTH_LONG).show();
     }
 }

@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.SAAService;
+package polsl.engineer.runexplorer.Tizen.SAAService;
 
 import java.util.ArrayList;
 import java.util.List;

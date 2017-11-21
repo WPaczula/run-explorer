@@ -29,7 +29,7 @@
             android:name="RunExplorerProvider"
             android:value="wgt" />
         <service
-            android:name=".SAAService.ConsumerService"
+            android:name=".Tizen.SAAService.ConsumerService"
             android:enabled="true"
             android:exported="true" />
         <receiver android:name="com.samsung.android.sdk.accessory.RegisterUponInstallReceiver">

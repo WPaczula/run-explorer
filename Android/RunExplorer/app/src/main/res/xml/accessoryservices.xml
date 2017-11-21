@@ -31,7 +31,7 @@
             id="/engineer/runexplorer"
             name="RunExplorerConsumer"
             role="consumer"
-            serviceImpl="polsl.engineer.runexplorer.SAAService.ConsumerService"
+            serviceImpl="polsl.engineer.runexplorer.Tizen.SAAService.ConsumerService"
             version="2.0"
             serviceLimit="ANY"
             serviceTimeout="10">

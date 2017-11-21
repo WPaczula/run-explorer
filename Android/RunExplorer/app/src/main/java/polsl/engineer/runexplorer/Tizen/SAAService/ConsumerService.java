@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.SAAService;
+package polsl.engineer.runexplorer.Tizen.SAAService;
 
 import android.content.Intent;
 import android.os.Binder;
