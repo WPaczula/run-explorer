@@ -1,5 +1,6 @@
 package polsl.engineer.runexplorer.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,12 @@ public class MyRoutesActivity extends AppCompatActivity{
     private String token;
     private String username;
     private List<RouteTitleData> routeList = new ArrayList<>();
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(MyRoutesActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

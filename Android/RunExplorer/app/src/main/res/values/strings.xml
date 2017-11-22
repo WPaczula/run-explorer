@@ -4,7 +4,7 @@
     <string name="route_preview">My Routes</string>
     <string name="distance">distance: </string>
     <string name="time">time: </string>
-    <string name="send_route_data">GO</string>
+    <string name="send_route_data">Run</string>
     <string name="NoPeersFound">No peers found</string>
     <string name="ConnectionFailure">Connection failure</string>
     <string name="start">connect</string>
@@ -27,4 +27,5 @@
     <string name="date_title">date:</string>
     <string name="time_title">time:</string>
     <string name="distance_title">distance:</string>
+    <string name="save_route_data">Save</string>
 </resources>

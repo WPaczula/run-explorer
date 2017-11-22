@@ -53,7 +53,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.id = routeData.get(position).getId();
         holder.name.setText(routeData.get(position).getName());
         holder.date.setText(dayFormat.format(routeData.get(position).getDate()));
@@ -69,9 +69,12 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
                     public void onResponse(Call<RouteData> call, Response<RouteData> response) {
                         Intent intent = new Intent(context, RoutePreviewActivity.class);
                         Gson gson = new Gson();
-                        String jsonData = gson.toJson(response.body());
+                        RouteData data = response.body();
+                        data.setId(holder.id);
+                        String jsonData = gson.toJson(data);
                         intent.putExtra(Extra.routeJSON, jsonData);
                         intent.putExtra(Extra.parent, Extra.myRoutes);
+                        intent.putExtra(Extra.isBeforeRun, true);
                         context.startActivity(intent);
                     }
 

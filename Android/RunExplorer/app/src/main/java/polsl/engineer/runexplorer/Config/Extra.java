@@ -11,11 +11,14 @@ import polsl.engineer.runexplorer.Activities.RunActivity;
  */
 
 public class Extra {
-    public static String routeJSON = "routeJSON";
-    public static String parent = "parent";
-    public static String myRoutes = "MyRoutes";
-    public static String newRoute = "NewRoute";
-    public static Map<String, Class> activities;
+    public final static String routeJSON = "routeJSON";
+    public final static String parent = "parent";
+    public final static String myRoutes = "MyRoutes";
+    public final static String newRoute = "NewRoute";
+    public final static String isBeforeRun = "beforeRun";
+    public final static String pathJSON = "pathJSON";
+    public final static String ID = "id";
+    public final static Map<String, Class> activities;
     static
     {
         activities = new HashMap<>();

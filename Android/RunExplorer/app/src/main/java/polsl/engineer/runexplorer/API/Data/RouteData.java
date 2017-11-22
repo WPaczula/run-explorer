@@ -14,6 +14,7 @@ import polsl.engineer.runexplorer.Tizen.Data.TizenRouteData;
 public class RouteData {
 
     private boolean isNew;
+    private String id;
     private String name;
     private int distance;
     private int time;
@@ -69,7 +70,11 @@ public class RouteData {
         this.times = times;
     }
 
-    public List<LatLng> getCheckpoints() {
+    public List<Checkpoint> getCheckpoints(){
+        return checkpoints;
+    }
+
+    public List<LatLng> getLatLngs() {
         List<LatLng> latLngList = new ArrayList<>();
         for(Checkpoint checkpoint : checkpoints){
             latLngList.add(new LatLng(checkpoint.getLat(), checkpoint.getLng()));
@@ -81,4 +86,11 @@ public class RouteData {
         this.checkpoints = checkpoints;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

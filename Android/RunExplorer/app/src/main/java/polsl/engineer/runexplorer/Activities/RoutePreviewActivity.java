@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -26,7 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.API.Data.RouteData;
-import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Layout.TimeAdapter;
@@ -39,12 +38,20 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public TextView distanceValue;
     @BindView(R.id.time_value_tv)
     public TextView timeValue;
+    @BindView(R.id.save_route_btn)
+    public Button saveButton;
+    @BindView(R.id.challenge_route_btn)
+    public Button challengeButton;
     private RouteData routeData;
     private Class parentActivity;
+    private Gson gson = new Gson();
 
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(RoutePreviewActivity.this, MainActivity.class);
+        if(parentActivity.equals(MyRoutesActivity.class)){
+            intent = new Intent(RoutePreviewActivity.this, MyRoutesActivity.class);
+        }
         startActivity(intent);
     }
 
@@ -73,8 +80,14 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         Intent intent = getIntent();
         String json = intent.getStringExtra(Extra.routeJSON);
         parentActivity = Extra.activities.get(intent.getStringExtra(Extra.parent));
-        Gson gson = new Gson();
         routeData = gson.fromJson(json, RouteData.class);
+
+        boolean isBeforeRun = intent.getBooleanExtra(Extra.isBeforeRun, true);
+        if(isBeforeRun){
+            challengeButton.setVisibility(View.VISIBLE);
+        }else{
+            saveButton.setVisibility(View.VISIBLE);
+        }
 
         initUI();
     }
@@ -84,10 +97,10 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        mMap.addPolyline(drawPolyline(routeData.getCheckpoints()));
+        mMap.addPolyline(drawPolyline(routeData.getLatLngs()));
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for(LatLng point : routeData.getCheckpoints()){
+        for(LatLng point : routeData.getLatLngs()){
             builder.include(point);
         }
 
@@ -109,9 +122,21 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         return polylineOptions;
     }
 
+    @OnClick(R.id.save_route_btn)
+    public void saveRoute(View view){
+        if(routeData.isNew()){
+            //TODO: addroute
+        }else{
+            //TODO: addrun
+        }
+    }
+
     @OnClick(R.id.challenge_route_btn)
     public void startRoute(View view){
         Intent intent = new Intent(RoutePreviewActivity.this, RunActivity.class);
+        String json = gson.toJson(routeData.getCheckpoints());
+        intent.putExtra(Extra.pathJSON, json);
+        intent.putExtra(Extra.ID, routeData.getId());
         startActivity(intent);
     }
 }
