@@ -61,6 +61,7 @@ exports.addRoute = function(req, res) {
                 var newRoute = new Route({
                     routeId: id,
                     points: req.body.points,
+                    name: req.body.name,
                     bestTime: req.body.time,
                     bestUser: user.username,
                     distance: req.body.distance,
@@ -72,7 +73,7 @@ exports.addRoute = function(req, res) {
                         user.usersRoutes.push({
                             routeId: id, 
                             name: req.body.name,
-                            times: req.body.times,
+                            timesPer100: req.body.times,
                             date: req.body.date,
                             time: req.body.time,
                         });
@@ -93,13 +94,26 @@ exports.addRoute = function(req, res) {
 exports.getRoute = function(req, res) {
     if(req.query.routeId === undefined)
         return res.json({success: false, message: 'No routes found'});
-    Route.findOne({routeId: req.query.routeId}, function(err, route) {
+    Route.findOne({}, function(err, route) {
         if(err)
-            throw err;
-        if(route === undefined)
+            res.status(500).json({success: false, message: 'Server error'});
+        if(route === null)
             return res.json({success: false, message: 'No routes found'});
         else{
-            return res.json({success: true, route: route});
+            User.findOne({username: route.bestUser}, function(err, user){
+                if(err)
+                    return res.status(500).json({success: false, message: 'Server error'});
+                const times = user.usersRoutes.find(r => r.routeId===route.routeId).timesPer100;
+                const result = {
+                    time: route.bestTime,
+                    distance: route.distance,
+                    checkpoints: route.points,
+                    times: times,
+                    name: route.name,
+                    isNew: false,
+                }             
+                return res.json(result);  
+            })
         }
     })
 }
@@ -165,7 +179,7 @@ exports.postAnotherRun = function(req, res) {
         user.usersRoutes.push({
             routeId: req.body.routeId,
             name: req.body.name,
-            times: req.body.times,
+            timesPer100: req.body.times,
             date: req.body.date,
             time: req.body.time,
         });

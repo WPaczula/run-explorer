@@ -13,6 +13,10 @@ var RouteSchema = new Schema({
         lat : Number,
         lng : Number,
     }],
+    name: {
+        type: String,
+        required: true,
+    },
     bestTime: {
         type: Number,
         required: true,

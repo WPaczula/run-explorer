@@ -2,6 +2,7 @@ package polsl.engineer.runexplorer.API;
 
 import polsl.engineer.runexplorer.API.Data.JWT;
 import polsl.engineer.runexplorer.API.Data.Message;
+import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.API.Data.User;
 import polsl.engineer.runexplorer.API.Data.UserRoutes;
 import retrofit2.Call;
@@ -31,4 +32,9 @@ public interface RESTServiceEndpoints {
     Call<UserRoutes> getUsersRoutes(@Header("Authorization") String token,
                                     @Path("username") String username,
                                     @Query("skip") int skip);
+
+    @Headers("content-type: application/json")
+    @GET("/Routes")
+    Call<RouteData> getRoute(@Header("Authorization") String token,
+            @Query("routeId") String id);
 }
