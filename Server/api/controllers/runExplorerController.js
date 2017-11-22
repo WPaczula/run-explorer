@@ -103,13 +103,14 @@ exports.getRoute = function(req, res) {
             User.findOne({username: route.bestUser}, function(err, user){
                 if(err)
                     return res.status(500).json({success: false, message: 'Server error'});
-                const times = user.usersRoutes.find(r => r.routeId===route.routeId).timesPer100;
+                const userData = user.usersRoutes.find(r => r.routeId===route.routeId);
                 const result = {
                     time: route.bestTime,
                     distance: route.distance,
                     checkpoints: route.points,
-                    times: times,
+                    times: userData.timesPer100,
                     name: route.name,
+                    date: userData.date,
                     isNew: false,
                 }             
                 return res.json(result);  
@@ -193,10 +194,9 @@ exports.postAnotherRun = function(req, res) {
                     route.bestTime = req.body.time;
                     route.bestUser = req.params.username;
                     route.save(function(err){
-                        if(err){
+                        if(err)
                             return res.json({success: false, message: 'Cant update route'});
                         return res.json({success: true, message: 'New routes record!'});
-                        }
                     })
                 }
                 return res.json({success: true, message: 'New run added'});

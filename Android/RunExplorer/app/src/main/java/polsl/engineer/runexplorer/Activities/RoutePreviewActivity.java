@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,17 +20,27 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import polsl.engineer.runexplorer.API.Data.Message;
+import polsl.engineer.runexplorer.API.Data.NewRunData;
 import polsl.engineer.runexplorer.API.Data.RouteData;
+import polsl.engineer.runexplorer.API.Data.SetPathAction;
+import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
+import polsl.engineer.runexplorer.API.RetrofitClient;
+import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Layout.TimeAdapter;
 import polsl.engineer.runexplorer.Utility.TimeConverter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -42,9 +53,12 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public Button saveButton;
     @BindView(R.id.challenge_route_btn)
     public Button challengeButton;
+    @BindView(R.id.back_btn)
+    public Button backButton;
     private RouteData routeData;
     private Class parentActivity;
     private Gson gson = new Gson();
+    private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
 
     @Override
     public void onBackPressed(){
@@ -72,6 +86,7 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_preview);
         ButterKnife.bind(this);
+        Hawk.init(this).build();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.preview_map);
@@ -124,17 +139,39 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
 
     @OnClick(R.id.save_route_btn)
     public void saveRoute(View view){
-        if(routeData.isNew()){
+        if(false){//routeData.isNew()){
             //TODO: addroute
         }else{
-            //TODO: addrun
+            String token = Hawk.get(Connection.tokenKey);
+            String username = Hawk.get(Connection.username);
+            Call<Message> addRunCallback = endpoints.saveRun(token, username, new NewRunData(routeData));
+            addRunCallback.enqueue(new Callback<Message>() {
+                @Override
+                public void onResponse(Call<Message> call, Response<Message> response) {
+                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    saveButton.setVisibility(View.INVISIBLE);
+                    backButton.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onFailure(Call<Message> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Cant save run", Toast.LENGTH_LONG).show();
+                }
+            });
         }
+    }
+
+    @OnClick(R.id.back_btn)
+    public void backToMain(View view){
+        Intent intent = new Intent(RoutePreviewActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.challenge_route_btn)
     public void startRoute(View view){
         Intent intent = new Intent(RoutePreviewActivity.this, RunActivity.class);
-        String json = gson.toJson(routeData.getCheckpoints());
+        SetPathAction action = new SetPathAction("start", routeData.getCheckpoints());
+        String json = gson.toJson(action);
         intent.putExtra(Extra.pathJSON, json);
         intent.putExtra(Extra.ID, routeData.getId());
         startActivity(intent);

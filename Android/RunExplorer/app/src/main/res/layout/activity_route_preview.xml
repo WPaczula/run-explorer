@@ -77,6 +77,13 @@
             android:text="@string/save_route_data"
             android:visibility="gone"
             android:layout_gravity="center" />
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back_btn"
+            android:visibility="gone"
+            android:layout_gravity="center" />
     </LinearLayout>
 </LinearLayout>
 

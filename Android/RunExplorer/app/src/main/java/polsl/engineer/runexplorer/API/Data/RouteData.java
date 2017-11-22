@@ -17,17 +17,27 @@ public class RouteData {
     private String id;
     private String name;
     private int distance;
+    private long date;
     private int time;
     private List<Integer> times;
     private List<Checkpoint> checkpoints;
 
-    public RouteData(TizenRouteData tizenRouteData) {
+    public RouteData(TizenRouteData tizenRouteData, long date) {
         this.isNew = tizenRouteData.isShouldBeSavedAsNew();
         this.name = "New run";
         this.distance = tizenRouteData.getDistance();
         this.time = tizenRouteData.getTime();
         this.times = tizenRouteData.getTimes();
+        this.date = date;
         this.checkpoints = tizenRouteData.getCheckpoints();
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public boolean isNew() {

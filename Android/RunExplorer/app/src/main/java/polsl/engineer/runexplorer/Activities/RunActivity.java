@@ -12,8 +12,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import polsl.engineer.runexplorer.API.Data.Checkpoint;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.Config.Extra;
@@ -24,15 +28,7 @@ import polsl.engineer.runexplorer.Tizen.SAAService.DataRecieveListener;
 
 public class RunActivity extends AppCompatActivity implements DataRecieveListener {
 
-    private String JSON = "{\"type\":\"start\"," +
-            "\"route\": [{\"lat\": 50.249930, \"lng\": 18.565919}," +
-            "{\"lat\": 50.250253, \"lng\": 18.566552}," +
-            "{\"lat\": 50.250415, \"lng\": 18.566706}," +
-            "{\"lat\": 50.250747, \"lng\": 18.566952}," +
-            "{\"lat\": 50.250722, \"lng\": 18.567749}," +
-            "{\"lat\": 50.250677, \"lng\": 18.568315}]}";
-    private String newRouteJSON = "{\"type\":\"start\"," +
-            "\"route\": []}";
+    private String pathJSON;
     private String stopJSON = "{\"type\":\"stop\"}";
     private boolean isBound = false;
     private ConsumerService consumerService = null;
@@ -45,8 +41,8 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         setContentView(R.layout.activity_run);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        ID = intent.getStringExtra("ID");
-
+        ID = intent.getStringExtra(Extra.ID);
+        pathJSON = intent.getStringExtra(Extra.pathJSON);
         isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -76,7 +72,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
 
     @OnClick(R.id.start_btn)
     public void start(View view){
-        if(isBound && consumerService.sendData(ID == null || ID.equals("") ? newRouteJSON : JSON)){
+        if(isBound && consumerService.sendData(pathJSON)){
             consumerService.addOnDataRecieveListener(this);
             Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();
         }else
@@ -90,7 +86,8 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         if(!data.equals("Route set")){
             Gson gson = new Gson();
             TizenRouteData tizenRouteData = gson.fromJson(data, TizenRouteData.class);
-            RouteData routeData = new RouteData(tizenRouteData);
+            RouteData routeData = new RouteData(tizenRouteData, Calendar.getInstance().getTime().getTime());
+            routeData.setId(ID);
             Intent intent = new Intent(RunActivity.this, RoutePreviewActivity.class);
             intent.putExtra(Extra.routeJSON, gson.toJson(routeData));
             intent.putExtra(Extra.parent, Extra.newRoute);

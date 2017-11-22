@@ -2,6 +2,7 @@ package polsl.engineer.runexplorer.API;
 
 import polsl.engineer.runexplorer.API.Data.JWT;
 import polsl.engineer.runexplorer.API.Data.Message;
+import polsl.engineer.runexplorer.API.Data.NewRunData;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.API.Data.User;
 import polsl.engineer.runexplorer.API.Data.UserRoutes;
@@ -37,4 +38,10 @@ public interface RESTServiceEndpoints {
     @GET("/Routes")
     Call<RouteData> getRoute(@Header("Authorization") String token,
             @Query("routeId") String id);
+
+    @Headers("content-type: application/json")
+    @POST("/Routes/{username}")
+    Call<Message> saveRun(@Header("Authorization") String token,
+                          @Path("username") String username,
+                          @Body NewRunData data);
 }

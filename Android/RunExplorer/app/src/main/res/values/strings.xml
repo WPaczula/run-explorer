@@ -28,4 +28,5 @@
     <string name="time_title">time:</string>
     <string name="distance_title">distance:</string>
     <string name="save_route_data">Save</string>
+    <string name="back_btn">back</string>
 </resources>

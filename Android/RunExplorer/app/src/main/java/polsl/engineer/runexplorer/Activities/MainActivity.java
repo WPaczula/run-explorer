@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import polsl.engineer.runexplorer.API.Data.Checkpoint;
+import polsl.engineer.runexplorer.API.Data.SetPathAction;
+import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void newRoute(View view){
         Intent intent = new Intent(MainActivity.this, RunActivity.class);
-        intent.putExtra("ID", "");
+        intent.putExtra(Extra.ID, "");
+        Gson gson = new Gson();
+        String json = gson.toJson(new SetPathAction("start", new ArrayList<Checkpoint>()));
+        intent.putExtra(Extra.pathJSON, json);
         startActivity(intent);
     }
 
