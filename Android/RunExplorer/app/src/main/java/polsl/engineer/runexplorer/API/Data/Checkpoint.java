@@ -1,21 +1,12 @@
-package polsl.engineer.runexplorer.Tizen.Data;
+package polsl.engineer.runexplorer.API.Data;
 
 /**
  * Created by Wojtek on 21.11.2017.
  */
 
-public class TizenCheckpoint {
-    private int time;
+public class Checkpoint {
     private double lat;
     private double lng;
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
 
     public double getLat() {
         return lat;

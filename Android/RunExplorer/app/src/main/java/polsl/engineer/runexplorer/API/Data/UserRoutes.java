@@ -9,7 +9,7 @@ import java.util.List;
 public class UserRoutes {
 
     private int totalCount;
-    private List<RouteBasicData> routes;
+    private List<RouteTitleData> routes;
 
     public int getTotalCount() {
         return totalCount;
@@ -19,11 +19,11 @@ public class UserRoutes {
         this.totalCount = totalCount;
     }
 
-    public List<RouteBasicData> getRoutes() {
+    public List<RouteTitleData> getRoutes() {
         return routes;
     }
 
-    public void setRoutes(List<RouteBasicData> routes) {
+    public void setRoutes(List<RouteTitleData> routes) {
         this.routes = routes;
     }
 

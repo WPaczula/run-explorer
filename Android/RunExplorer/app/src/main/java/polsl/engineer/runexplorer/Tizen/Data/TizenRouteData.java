@@ -2,22 +2,34 @@ package polsl.engineer.runexplorer.Tizen.Data;
 
 import java.util.List;
 
+import polsl.engineer.runexplorer.API.Data.Checkpoint;
+import polsl.engineer.runexplorer.API.Data.Time;
+
 /**
  * Created by Wojtek on 21.11.2017.
  */
 
 public class TizenRouteData {
-    private List<TizenCheckpoint> checkpointList;
+    private List<Checkpoint> checkpoints;
+    private List<Time> times;
     private int distance;
     private int time;
     private boolean shouldBeSavedAsNew;
 
-    public List<TizenCheckpoint> getCheckpointList() {
-        return checkpointList;
+    public List<Time> getTimes() {
+        return times;
     }
 
-    public void setCheckpointList(List<TizenCheckpoint> checkpointList) {
-        this.checkpointList = checkpointList;
+    public void setTimes(List<Time> times) {
+        this.times = times;
+    }
+
+    public List<Checkpoint> getCheckpoints() {
+        return checkpoints;
+    }
+
+    public void setCheckpoints(List<Checkpoint> checkpoints) {
+        this.checkpoints = checkpoints;
     }
 
     public int getDistance() {

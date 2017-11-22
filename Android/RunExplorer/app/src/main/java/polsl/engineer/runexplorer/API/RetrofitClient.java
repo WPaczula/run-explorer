@@ -1,6 +1,6 @@
 package polsl.engineer.runexplorer.API;
 
-import polsl.engineer.runexplorer.Config.API;
+import polsl.engineer.runexplorer.Config.Connection;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -17,7 +17,7 @@ public class RetrofitClient {
 //                .addInterceptor(interceptor).build();
 
         return new Retrofit.Builder()
-                .baseUrl(API.Url)
+                .baseUrl(Connection.Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

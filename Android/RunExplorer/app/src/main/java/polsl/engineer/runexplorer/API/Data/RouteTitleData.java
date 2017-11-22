@@ -4,7 +4,7 @@ package polsl.engineer.runexplorer.API.Data;
  * Created by Wojtek on 21.11.2017.
  */
 
-public class RouteBasicData {
+public class RouteTitleData {
 
     private String id;
     private long date;

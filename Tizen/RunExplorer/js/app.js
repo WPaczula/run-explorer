@@ -50,6 +50,7 @@
 					heartCallbackInterval: 3000,
 					gpsMaxAge: 3000,
 					checkpoints: [],
+					times: [],
 					time: 0,
 				},
 				map:{
@@ -120,6 +121,8 @@
         initUI.call(myapp);
     	initSensors.bind(myapp, initMap.bind(myapp))();
     	initControls.call(myapp);
+    	
+    	tizen.power.request('CPU', 'CPU_AWAKE');
     	
     	window.addEventListener('rotarydetent', myapp.navigation.rotarydetentHandler);
         window.addEventListener('tizenhwkey', function (ev) {

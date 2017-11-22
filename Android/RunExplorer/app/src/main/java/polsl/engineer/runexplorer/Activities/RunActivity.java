@@ -14,6 +14,8 @@ import com.google.gson.Gson;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import polsl.engineer.runexplorer.API.Data.RouteData;
+import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Tizen.Data.TizenRouteData;
 import polsl.engineer.runexplorer.Tizen.SAAService.ConsumerService;
@@ -34,6 +36,8 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
     private boolean isBound = false;
     private ConsumerService consumerService = null;
     private String ID;
+    private TizenRouteData routeData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +75,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
 
     @OnClick(R.id.start_btn)
     public void start(View view){
-        if(isBound && consumerService.sendData(ID.equals("") ? newRouteJSON : JSON)){
+        if(isBound && consumerService.sendData(ID == null ? newRouteJSON : JSON)){
             consumerService.addOnDataRecieveListener(this);
             Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();
         }else
@@ -80,15 +84,15 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         }
     }
 
-    @OnClick(R.id.reconnect_btn)
-    public void reconnect(View view){
-        isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
-    }
-
     @Override
     public void OnRecieve(String data) {
-        Gson gson = new Gson();
-        TizenRouteData routeData = gson.fromJson(data, TizenRouteData.class);
-        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
+        if(!data.equals("Route set")){
+            Gson gson = new Gson();
+            TizenRouteData tizenRouteData = gson.fromJson(data, TizenRouteData.class);
+            RouteData routeData = new RouteData(tizenRouteData);
+            Intent intent = new Intent(RunActivity.this, RoutePreviewActivity.class);
+            intent.putExtra(Connection.routeJSON, gson.toJson(routeData));
+            startActivity(intent);
+        }
     }
 }

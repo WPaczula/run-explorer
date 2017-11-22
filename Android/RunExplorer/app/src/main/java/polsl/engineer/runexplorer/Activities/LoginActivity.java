@@ -3,15 +3,11 @@ package polsl.engineer.runexplorer.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +16,7 @@ import polsl.engineer.runexplorer.API.Data.JWT;
 import polsl.engineer.runexplorer.API.Data.User;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
-import polsl.engineer.runexplorer.Config.API;
+import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             authenticateCall.enqueue(new Callback<JWT>() {
                 @Override
                 public void onResponse(Call<JWT> call, Response<JWT> response) {
-                    Hawk.put(API.tokenKey, response.body().getToken());
-                    Hawk.put(API.username, username);
+                    Hawk.put(Connection.tokenKey, response.body().getToken());
+                    Hawk.put(Connection.username, username);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -77,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         Hawk.init(this).build();
-        if(Hawk.contains(API.tokenKey)){
+        if(Hawk.contains(Connection.tokenKey)){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }

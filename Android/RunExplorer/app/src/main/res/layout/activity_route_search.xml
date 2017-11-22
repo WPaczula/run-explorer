@@ -59,7 +59,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:inputType="numberDecimal"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -73,8 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search"
-            android:layout_gravity="center"
-            android:onClick="startRoute"/>
+            android:layout_gravity="center"/>
     </LinearLayout>
 </LinearLayout>
 

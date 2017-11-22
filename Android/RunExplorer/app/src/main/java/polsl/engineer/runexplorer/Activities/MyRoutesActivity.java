@@ -8,19 +8,16 @@ import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import polsl.engineer.runexplorer.API.Data.RouteBasicData;
+import polsl.engineer.runexplorer.API.Data.RouteTitleData;
 import polsl.engineer.runexplorer.API.Data.UserRoutes;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
-import polsl.engineer.runexplorer.Config.API;
+import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Layout.RouteAdapter;
 import retrofit2.Call;
@@ -35,7 +32,7 @@ public class MyRoutesActivity extends AppCompatActivity{
     private int totalRoutesCount=0;
     private String token;
     private String username;
-    private List<RouteBasicData> routeList = new ArrayList<>();
+    private List<RouteTitleData> routeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +41,8 @@ public class MyRoutesActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         Hawk.init(this).build();
 
-        token = Hawk.get(API.tokenKey);
-        username = Hawk.get(API.username);
+        token = Hawk.get(Connection.tokenKey);
+        username = Hawk.get(Connection.username);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);

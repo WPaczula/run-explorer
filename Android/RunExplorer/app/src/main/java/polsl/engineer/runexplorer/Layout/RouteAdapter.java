@@ -13,7 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import polsl.engineer.runexplorer.API.Data.RouteBasicData;
+import polsl.engineer.runexplorer.API.Data.RouteTitleData;
 import polsl.engineer.runexplorer.Activities.RoutePreviewActivity;
 import polsl.engineer.runexplorer.R;
 
@@ -22,13 +22,13 @@ import polsl.engineer.runexplorer.R;
  */
 
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
-    public RouteAdapter(Context context, List<RouteBasicData> routeData) {
+    public RouteAdapter(Context context, List<RouteTitleData> routeData) {
         this.context = context;
         this.routeData = routeData;
     }
 
     private Context context;
-    private List<RouteBasicData> routeData;
+    private List<RouteTitleData> routeData;
     private DateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy");
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -48,7 +48,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RoutePreviewActivity.class);
-                RouteBasicData chosenRoute = routeData.get(position);
+                RouteTitleData chosenRoute = routeData.get(position);
                 intent.putExtra("id", chosenRoute.getId());
                 intent.putExtra("distance", chosenRoute.getDistance());
                 intent.putExtra("time", chosenRoute.getSeconds());
