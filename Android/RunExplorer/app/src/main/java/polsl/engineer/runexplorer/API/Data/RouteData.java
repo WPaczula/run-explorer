@@ -17,7 +17,7 @@ public class RouteData {
     private String name;
     private int distance;
     private int time;
-    private List<Time> times;
+    private List<Integer> times;
     private List<Checkpoint> checkpoints;
 
     public RouteData(TizenRouteData tizenRouteData) {
@@ -62,13 +62,10 @@ public class RouteData {
     }
 
     public List<Integer> getTimes() {
-        List<Integer> timesAsInt = new ArrayList<>();
-        for(Time time : times){
-            timesAsInt.add(time.getTime());
-        }
+        return times;
     }
 
-    public void setTimes(List<Time> times) {
+    public void setTimes(List<Integer> times) {
         this.times = times;
     }
 

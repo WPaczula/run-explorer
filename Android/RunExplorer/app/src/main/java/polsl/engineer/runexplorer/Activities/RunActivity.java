@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.Config.Connection;
+import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Tizen.Data.TizenRouteData;
 import polsl.engineer.runexplorer.Tizen.SAAService.ConsumerService;
@@ -75,7 +76,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
 
     @OnClick(R.id.start_btn)
     public void start(View view){
-        if(isBound && consumerService.sendData(ID == null ? newRouteJSON : JSON)){
+        if(isBound && consumerService.sendData(ID == null || ID.equals("") ? newRouteJSON : JSON)){
             consumerService.addOnDataRecieveListener(this);
             Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();
         }else
@@ -91,7 +92,8 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
             TizenRouteData tizenRouteData = gson.fromJson(data, TizenRouteData.class);
             RouteData routeData = new RouteData(tizenRouteData);
             Intent intent = new Intent(RunActivity.this, RoutePreviewActivity.class);
-            intent.putExtra(Connection.routeJSON, gson.toJson(routeData));
+            intent.putExtra(Extra.routeJSON, gson.toJson(routeData));
+            intent.putExtra(Extra.parent, Extra.newRoute);
             startActivity(intent);
         }
     }

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.Config.Connection;
+import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.Layout.TimeAdapter;
 import polsl.engineer.runexplorer.Utility.TimeConverter;
@@ -38,15 +40,22 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     @BindView(R.id.time_value_tv)
     public TextView timeValue;
     private RouteData routeData;
+    private Class parentActivity;
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(RoutePreviewActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
     @SuppressLint("SetTextI18n")
-    private void initUI(){
-        distanceValue.setText(String.valueOf(routeData.getDistance()/1000) + "km");
+    private void initUI() {
+        distanceValue.setText(String.valueOf(routeData.getDistance() / 1000) + "km");
         timeValue.setText(TimeConverter.convertToTimeString(routeData.getTime()));
         RecyclerView timesRecyclerView = (RecyclerView) findViewById(R.id.times_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         timesRecyclerView.setLayoutManager(linearLayoutManager);
-
+        setTitle(routeData.getName());
         TimeAdapter adapter = new TimeAdapter(this, routeData.getTimes());
         timesRecyclerView.setAdapter(adapter);
     }
@@ -62,7 +71,8 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
-        String json = intent.getStringExtra(Connection.routeJSON);
+        String json = intent.getStringExtra(Extra.routeJSON);
+        parentActivity = Extra.activities.get(intent.getStringExtra(Extra.parent));
         Gson gson = new Gson();
         routeData = gson.fromJson(json, RouteData.class);
 

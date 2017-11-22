@@ -3,7 +3,6 @@ package polsl.engineer.runexplorer.Tizen.Data;
 import java.util.List;
 
 import polsl.engineer.runexplorer.API.Data.Checkpoint;
-import polsl.engineer.runexplorer.API.Data.Time;
 
 /**
  * Created by Wojtek on 21.11.2017.
@@ -11,16 +10,16 @@ import polsl.engineer.runexplorer.API.Data.Time;
 
 public class TizenRouteData {
     private List<Checkpoint> checkpoints;
-    private List<Time> times;
+    private List<Integer> times;
     private int distance;
     private int time;
     private boolean shouldBeSavedAsNew;
 
-    public List<Time> getTimes() {
+    public List<Integer> getTimes() {
         return times;
     }
 
-    public void setTimes(List<Time> times) {
+    public void setTimes(List<Integer> times) {
         this.times = times;
     }
 
