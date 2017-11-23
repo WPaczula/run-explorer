@@ -143,13 +143,13 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public void saveRoute(View view){
         String token = Hawk.get(Connection.tokenKey);
         String username = Hawk.get(Connection.username);
-        if(false){//routeData.isNew()){
+        if(true){//routeData.isNew()){
             Call<Message> addRouteCallback = endpoints.saveRoute(token, new NewRouteData(routeData, Calendar.getInstance().getTime().getTime()));
             addRouteCallback.enqueue(new Callback<Message>() {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
                     Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    saveButton.setVisibility(View.INVISIBLE);
+                    saveButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.VISIBLE);
                 }
 
@@ -164,7 +164,7 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
                     Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    saveButton.setVisibility(View.INVISIBLE);
+                    saveButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.VISIBLE);
                 }
 

@@ -25,6 +25,10 @@ var RouteSchema = new Schema({
         type: String,
         required: true,
     },
+    recordDate: {
+        type: Number,
+        required: true,
+    },
     distance: {
         type: Number,
         required: true,

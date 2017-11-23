@@ -7,6 +7,8 @@ var mongoose = require('mongoose'),
     config = require('../../config/database'),
     generateId = mongoose.Types.ObjectId;
 
+const max = 5;    
+
 exports.signUp = function(req, res) {
     if(!req.body.username || !req.body.password){
         return res.json({success: false, message: 'Please pass name and password.'});
@@ -64,6 +66,7 @@ exports.addRoute = function(req, res) {
                     name: req.body.name,
                     bestTime: req.body.time,
                     bestUser: user.username,
+                    recordDate: req.body.date,
                     distance: req.body.distance,
                 });
                 newRoute.save(function(err){
@@ -157,7 +160,6 @@ exports.getUsersRoutes = function(req, res) {
             if(routes.length === 0)
                 return res.json({routes: []});
             let count = 0;
-            const max = 5;
             userRoutesData.slice(skipNumber, skipNumber+max).forEach(usersRoute => {
                 const foundRoute = routes.find(function(route) {return route.routeId === usersRoute.routeId});                
                     routesData.push({
@@ -193,6 +195,7 @@ exports.postAnotherRun = function(req, res) {
                 if(route.bestTime > req.body.time){
                     route.bestTime = req.body.time;
                     route.bestUser = req.params.username;
+                    route.recordDate = req.body.date;
                     route.save(function(err){
                         if(err)
                             return res.json({success: false, message: 'Cant update route'});
@@ -206,6 +209,9 @@ exports.postAnotherRun = function(req, res) {
 }
 
 exports.search = function(req, res) {
+    let skipNumber = Number.parseInt(req.query.skip);
+    if(skipNumber === undefined)
+        skipNumber = 0;
     const searchCryteria = {
         searchedDistance: {max: parseInt(req.query.maxDistance), min: parseInt(req.query.minDistance)},
         searchedUser: {username: req.query.username},
@@ -215,11 +221,11 @@ exports.search = function(req, res) {
     const searchMechanisms = {
         searchedDistance : function(routes, distance) {
             return new Promise((resolve, reject) => {
-                if(routes.length !== 0)
-                    resolve(
-                        routes.filter(r => 
-                            r.distance < distance.max && r.distance > distance.min )
-                    );
+                if(routes.length !== 0){
+                    const result = routes.filter(r => 
+                        r.distance < distance.max && r.distance > distance.min );
+                    resolve(result);
+                }
                 else
                     reject([])
             })
@@ -230,10 +236,17 @@ exports.search = function(req, res) {
                     reject([])
                 else{
                     User.findOne({username: user.username}, function(err, user){
-                        if(err)
-                            reject([])
-                        const routeIds = user.usersRoutes.map(r => r.routeId);
-                        resolve(routes.filter(r => routeIds.indexOf(r) > -1));
+                        if(err){
+                            reject([])                            
+                        }
+                        if(user === null){
+                            resolve([])                            
+                        }
+                        else {
+                            const routeIds = user.usersRoutes.map(r => r.routeId);
+                            const result = routes.filter(r => routeIds.indexOf(r.routeId) > -1);
+                            resolve(result);                            
+                        }
                     })
                 }
             })
@@ -242,13 +255,13 @@ exports.search = function(req, res) {
         searchedCircle: function(routes, searchedCircle){
             return new Promise((resolve, reject) => {
                 if(routes.length !== 0){
-                    resolve(
-                        routes.filter(r => {
-                        const start = r.points[0];
-                        return (start.lat - searchedCircle.lat)*(start.lat - searchedCircle.lat)
-                            + (start.lng - searchedCircle.lng)*(start.lng - searchedCircle.lng) 
-                            < searchedCircle.radius*searchedCircle.radius; 
-                    }));
+                    const result = routes.filter(r => {
+                    const start = r.points[0];
+                    return (start.lat - searchedCircle.lat)*(start.lat - searchedCircle.lat)
+                        + (start.lng - searchedCircle.lng)*(start.lng - searchedCircle.lng) 
+                        < searchedCircle.radius*searchedCircle.radius; 
+                    });
+                    resolve(result);
                 }else{
                     reject([]);
                 }
@@ -259,19 +272,28 @@ exports.search = function(req, res) {
     Route.find({}, (err, routes) => {
         if(err)
             throw err;
+        let i = Object.keys(searchCryteria).length;
         Object.keys(searchCryteria).forEach(k => {
             filterWith(searchCryteria[k], searchMechanisms[k], routes)
                 .then((filteredResult) => {
                     routes = routes.filter(r => filteredResult.indexOf(r) > -1);
+                    i--;
+                    if(i === 0){
+                        const results = routes.slice(skipNumber, skipNumber+max).map(r => 
+                            ({
+                                id: r.routeId,
+                                name: r.name,
+                                seconds: r.bestTime,
+                                distance: r.distance,
+                                date: r.recordDate,
+                            }));
+                        return res.json(results);
+                    }
                 })
-        })
-        const results = routes.map(r => 
-        ({
-            id: r.routeId,
-            time: r.bestTime,
-            distance: r.distance,
-        }))
-        return res.json({success: true, routes: results});
+                .catch(() => {
+                    return res.json([]);
+                })
+        });
     })
 }
 

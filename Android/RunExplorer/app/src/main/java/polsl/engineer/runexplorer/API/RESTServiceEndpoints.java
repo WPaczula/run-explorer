@@ -50,4 +50,8 @@ public interface RESTServiceEndpoints {
     @POST("/Routes")
     Call<Message> saveRoute(@Header("Authorization") String token,
                             @Body NewRouteData data);
+
+    @Headers("content-type: application/json");
+    @GET("/Search")
+    Call<>
 }
