@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import polsl.engineer.runexplorer.API.Data.RouteTitleData;
-import polsl.engineer.runexplorer.API.Data.UserRoutes;
+import polsl.engineer.runexplorer.API.Data.RouteListData;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
 import polsl.engineer.runexplorer.Config.Connection;
@@ -68,17 +68,17 @@ public class MyRoutesActivity extends AppCompatActivity{
     }
 
     private void getRoutes(final RouteAdapter adapter, int skip){
-        Call<UserRoutes> getUserRoutesCall = endpoints.getUsersRoutes(this.token, this.username, skip);
-        getUserRoutesCall.enqueue(new Callback<UserRoutes>() {
+        Call<RouteListData> getUserRoutesCall = endpoints.getUsersRoutes(this.token, this.username, skip);
+        getUserRoutesCall.enqueue(new Callback<RouteListData>() {
             @Override
-            public void onResponse(Call<UserRoutes> call, Response<UserRoutes> response) {
+            public void onResponse(Call<RouteListData> call, Response<RouteListData> response) {
                 totalRoutesCount = response.body().getTotalCount();
                 routeList.addAll(response.body().getRoutes());
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<UserRoutes> call, Throwable t) {
+            public void onFailure(Call<RouteListData> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Cant load routes", Toast.LENGTH_LONG).show();
             }
         });

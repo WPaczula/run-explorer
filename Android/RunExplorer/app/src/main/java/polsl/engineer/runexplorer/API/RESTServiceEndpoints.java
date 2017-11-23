@@ -8,7 +8,7 @@ import polsl.engineer.runexplorer.API.Data.NewRunData;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.API.Data.RouteTitleData;
 import polsl.engineer.runexplorer.API.Data.User;
-import polsl.engineer.runexplorer.API.Data.UserRoutes;
+import polsl.engineer.runexplorer.API.Data.RouteListData;
 import polsl.engineer.runexplorer.API.Data.NewRouteData;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -34,9 +34,9 @@ public interface RESTServiceEndpoints {
 
     @Headers("content-type: application/json")
     @GET("/Routes/{username}")
-    Call<UserRoutes> getUsersRoutes(@Header("Authorization") String token,
-                                    @Path("username") String username,
-                                    @Query("skip") int skip);
+    Call<RouteListData> getUsersRoutes(@Header("Authorization") String token,
+                                       @Path("username") String username,
+                                       @Query("skip") int skip);
 
     @Headers("content-type: application/json")
     @GET("/Routes")
@@ -56,12 +56,12 @@ public interface RESTServiceEndpoints {
 
     @Headers("content-type: application/json")
     @GET("/Search")
-    Call<List<RouteTitleData>> search(@Header("Authorization") String token,
-                                      @Query("maxDistance") int maxDistance,
-                                      @Query("minDistance") int minDistance,
+    Call<RouteListData> search(@Header("Authorization") String token,
+                                      @Query("maxDistance") Integer maxDistance,
+                                      @Query("minDistance") Integer minDistance,
                                       @Query("username") String username,
-                                      @Query("lat") double lat,
-                                      @Query("lng") double lng,
-                                      @Query("radius") int radius,
-                                      @Query("skip") int skip);
+                                      @Query("lat") Double lat,
+                                      @Query("lng") Double lng,
+                                      @Query("radius") Integer radius,
+                                      @Query("skip") Integer skip);
 }

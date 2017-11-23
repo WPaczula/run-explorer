@@ -161,7 +161,7 @@ exports.getUsersRoutes = function(req, res) {
                 return res.json({routes: []});
             let count = 0;
             userRoutesData.slice(skipNumber, skipNumber+max).forEach(usersRoute => {
-                const foundRoute = routes.find(function(route) {return route.routeId === usersRoute.routeId});                
+                const foundRoute = routes.find(function(route) {return route.routeId  === usersRoute.routeId});                
                     routesData.push({
                         id: foundRoute.routeId,
                         date: usersRoute.date,
@@ -214,9 +214,20 @@ exports.search = function(req, res) {
     if(skipNumber === undefined)
         skipNumber = 0;
     const searchCryteria = {
-        searchedDistance: {max: parseInt(req.query.maxDistance), min: parseInt(req.query.minDistance)},
+        searchedDistance: !req.query.maxDistance && !req.query.minDistance 
+        ? {
+            max: undefined,
+            min: undefined,
+        }
+        : {
+            max: !req.query.maxDistance ? Number.MAX_SAFE_INTEGER : Number.parseInt(req.query.maxDistance),
+            min: !req.query.minDistance ? 0 : Number.parseInt(req.query.minDistance)
+        },
         searchedUser: {username: req.query.username},
-        searchedCircle: {lat: parseFloat(req.query.lat), lng: parseFloat(req.query.lng), radius: parseFloat(req.query.radius)},
+        searchedCircle: {
+            lat: !req.query.lat ? undefined : parseFloat(req.query.lat), 
+            lng: !req.query.lng ? undefined : parseFloat(req.query.lng), 
+            radius: !req.query.radius ? undefined : parseFloat(req.query.radius)},
     }
 
     const searchMechanisms = {
@@ -283,12 +294,12 @@ exports.search = function(req, res) {
                         const results = routes.slice(skipNumber, skipNumber+max).map(r => 
                             ({
                                 id: r.routeId,
-                                name: r.name,
+                                name: r.name + ' - ' + r.bestUser,
                                 seconds: r.bestTime,
                                 distance: r.distance,
                                 date: r.recordDate,
                             }));
-                        return res.json(results);
+                        return res.json({totalCount: routes.length, routes: results});
                     }
                 })
                 .catch(() => {
@@ -299,7 +310,7 @@ exports.search = function(req, res) {
 }
 
 async function filterWith(searchCryterium, searchMechanism, routes){
-    let result = [];
+    let result = routes;
     if(isDefined(searchCryterium))
         result = await searchMechanism(routes, searchCryterium);
     return result;

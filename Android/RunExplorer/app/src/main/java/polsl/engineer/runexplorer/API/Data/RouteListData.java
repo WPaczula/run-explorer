@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Wojtek on 21.11.2017.
  */
 
-public class UserRoutes {
+public class RouteListData {
 
     private int totalCount;
     private List<RouteTitleData> routes;

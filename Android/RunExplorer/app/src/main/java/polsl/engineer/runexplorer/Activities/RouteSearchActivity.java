@@ -1,12 +1,15 @@
 package polsl.engineer.runexplorer.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -27,6 +30,8 @@ import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 
 public class RouteSearchActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, SeekBar.OnSeekBarChangeListener {
@@ -36,6 +41,12 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
     public SeekBar radiusBar;
     @BindView(R.id.radius_value_tv)
     public TextView radiusValue;
+    @BindView(R.id.distance_min_value_et)
+    public EditText minDistanceValue;
+    @BindView(R.id.distance_max_value_et)
+    public EditText maxDistanceValue;
+    @BindView(R.id.username_et)
+    public EditText usernameValue;
     private Marker centerMarker;
     private Circle searchCircle;
 
@@ -103,6 +114,35 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
             searchCircle.setRadius(progress*100);
             radiusValue.setText(progress/10f + "km");
         }
+    }
+
+    @OnClick(R.id.route_search_btn)
+    public void search(View view){
+        Intent intent = new Intent(RouteSearchActivity.this, SearchResultActivity.class);
+        Integer maxDistance = null;
+        Integer minDistance = null;
+        Integer radius = null;
+        Double lat = null;
+        Double lng = null;
+        String username = null;
+        if(!maxDistanceValue.getText().toString().isEmpty())
+            maxDistance = Integer.valueOf(maxDistanceValue.getText().toString());
+        if(!minDistanceValue.getText().toString().isEmpty())
+            minDistance = Integer.valueOf(minDistanceValue.getText().toString());
+        if(centerMarker != null){
+            lat = centerMarker.getPosition().latitude;
+            lng = centerMarker.getPosition().longitude;
+            radius = radiusBar.getProgress();
+        }
+        if(!usernameValue.getText().toString().isEmpty())
+            username = usernameValue.getText().toString();
+        intent.putExtra(Extra.maxDistance, maxDistance);
+        intent.putExtra(Extra.minDistance, minDistance);
+        intent.putExtra(Extra.radius, radius);
+        intent.putExtra(Extra.lat, lat);
+        intent.putExtra(Extra.lng, lng);
+        intent.putExtra(Extra.username, username);
+        //startActivity(intent);
     }
 
     @Override
