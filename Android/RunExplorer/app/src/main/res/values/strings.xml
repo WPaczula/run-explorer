@@ -12,7 +12,7 @@
     <string name="choose_route">GO</string>
     <string name="timePer100">Time:</string>
     <string name="title_activity_route_search">Map</string>
-    <string name="user">user</string>
+    <string name="user">By user</string>
     <string name="search">search</string>
     <string name="hint_username">username</string>
     <string name="hint_password">password</string>
@@ -29,4 +29,9 @@
     <string name="distance_title">distance:</string>
     <string name="save_route_data">Save</string>
     <string name="back_btn">back</string>
+    <string name="min">min</string>
+    <string name="max">max</string>
+    <string name="username_hint">username</string>
+    <string name="distance_search">By distance</string>
+    <string name="radius_tv">Radius:</string>
 </resources>

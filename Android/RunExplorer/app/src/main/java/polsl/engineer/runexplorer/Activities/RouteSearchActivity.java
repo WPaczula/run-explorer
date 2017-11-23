@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -22,6 +23,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import polsl.engineer.runexplorer.R;
@@ -31,6 +34,8 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
     private GoogleMap mMap;
     @BindView(R.id.radius_sb)
     public SeekBar radiusBar;
+    @BindView(R.id.radius_value_tv)
+    public TextView radiusValue;
     private Marker centerMarker;
     private Circle searchCircle;
 
@@ -43,6 +48,7 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        radiusValue.setText("0km");
         radiusBar.setOnSeekBarChangeListener(this);
         radiusBar.setMax(100);
         radiusBar.setProgress(5);
@@ -88,12 +94,15 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
             searchCircle.remove();
         centerMarker = mMap.addMarker(new MarkerOptions().position(latLng));
         searchCircle = mMap.addCircle(new CircleOptions().center(latLng).radius((double)radiusBar.getProgress()*100));
+        radiusValue.setText(radiusBar.getProgress()*0.1f + "km");
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if(centerMarker != null)
+        if(centerMarker != null){
             searchCircle.setRadius(progress*100);
+            radiusValue.setText(progress/10f + "km");
+        }
     }
 
     @Override

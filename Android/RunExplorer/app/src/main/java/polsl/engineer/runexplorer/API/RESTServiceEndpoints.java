@@ -1,9 +1,12 @@
 package polsl.engineer.runexplorer.API;
 
+import java.util.List;
+
 import polsl.engineer.runexplorer.API.Data.JWT;
 import polsl.engineer.runexplorer.API.Data.Message;
 import polsl.engineer.runexplorer.API.Data.NewRunData;
 import polsl.engineer.runexplorer.API.Data.RouteData;
+import polsl.engineer.runexplorer.API.Data.RouteTitleData;
 import polsl.engineer.runexplorer.API.Data.User;
 import polsl.engineer.runexplorer.API.Data.UserRoutes;
 import polsl.engineer.runexplorer.API.Data.NewRouteData;
@@ -51,7 +54,14 @@ public interface RESTServiceEndpoints {
     Call<Message> saveRoute(@Header("Authorization") String token,
                             @Body NewRouteData data);
 
-    @Headers("content-type: application/json");
+    @Headers("content-type: application/json")
     @GET("/Search")
-    Call<>
+    Call<List<RouteTitleData>> search(@Header("Authorization") String token,
+                                      @Query("maxDistance") int maxDistance,
+                                      @Query("minDistance") int minDistance,
+                                      @Query("username") String username,
+                                      @Query("lat") double lat,
+                                      @Query("lng") double lng,
+                                      @Query("radius") int radius,
+                                      @Query("skip") int skip);
 }

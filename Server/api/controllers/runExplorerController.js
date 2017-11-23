@@ -190,7 +190,7 @@ exports.postAnotherRun = function(req, res) {
             if(err)
                 return res.json({success: false, message: 'Cant add new run'});
             Route.findOne({routeId: req.body.routeId}, function(err, route){
-                if(err)
+                if(err || route === null)
                     return res.json({success: false, message: 'Cant find given route'});
                 if(route.bestTime > req.body.time){
                     route.bestTime = req.body.time;
@@ -201,8 +201,9 @@ exports.postAnotherRun = function(req, res) {
                             return res.json({success: false, message: 'Cant update route'});
                         return res.json({success: true, message: 'New routes record!'});
                     })
+                }else{
+                    return res.json({success: true, message: 'New run added'});                    
                 }
-                return res.json({success: true, message: 'New run added'});
             })
         })
     })
