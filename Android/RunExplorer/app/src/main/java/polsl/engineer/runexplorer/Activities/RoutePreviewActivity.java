@@ -22,12 +22,14 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import polsl.engineer.runexplorer.API.Data.Message;
+import polsl.engineer.runexplorer.API.Data.NewRouteData;
 import polsl.engineer.runexplorer.API.Data.NewRunData;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.API.Data.SetPathAction;
@@ -139,11 +141,24 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
 
     @OnClick(R.id.save_route_btn)
     public void saveRoute(View view){
+        String token = Hawk.get(Connection.tokenKey);
+        String username = Hawk.get(Connection.username);
         if(false){//routeData.isNew()){
-            //TODO: addroute
+            Call<Message> addRouteCallback = endpoints.saveRoute(token, new NewRouteData(routeData, Calendar.getInstance().getTime().getTime()));
+            addRouteCallback.enqueue(new Callback<Message>() {
+                @Override
+                public void onResponse(Call<Message> call, Response<Message> response) {
+                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    saveButton.setVisibility(View.INVISIBLE);
+                    backButton.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onFailure(Call<Message> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Cant save run", Toast.LENGTH_LONG).show();
+                }
+            });
         }else{
-            String token = Hawk.get(Connection.tokenKey);
-            String username = Hawk.get(Connection.username);
             Call<Message> addRunCallback = endpoints.saveRun(token, username, new NewRunData(routeData));
             addRunCallback.enqueue(new Callback<Message>() {
                 @Override

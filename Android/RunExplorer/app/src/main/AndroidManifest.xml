@@ -3,6 +3,7 @@
     package="polsl.engineer.runexplorer">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -12,10 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity"/>
+        <activity android:name=".Activities.MainActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".Activities.RoutePreviewActivity"
             android:label="@string/title_activity_route_preview">
@@ -23,16 +26,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="polsl.engineer.runexplorer.Activities.MainActivity" />
         </activity>
+
         <meta-data
             android:name="AccessoryServicesLocation"
             android:value="/res/xml/accessoryservices.xml" />
         <meta-data
             android:name="RunExplorerProvider"
             android:value="wgt" />
+
         <service
             android:name=".Tizen.SAAService.ConsumerService"
             android:enabled="true"
             android:exported="true" />
+
         <receiver android:name="com.samsung.android.sdk.accessory.RegisterUponInstallReceiver">
             <intent-filter>
                 <action android:name="com.samsung.accessory.action.REGISTER_AGENT" />
@@ -43,19 +49,21 @@
                 <action android:name="com.samsung.accessory.action.SERVICE_CONNECTION_REQUESTED" />
             </intent-filter>
         </receiver>
+
         <activity android:name=".Activities.RunActivity" />
         <activity android:name=".Activities.MyRoutesActivity" />
         <activity
             android:name=".Activities.RouteSearchActivity"
             android:label="@string/title_activity_route_search" />
         <activity android:name=".Activities.LoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegisterActivity"></activity>
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.SearchResultActivity"></activity>
     </application>
 
 </manifest>

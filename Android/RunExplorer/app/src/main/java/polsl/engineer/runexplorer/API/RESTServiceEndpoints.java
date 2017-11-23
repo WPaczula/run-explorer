@@ -6,6 +6,7 @@ import polsl.engineer.runexplorer.API.Data.NewRunData;
 import polsl.engineer.runexplorer.API.Data.RouteData;
 import polsl.engineer.runexplorer.API.Data.User;
 import polsl.engineer.runexplorer.API.Data.UserRoutes;
+import polsl.engineer.runexplorer.API.Data.NewRouteData;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -44,4 +45,9 @@ public interface RESTServiceEndpoints {
     Call<Message> saveRun(@Header("Authorization") String token,
                           @Path("username") String username,
                           @Body NewRunData data);
+
+    @Headers("content-type: application/json")
+    @POST("/Routes")
+    Call<Message> saveRoute(@Header("Authorization") String token,
+                            @Body NewRouteData data);
 }
