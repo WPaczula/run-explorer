@@ -58,18 +58,8 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     @BindView(R.id.back_btn)
     public Button backButton;
     private RouteData routeData;
-    private Class parentActivity;
     private Gson gson = new Gson();
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
-
-    @Override
-    public void onBackPressed(){
-        Intent intent = new Intent(RoutePreviewActivity.this, MainActivity.class);
-        if(parentActivity.equals(MyRoutesActivity.class)){
-            intent = new Intent(RoutePreviewActivity.this, MyRoutesActivity.class);
-        }
-        startActivity(intent);
-    }
 
     @SuppressLint("SetTextI18n")
     private void initUI() {
@@ -96,7 +86,6 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
 
         Intent intent = getIntent();
         String json = intent.getStringExtra(Extra.routeJSON);
-        parentActivity = Extra.activities.get(intent.getStringExtra(Extra.parent));
         routeData = gson.fromJson(json, RouteData.class);
 
         boolean isBeforeRun = intent.getBooleanExtra(Extra.isBeforeRun, true);

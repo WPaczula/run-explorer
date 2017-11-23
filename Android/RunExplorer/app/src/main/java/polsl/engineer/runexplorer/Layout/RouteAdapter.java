@@ -73,7 +73,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
                         data.setId(holder.id);
                         String jsonData = gson.toJson(data);
                         intent.putExtra(Extra.routeJSON, jsonData);
-                        intent.putExtra(Extra.parent, Extra.myRoutes);
                         intent.putExtra(Extra.isBeforeRun, true);
                         context.startActivity(intent);
                     }

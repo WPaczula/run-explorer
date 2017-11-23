@@ -25,12 +25,14 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import polsl.engineer.runexplorer.API.Data.SearchParams;
 import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
 
@@ -45,7 +47,7 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
     public EditText minDistanceValue;
     @BindView(R.id.distance_max_value_et)
     public EditText maxDistanceValue;
-    @BindView(R.id.username_et)
+    @BindView(R.id.user_et)
     public EditText usernameValue;
     private Marker centerMarker;
     private Circle searchCircle;
@@ -69,19 +71,31 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
-        if(!permissionsGranted())
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-        else{
+        if (!permissionsGranted())
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        else {
             showCurrentPosition();
         }
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.remove();
+                if(searchCircle != null)
+                    searchCircle.remove();
+                return true;
+            }
+        });
     }
 
     private boolean permissionsGranted() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
-    @SuppressWarnings("MissingPermission")
-    private void showCurrentPosition(){
+    private void showCurrentPosition() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Cant find you, did you forget to turn GPS on?", Toast.LENGTH_LONG).show();
+            return;
+        }
         mMap.setMyLocationEnabled(true);
     }
 
@@ -116,7 +130,7 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
-    @OnClick(R.id.route_search_btn)
+    @OnClick(R.id.search_route_btn)
     public void search(View view){
         Intent intent = new Intent(RouteSearchActivity.this, SearchResultActivity.class);
         Integer maxDistance = null;
@@ -136,13 +150,10 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
         }
         if(!usernameValue.getText().toString().isEmpty())
             username = usernameValue.getText().toString();
-        intent.putExtra(Extra.maxDistance, maxDistance);
-        intent.putExtra(Extra.minDistance, minDistance);
-        intent.putExtra(Extra.radius, radius);
-        intent.putExtra(Extra.lat, lat);
-        intent.putExtra(Extra.lng, lng);
-        intent.putExtra(Extra.username, username);
-        //startActivity(intent);
+        Gson gson = new Gson();
+        SearchParams params = new SearchParams(maxDistance, minDistance, radius, lat, lng, username);
+        intent.putExtra(Extra.searchParams, gson.toJson(params));
+        startActivity(intent);
     }
 
     @Override

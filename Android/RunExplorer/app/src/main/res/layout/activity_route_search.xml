@@ -80,7 +80,7 @@
                 android:layout_weight="2"
                 android:text="@string/user"/>
             <EditText
-                android:id="@+id/user_ed"
+                android:id="@+id/user_et"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="wrap_content"

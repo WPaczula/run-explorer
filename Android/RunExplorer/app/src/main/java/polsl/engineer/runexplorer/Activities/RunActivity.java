@@ -90,7 +90,6 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
             routeData.setId(ID);
             Intent intent = new Intent(RunActivity.this, RoutePreviewActivity.class);
             intent.putExtra(Extra.routeJSON, gson.toJson(routeData));
-            intent.putExtra(Extra.parent, Extra.newRoute);
             intent.putExtra(Extra.isBeforeRun, false);
             startActivity(intent);
         }

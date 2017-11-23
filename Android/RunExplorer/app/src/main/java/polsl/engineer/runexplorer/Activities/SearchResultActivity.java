@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import polsl.engineer.runexplorer.API.Data.RouteListData;
 import polsl.engineer.runexplorer.API.Data.RouteTitleData;
+import polsl.engineer.runexplorer.API.Data.SearchParams;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
 import polsl.engineer.runexplorer.Config.Connection;
+import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.Layout.RouteAdapter;
 import polsl.engineer.runexplorer.R;
 import retrofit2.Call;
@@ -44,7 +47,9 @@ public class SearchResultActivity extends AppCompatActivity {
         Hawk.init(this).build();
 
         Intent intent = getIntent();
-
+        Gson gson = new Gson();
+        String paramsJSON = intent.getStringExtra(Extra.searchParams);
+        final SearchParams params = gson.fromJson(paramsJSON, SearchParams.class);
         token = Hawk.get(Connection.tokenKey);
         username = Hawk.get(Connection.username);
 
@@ -57,19 +62,30 @@ public class SearchResultActivity extends AppCompatActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if(linearLayoutManager.findLastCompletelyVisibleItemPosition() == routeList.size()-1 && routeList.size() != totalRoutesCount){
-                    getSearchResults(adapter, routeList.size());
+                    getSearchResults(adapter, routeList.size(), params);
                 }
             }
         });
-        getSearchResults(adapter, 0);
+        getSearchResults(adapter, 0, params);
     }
 
-    private void getSearchResults(final RouteAdapter adapter, int skip){
-        Call<RouteListData> getUserRoutesCall = endpoints.getUsersRoutes(this.token, this.username, skip);
-        getUserRoutesCall.enqueue(new Callback<RouteListData>() {
+    private void getSearchResults(final RouteAdapter adapter, int skip, SearchParams params){
+        Call<RouteListData> getSearchResults = endpoints.search(token,
+                                                                params.getMaxDistance(),
+                                                                params.getMinDistance(),
+                                                                params.getUsername(),
+                                                                params.getLat(),
+                                                                params.getLng(),
+                                                                params.getRadius(),
+                                                                skip);
+        getSearchResults.enqueue(new Callback<RouteListData>() {
             @Override
             public void onResponse(Call<RouteListData> call, Response<RouteListData> response) {
+                RouteListData data = response.body();
                 totalRoutesCount = response.body().getTotalCount();
+                if(totalRoutesCount == 0){
+                    Toast.makeText(getApplicationContext(), "No routes found given criteria", Toast.LENGTH_LONG).show();
+                }
                 routeList.addAll(response.body().getRoutes());
                 adapter.notifyDataSetChanged();
             }
