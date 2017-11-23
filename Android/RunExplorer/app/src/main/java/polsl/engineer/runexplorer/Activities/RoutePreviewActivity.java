@@ -87,7 +87,6 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         Intent intent = getIntent();
         String json = intent.getStringExtra(Extra.routeJSON);
         routeData = gson.fromJson(json, RouteData.class);
-
         boolean isBeforeRun = intent.getBooleanExtra(Extra.isBeforeRun, true);
         if(isBeforeRun){
             challengeButton.setVisibility(View.VISIBLE);
@@ -102,21 +101,26 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        mMap.addPolyline(drawPolyline(routeData.getLatLngs()));
+        if(routeData.getLatLngs().size() != 0){
+            mMap.addPolyline(drawPolyline(routeData.getLatLngs()));
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for(LatLng point : routeData.getLatLngs()){
-            builder.include(point);
-        }
-
-        final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder.build(), 20);
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                    mMap.animateCamera(cameraUpdate);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for(LatLng point : routeData.getLatLngs()){
+                builder.include(point);
             }
-        });
+
+            final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(builder.build(), 20);
+            mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    mMap.animateCamera(cameraUpdate);
+                }
+            });
+        }else{
+            Toast.makeText(this, "Not enough points for this path", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(RoutePreviewActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private PolylineOptions drawPolyline(List<LatLng> routePoints){
@@ -132,7 +136,7 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public void saveRoute(View view){
         String token = Hawk.get(Connection.tokenKey);
         String username = Hawk.get(Connection.username);
-        if(true){//routeData.isNew()){
+        if(routeData.isNew()){
             Call<Message> addRouteCallback = endpoints.saveRoute(token, new NewRouteData(routeData, Calendar.getInstance().getTime().getTime()));
             addRouteCallback.enqueue(new Callback<Message>() {
                 @Override

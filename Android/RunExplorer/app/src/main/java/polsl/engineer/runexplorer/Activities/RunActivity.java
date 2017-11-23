@@ -34,19 +34,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
     private ConsumerService consumerService = null;
     private String ID;
     private TizenRouteData routeData;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_run);
-        ButterKnife.bind(this);
-        Intent intent = getIntent();
-        ID = intent.getStringExtra(Extra.ID);
-        pathJSON = intent.getStringExtra(Extra.pathJSON);
-        isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    private final ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             consumerService = ((ConsumerService.LocalBinder) service).getService();
@@ -61,9 +49,20 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         }
     };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_run);
+        ButterKnife.bind(this);
+        Intent intent = getIntent();
+        ID = intent.getStringExtra(Extra.ID);
+        pathJSON = intent.getStringExtra(Extra.pathJSON);
+        isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
+    }
+
     @OnClick(R.id.stop_btn)
     public void stop(View view){
-        if(isBound && consumerService.sendData(stopJSON)){
+        if(isBound && consumerService != null && consumerService.sendData(stopJSON)){
             Toast.makeText(getApplicationContext(), "STOPPED", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT).show();
@@ -72,11 +71,10 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
 
     @OnClick(R.id.start_btn)
     public void start(View view){
-        if(isBound && consumerService.sendData(pathJSON)){
+        if(isBound && consumerService != null && consumerService.sendData(pathJSON)){
             consumerService.addOnDataRecieveListener(this);
             Toast.makeText(getApplicationContext(), "STARTED", Toast.LENGTH_SHORT).show();
-        }else
-        {
+        }else {
             Toast.makeText(getApplicationContext(), "No connection", Toast.LENGTH_SHORT).show();
         }
     }
