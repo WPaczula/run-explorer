@@ -128,7 +128,7 @@
         window.addEventListener('tizenhwkey', function (ev) {
             if (ev.keyName === "back") {
             	console.log(myapp.connection.SAAgent, myapp.connection.SASocket, myapp.connection.connectionListener);
-	    		if(checkPage(myapp.MAIN_PAGE)){
+	    		if(checkPage(myapp.MAIN_PAGE) || checkPage(myapp.CONNECTION_PAGE)){
 	    			myapp.exit();
 	    		}else{
 	    			window.history.back();

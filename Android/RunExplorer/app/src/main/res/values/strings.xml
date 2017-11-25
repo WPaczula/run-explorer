@@ -7,7 +7,7 @@
     <string name="send_route_data">Run</string>
     <string name="NoPeersFound">No peers found</string>
     <string name="ConnectionFailure">Connection failure</string>
-    <string name="start">connect</string>
+    <string name="start">Send route to watch</string>
     <string name="stop">stop</string>
     <string name="choose_route">GO</string>
     <string name="timePer100">Time:</string>
@@ -22,7 +22,6 @@
     <string name="register_btn">register</string>
     <string name="logout_btn">logout</string>
     <string name="new_route_btn">New route</string>
-    <string name="reconnect">reconnect</string>
     <string name="name_title">name:</string>
     <string name="date_title">date:</string>
     <string name="time_title">time:</string>
@@ -34,4 +33,5 @@
     <string name="username_hint">username</string>
     <string name="distance_search">By distance</string>
     <string name="radius_tv">Radius:</string>
+    <string name="connect">Connect</string>
 </resources>

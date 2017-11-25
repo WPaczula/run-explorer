@@ -33,7 +33,6 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
     private boolean isBound = false;
     private ConsumerService consumerService = null;
     private String ID;
-    private TizenRouteData routeData;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -60,6 +59,18 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         isBound = bindService(new Intent(RunActivity.this, ConsumerService.class), mConnection, Context.BIND_AUTO_CREATE);
     }
 
+    @Override
+    protected  void onDestroy(){
+        if(isBound && consumerService != null){
+            consumerService.closeConnection();
+        }
+        if(isBound){
+            unbindService(mConnection);
+            isBound = false;
+        }
+        super.onDestroy();
+    }
+
     @OnClick(R.id.stop_btn)
     public void stop(View view){
         if(isBound && consumerService != null && consumerService.sendData(stopJSON)){
@@ -79,6 +90,13 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
         }
     }
 
+    @OnClick(R.id.connect_btn)
+    public void connect(View view){
+        if (isBound && consumerService != null) {
+            consumerService.findPeers();
+        }
+    }
+
     @Override
     public void OnRecieve(String data) {
         if(!data.equals("Route set")){
@@ -89,6 +107,7 @@ public class RunActivity extends AppCompatActivity implements DataRecieveListene
             Intent intent = new Intent(RunActivity.this, RoutePreviewActivity.class);
             intent.putExtra(Extra.routeJSON, gson.toJson(routeData));
             intent.putExtra(Extra.isBeforeRun, false);
+            consumerService.closeConnection();
             startActivity(intent);
         }
     }

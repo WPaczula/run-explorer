@@ -79,6 +79,7 @@ var initMap = function() {
 	function followThePath(map, position){
 		self.data.map.currentPositionMarker = moveMarker(map, self.data.map.currentPositionMarker, position);
 		tryToGetNextCheckpoint(routesCheckpointsMarkers, routesCheckpointsMarkersPassed, routeBet, position);
+		moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
 	}
 	
 	function measureDistance(position1, position2){
@@ -96,6 +97,7 @@ var initMap = function() {
 	function makeOwnPath(map, position){
 		self.data.map.currentPositionMarker = moveMarker(map, self.data.map.currentPositionMarker, position);
 		drawNewCheckpoint(map, routesCheckpointsMarkersPassed, routeBet, position);
+		moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
 	}
 	
 	self.map.init = function(){

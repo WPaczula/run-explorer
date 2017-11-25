@@ -49,7 +49,6 @@ public class ConsumerService extends SAAgent {
              */
             stopSelf();
         }
-        findPeers();
     }
 
     @Override

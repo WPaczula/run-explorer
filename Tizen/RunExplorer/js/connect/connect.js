@@ -66,7 +66,7 @@ var initConnection = function(){
             			times: self.data.main.times,
             			distance: self.data.main.distance,
             			time: self.data.main.time,
-            			shouldBeSavedAsNew: !self.map.completedGivenRoute,
+            			shouldBeSavedAsNew: !self.data.map.completedGivenRoute,
 //            			checkpoints: [{lat:50.249596,lng:18.566320},
 //            			              {lat:50.249912,lng:18.566585},
 //            			              {lat:50.250214,lng:18.566835},

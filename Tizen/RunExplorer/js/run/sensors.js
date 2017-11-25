@@ -108,7 +108,7 @@ var initSensors = function(mapInit) {
 				self.map.init();
 			}
 			console.log(position);
-			if(checkPage(self.MAP_PAGE) && self.map.ready){
+			if(self.map.ready){
 				self.map.updatePosition(self.data.map.myMap, self.data.main.position);
 			}
 		};

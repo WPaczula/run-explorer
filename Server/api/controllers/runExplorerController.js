@@ -97,7 +97,7 @@ exports.addRoute = function(req, res) {
 exports.getRoute = function(req, res) {
     if(req.query.routeId === undefined)
         return res.json({success: false, message: 'No routes found'});
-    Route.findOne({}, function(err, route) {
+    Route.findOne({routeId: req.query.routeId}, function(err, route) {
         if(err)
             res.status(500).json({success: false, message: 'Server error'});
         if(route === null)
@@ -160,8 +160,11 @@ exports.getUsersRoutes = function(req, res) {
             if(routes.length === 0)
                 return res.json({routes: []});
             let count = 0;
-            userRoutesData.slice(skipNumber, skipNumber+max).forEach(usersRoute => {
-                const foundRoute = routes.find(function(route) {return route.routeId  === usersRoute.routeId});                
+            userRoutesData
+                .sort((r1, r2) => r1.date > r2.date ? -1 : 1)
+                .slice(skipNumber, skipNumber+max)
+                .forEach(usersRoute => {
+                    const foundRoute = routes.find(function(route) {return route.routeId  === usersRoute.routeId});                
                     routesData.push({
                         id: foundRoute.routeId,
                         date: usersRoute.date,

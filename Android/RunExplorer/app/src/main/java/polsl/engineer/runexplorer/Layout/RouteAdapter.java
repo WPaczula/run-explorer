@@ -25,6 +25,7 @@ import polsl.engineer.runexplorer.Activities.RoutePreviewActivity;
 import polsl.engineer.runexplorer.Config.Connection;
 import polsl.engineer.runexplorer.Config.Extra;
 import polsl.engineer.runexplorer.R;
+import polsl.engineer.runexplorer.Utility.TimeConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,7 +45,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
     private Context context;
     private List<RouteTitleData> routeData;
     private DateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy");
-    private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -57,7 +57,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
         holder.id = routeData.get(position).getId();
         holder.name.setText(routeData.get(position).getName());
         holder.date.setText(dayFormat.format(routeData.get(position).getDate()));
-        holder.time.setText(timeFormat.format(routeData.get(position).getSeconds()));
+        holder.time.setText(TimeConverter.convertToTimeString(routeData.get(position).getSeconds()));
         holder.distance.setText((String.valueOf(routeData.get(position).getDistance()/1000) + "km"));
         holder.chooseRoute.setOnClickListener(new View.OnClickListener() {
             @Override

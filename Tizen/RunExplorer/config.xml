@@ -15,6 +15,7 @@
     <icon src="icon.png"/>
     <tizen:metadata key="AccessoryServicesLocation" value="res/xml/accesoryservices.xml"/>
     <name>RunExp</name>
+    <preference name="force-screen-on" value="true" readonly="false"/>
     <tizen:privilege name="http://tizen.org/privilege/power"/>
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <tizen:privilege name="http://tizen.org/privilege/healthinfo"/>

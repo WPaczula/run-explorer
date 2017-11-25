@@ -27,15 +27,14 @@
 .metadata/.plugins/org.eclipse.wst.jsdt.ui/OpenTypeHistory.xml__DEL__Gp5IiP70MtbMV5EP6zRxmHYRcULf2/0T1tWAHtXvEWY=
 .metadata/.plugins/org.eclipse.wst.jsdt.ui/QualifiedTypeNameHistory.xml__DEL__tBu5/K7Np4pv2KSPxFKUGASzyWcnuYMwMqfPuv3JCF0=
 .metadata/version.ini__DEL__dZk2YWvCdaorQO1v3T9vkQ23/kmIbLJQqJkNmp6g3UA=
-config.xml__DEL__nDqtQhfAoAhcJkgf2EfTMgypLwCUzcM/ih3r/DUgJ2Q=
+config.xml__DEL__cGQtpQyd31Q6XYhkUJjeRd9YSs6Fa6SSA4wE8L/K1V0=
 css/style.css__DEL__h2LMtsU6GMhBVTuu9JQi3NpMpqQqIxoKpPQ7bRXlj10=
 icon.png__DEL__vPjxjOppORd6hn9Bw4sh06gqtDoJzoFbV/8e9FyIdvk=
 index.html__DEL__v+x4MGEWJ7h7QkRn6ruGNhbyejaydc90SBmYlWS1I3E=
-js/app.js__DEL__1+Z7TOcuz0YlGrNQt9U26v7Y1Bfmw20M+eDTuWDmIVE=
-js/connect/connect.js__DEL__nSavWTMOngi4wuOKYI7TG4Kn3RIMsV5mTk9N2pMaSbo=
+js/app.js__DEL__eCn6Kju6lI66PxZULiLzqVbGxWu3Nbr1OsdUAMOK5VU=
+js/connect/connect.js__DEL__x365IRjalRJr63TsbhzzvuYezPimPjbTGpJ4n3WdGK4=
 js/run/controls.js__DEL__lyS0JHe5LjFvuRNt2jjCy7MOwOUzKAU3n2dawOsWo9U=
-js/run/map.js__DEL__F/z2/B+AIGVf6gpWl1isodRiYuWegY0fOzWDgURFJC0=
-js/run/sensors.js__DEL__rJce9zzgb06ana8aR6aAQThxxhlVkoomPR0sIbFH7xc=
+js/run/map.js__DEL__mt2XGNz7zmM+l8TAUJpJm2cyHnSDVdGjBkJWnEHsM5g=
 js/ui.js__DEL__ASfFuZfmAUTwObBduIwv/1mlOIlgJMtwsoc9M7nDlT8=
 lib/tau/LICENSE.Flora__DEL__R4988xI3tkQMAcLGLOROY5Wp8YTDrI0X90uMvrydtQw=
 lib/tau/VERSION__DEL__NNwL10gCpu8DCYYpDaectUanXQBclaS+wcI8Atm98p4=
@@ -318,4 +317,5 @@ lib/tau/wearable/theme/default/tau.min.css__DEL__qnnCAIPGsW3IDww1aliQWt68MoJpWlp
 lib/tau/wearable/theme/default/tau.min.template__DEL__pMbNqgPMw2Wi+7A6WpjsUttxF24ELM4vVvJHlNCew3E=
 lib/tau/wearable/theme/default/tau.template__DEL__6G1+BW7cnojrMTmoZuo0V6ytOpdJfXfIOLJDBQh9x04=
 res/xml/accesoryservices.xml__DEL__midVk6nj0uG/6U03Avyc47LxQU1rVLxAAulbmsESiTM=
-author-signature.xml__DEL__pY/KhzG1FUlcSA/sFLESIHJUAFSsJA5t7xu4w8WEaNM=
+author-signature.xml__DEL__KaS+b5LnnqLW+NlaKd96mg4VEBTFlGemXfvoyqNgpsA=
+js/run/sensors.js__DEL__zJ6XrYrUpF4Ef/GrvfsZl5NHHuFheYafyf8ssVa1Vz0=
