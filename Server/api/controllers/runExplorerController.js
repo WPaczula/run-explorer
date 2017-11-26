@@ -246,7 +246,7 @@ exports.getUsersRoutes = function(req, res) {
                     routesData.push({
                         id: foundRoute.routeId,
                         date: usersRoute.date,
-                        time: usersRoute.time,
+                        seconds: usersRoute.time,
                         name: usersRoute.name,
                         distance: foundRoute.distance,
                     })
