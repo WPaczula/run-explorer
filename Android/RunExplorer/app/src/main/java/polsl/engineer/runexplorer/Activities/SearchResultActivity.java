@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,6 +34,8 @@ public class SearchResultActivity extends AppCompatActivity {
 
     @BindView(R.id.search_recycler_view)
     public RecyclerView recyclerView;
+    @BindView(R.id.no_found_routes_tv)
+    public TextView noRoutesFoundTextView;
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
     private int totalRoutesCount=0;
     private String token;
@@ -81,10 +85,11 @@ public class SearchResultActivity extends AppCompatActivity {
         getSearchResults.enqueue(new Callback<RouteListData>() {
             @Override
             public void onResponse(Call<RouteListData> call, Response<RouteListData> response) {
-                RouteListData data = response.body();
                 totalRoutesCount = response.body().getTotalCount();
-                if(totalRoutesCount == 0){
-                    Toast.makeText(getApplicationContext(), "No routes found given criteria", Toast.LENGTH_LONG).show();
+                if(totalRoutesCount > 0){
+                    noRoutesFoundTextView.setVisibility(View.GONE);
+                } else {
+                    noRoutesFoundTextView.setVisibility(View.VISIBLE);
                 }
                 routeList.addAll(response.body().getRoutes());
                 adapter.notifyDataSetChanged();

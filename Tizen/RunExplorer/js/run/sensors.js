@@ -103,13 +103,17 @@ var initSensors = function(mapInit) {
 		 */
 		GeolocationChangeListener.onChange = function(position){
 			self.data.main.position = {lat: position.coords.latitude, lng: position.coords.longitude};
-			if(!self.map.ready && checkPage(self.MAP_PAGE)){
+			if(!self.map.ready){
 				mapInit();
 				self.map.init();
 			}
 			console.log(position);
 			if(self.map.ready){
-				self.map.updatePosition(self.data.map.myMap, self.data.main.position);
+				if(self.sensors.running)
+					self.map.updatePosition(self.data.map.myMap, self.data.main.position);
+				else {
+					self.map.showPosition(self.data.map.myMap, self.data.main.position);
+				}
 			}
 		};
 		
@@ -130,8 +134,8 @@ var initSensors = function(mapInit) {
             try {
             	tizen.humanactivitymonitor.setAccumulativePedometerListener(SpeedDistanceChangeListener.onChange);
                 console.log('Speed/distance sensor set');
-            	segmentDistance = 1;
-            	segmentTime = 1;
+            	segmentDistance = 0;
+            	segmentTime = 0;
             	lastSegmentTime = 0;
             } catch (error) {
                 self.onerror(error);
@@ -203,14 +207,18 @@ var initSensors = function(mapInit) {
         	tizen.humanactivitymonitor.stop('HRM');
         };
         
+        self.sensors.setup = function() {
+        	GeolocationChangeListener.set(self.data.main.gpsMaxAge);
+        	HeartRateChangeListener.set(self.data.main.heartCallbackInterval);
+        }
+        
         /**
          * Starts all sensors at once
          */
         self.sensors.start = function(){
         	StopWatch.set();
         	SpeedDistanceChangeListener.set(self.data.main.sampleInterval, self.data.main.callbackInterval);
-        	GeolocationChangeListener.set(self.data.main.gpsMaxAge);
-        	HeartRateChangeListener.set(self.data.main.heartCallbackInterval);
+        	self.sensors.running = true;
         };
         
         /**

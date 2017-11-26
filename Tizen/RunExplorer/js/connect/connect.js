@@ -108,8 +108,6 @@ var initConnection = function(){
 
 	    for (i; i < agents.length; i += 1) {
 	        if (agents[i].role === "PROVIDER") {
-	            createHTML("Service Provider found!<br />" +
-	                        "Name: " +  agents[i].name);
 	            self.connection.SAAgent = agents[i];
 	            break;
 	        }

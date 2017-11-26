@@ -9,7 +9,7 @@
     <string name="ConnectionFailure">Connection failure</string>
     <string name="start">Send route to watch</string>
     <string name="stop">stop</string>
-    <string name="choose_route">GO</string>
+    <string name="choose_route">Preview</string>
     <string name="timePer100">Time:</string>
     <string name="title_activity_route_search">Map</string>
     <string name="user">By user</string>
@@ -34,4 +34,6 @@
     <string name="distance_search">By distance</string>
     <string name="radius_tv">Radius:</string>
     <string name="connect">Connect</string>
+    <string name="delete">Delete</string>
+    <string name="no_routes_found">No routes found</string>
 </resources>

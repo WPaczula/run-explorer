@@ -47,10 +47,15 @@ public class LoginActivity extends AppCompatActivity {
             authenticateCall.enqueue(new Callback<JWT>() {
                 @Override
                 public void onResponse(Call<JWT> call, Response<JWT> response) {
-                    Hawk.put(Connection.tokenKey, response.body().getToken());
-                    Hawk.put(Connection.username, username);
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    if(response.isSuccessful()){
+                        Hawk.put(Connection.tokenKey, response.body().getToken());
+                        Hawk.put(Connection.username, username);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Login unsuccessful", Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
                 @Override

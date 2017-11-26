@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/route_cv"
+    android:id="@+id/found_route_cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/tv_vertical_padding"
@@ -19,14 +19,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/name_route_card_title_tv"
+                android:id="@+id/name_found_card_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
                 android:paddingEnd="@dimen/tv_horizontal_padding"
                 android:text="@string/name_title"/>
             <TextView
-                android:id="@+id/name_route_card_tv"
+                android:id="@+id/name_found_card_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
@@ -37,14 +37,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/date_route_card_title_tv"
+                android:id="@+id/date_found_card_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
                 android:paddingEnd="@dimen/tv_horizontal_padding"
                 android:text="@string/date_title"/>
             <TextView
-                android:id="@+id/date_route_card_tv"
+                android:id="@+id/date_found_card_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
@@ -55,14 +55,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/time_route_card_title_tv"
+                android:id="@+id/time_found_card_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
                 android:paddingEnd="@dimen/tv_horizontal_padding"
                 android:text="@string/time_title"/>
             <TextView
-                android:id="@+id/time_route_card_tv"
+                android:id="@+id/time_found_card_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
@@ -73,14 +73,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/distance_route_card_title_tv"
+                android:id="@+id/distance_found_card_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
                 android:paddingEnd="@dimen/tv_horizontal_padding"
                 android:text="@string/distance_title"/>
             <TextView
-                android:id="@+id/distance_route_card_tv"
+                android:id="@+id/distance_found_card_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/tv_horizontal_padding"
@@ -91,15 +91,10 @@
             android:layout_height="wrap_content"
             android:gravity="center">
             <Button
-                android:id="@+id/choose_route_card_btn"
+                android:id="@+id/choose_found_route_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/choose_route"/>
-            <Button
-                android:id="@+id/delete_route_card_bnt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/delete"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

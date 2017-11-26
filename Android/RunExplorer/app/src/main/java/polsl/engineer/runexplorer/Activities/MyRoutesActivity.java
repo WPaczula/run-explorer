@@ -5,9 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,8 @@ public class MyRoutesActivity extends AppCompatActivity{
 
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.no_my_rotes_tv)
+    TextView noRoutesTextView;
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
     private int totalRoutesCount=0;
     private String token;
@@ -73,6 +79,11 @@ public class MyRoutesActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<RouteListData> call, Response<RouteListData> response) {
                 totalRoutesCount = response.body().getTotalCount();
+                if(totalRoutesCount > 0){
+                    noRoutesTextView.setVisibility(View.GONE);
+                } else {
+                    noRoutesTextView.setVisibility(View.VISIBLE);
+                }
                 routeList.addAll(response.body().getRoutes());
                 adapter.notifyDataSetChanged();
             }

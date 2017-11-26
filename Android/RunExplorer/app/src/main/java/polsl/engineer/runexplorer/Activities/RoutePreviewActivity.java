@@ -63,7 +63,7 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
 
     @SuppressLint("SetTextI18n")
     private void initUI() {
-        distanceValue.setText(String.valueOf(routeData.getDistance() / 1000) + "km");
+        distanceValue.setText(String.valueOf(routeData.getDistance() / 1000f) + "km");
         timeValue.setText(TimeConverter.convertToTimeString(routeData.getTime()));
         RecyclerView timesRecyclerView = (RecyclerView) findViewById(R.id.times_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

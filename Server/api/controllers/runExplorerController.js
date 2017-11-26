@@ -156,21 +156,46 @@ exports.getRoute = function(req, res) {
         if(route === null)
             return res.json({success: false, message: 'No routes found'});
         else{
-            User.findOne({username: route.bestUser}, function(err, user){
-                if(err)
-                    return res.status(500).json({success: false, message: 'Server error'});
-                const userData = user.usersRoutes.find(r => r.routeId===route.routeId);
-                const result = {
-                    time: route.bestTime,
-                    distance: route.distance,
-                    checkpoints: route.points,
-                    times: userData.timesPer100,
-                    name: route.name,
-                    date: userData.date,
-                    isNew: false,
-                }             
-                return res.json(result);  
-            })
+            if(!req.query.date){
+                User.findOne({username: route.bestUser}, function(err, user){
+                    if(err)
+                        return res.status(500).json({success: false, message: 'Server error'});
+                    const userData = user.usersRoutes.find(r => r.routeId===route.routeId);
+                    const result = {
+                        time: route.bestTime,
+                        distance: route.distance,
+                        checkpoints: route.points,
+                        times: userData.timesPer100,
+                        name: route.name,
+                        date: userData.date,
+                        isNew: false,
+                    }             
+                    return res.json(result);  
+                })
+            }else {
+                var token = getToken(req.headers);
+                if(token) {
+                    var decoded = jwt.decode(token, config.secret);
+                    User.findOne({username: decoded.name}, function(err, user){
+                        if(err)
+                            return res.status(500).json({success: false, message: 'Server error'});
+                        const userRun = user.usersRoutes.find(r => r.date == req.query.date);
+                        const result = {
+                            time: userRun.time,
+                            distance: route.distance,
+                            checkpoints: route.points,
+                            times: userRun.timesPer100,
+                            name: userRun.name,
+                            date: userRun.date,
+                            isNew: false,
+                        }
+                        return res.json(result);       
+                    })
+                } else {
+                    return res.status(403).json({success: false, message: 'Authentication failed'});
+                }
+            }
+            
         }
     })
 }
@@ -295,7 +320,7 @@ exports.search = function(req, res) {
                     resolve(result);
                 }
                 else
-                    reject([])
+                    reject()
             })
         },
         searchedUser: function(routes, user){
@@ -305,7 +330,7 @@ exports.search = function(req, res) {
                 else{
                     User.findOne({username: user.username}, function(err, user){
                         if(err){
-                            reject([])                            
+                            reject()                            
                         }
                         if(user === null){
                             resolve([])                            
@@ -331,7 +356,7 @@ exports.search = function(req, res) {
                     });
                     resolve(result);
                 }else{
-                    reject([]);
+                    reject();
                 }
             })
         }

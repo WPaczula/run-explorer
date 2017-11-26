@@ -95,7 +95,9 @@
 			sensors: {
 				start: {},
 				pause: {},
+				setup: {},
 				stop: {},
+				running: false,
 			},
 			
 			map: {
@@ -121,6 +123,8 @@
         initUI.call(myapp);
     	initSensors.bind(myapp, initMap.bind(myapp))();
     	initControls.call(myapp);
+    	
+    	myapp.sensors.setup();
     	
     	tizen.power.request('CPU', 'CPU_AWAKE');
     	

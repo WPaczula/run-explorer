@@ -62,9 +62,9 @@ public class ConsumerService extends SAAgent {
             for(SAPeerAgent peerAgent:peerAgents)
                 requestServiceConnection(peerAgent);
         } else if (result == SAAgent.FINDPEER_DEVICE_NOT_CONNECTED) {
-            Toast.makeText(getApplicationContext(), "FINDPEER_DEVICE_NOT_CONNECTED", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cant find any connected device", Toast.LENGTH_LONG).show();
         } else if (result == SAAgent.FINDPEER_SERVICE_NOT_FOUND) {
-            Toast.makeText(getApplicationContext(), "FINDPEER_SERVICE_NOT_FOUND", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cant find any device", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(), R.string.NoPeersFound, Toast.LENGTH_LONG).show();
         }
@@ -82,9 +82,9 @@ public class ConsumerService extends SAAgent {
         if (result == SAAgent.CONNECTION_SUCCESS) {
             this.mConnectionHandler = (ServiceConnection) socket;
         } else if (result == SAAgent.CONNECTION_ALREADY_EXIST) {
-            Toast.makeText(getBaseContext(), "CONNECTION_ALREADY_EXIST", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "You are already conected", Toast.LENGTH_LONG).show();
         } else if (result == SAAgent.CONNECTION_DUPLICATE_REQUEST) {
-            Toast.makeText(getBaseContext(), "CONNECTION_DUPLICATE_REQUEST", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "You already started connection", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getBaseContext(), R.string.ConnectionFailure, Toast.LENGTH_LONG).show();
         }
@@ -104,9 +104,9 @@ public class ConsumerService extends SAAgent {
             public void run() {
                 if (peers != null) {
                     if (status == SAAgent.PEER_AGENT_AVAILABLE) {
-                        Toast.makeText(getApplicationContext(), "PEER_AGENT_AVAILABLE", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Found a device nearby", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "PEER_AGENT_UNAVAILABLE", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No devices nearby", Toast.LENGTH_LONG).show();
                     }
                 }
             }

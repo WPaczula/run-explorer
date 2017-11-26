@@ -51,12 +51,12 @@ var initMap = function() {
 	    if(isFinished(routesCheckpointsMarkers, routesCheckpointsMarkersPassed) !== true){
 	        var nextCheckpoint = routesCheckpointsMarkers[routesCheckpointsMarkersPassed.length];
 	        if(didPassCheckpoint(normalizePosition(currentPosition),
-	        		normalizePosition(nextCheckpoint))){
+	        		nextCheckpoint)){
 		        	routesCheckpointsMarkersPassed.push(nextCheckpoint);
 	                routeBet.addLatLng(nextCheckpoint);
 	        }
 	    } else {
-	    	self.map.completedGivenRoute = true;
+	    	self.data.map.completedGivenRoute = true;
 	    	self.sensors.pause();
 	    }
 	}
@@ -114,6 +114,7 @@ var initMap = function() {
 		self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position);
 		self.data.map.myMap.setView(normalizePosition(self.data.main.position), 17);
 		moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
+		self.map.updatePosition = (pathLatLng.length !== 0) ? followThePath : makeOwnPath;
 		self.map.ready = true;
 	};
 	
@@ -123,7 +124,11 @@ var initMap = function() {
 				);
 	};
 	
-	self.map.updatePosition = (pathLatLng.length !== 0) ? followThePath : makeOwnPath;
+	self.map.showPosition = function(map, position){
+		self.data.map.currentPositionMarker = moveMarker(map, self.data.map.currentPositionMarker, position);
+		moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
+		
+	}
 	
 	self.map.reset = function(){
 		routesCheckpointsMarkersPassed = [];
