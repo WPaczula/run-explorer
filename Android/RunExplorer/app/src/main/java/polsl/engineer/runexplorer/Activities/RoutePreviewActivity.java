@@ -1,13 +1,17 @@
 package polsl.engineer.runexplorer.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +61,8 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public Button challengeButton;
     @BindView(R.id.back_btn)
     public Button backButton;
+    @BindView(R.id.route_name_tv)
+    public TextView nameValue;
     private RouteData routeData;
     private Gson gson = new Gson();
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
@@ -68,7 +74,7 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         RecyclerView timesRecyclerView = (RecyclerView) findViewById(R.id.times_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         timesRecyclerView.setLayoutManager(linearLayoutManager);
-        setTitle(routeData.getName());
+        nameValue.setText(routeData.getName());
         TimeAdapter adapter = new TimeAdapter(this, routeData.getTimes());
         timesRecyclerView.setAdapter(adapter);
     }
