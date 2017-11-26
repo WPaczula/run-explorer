@@ -9,9 +9,62 @@ var mongoose = require('mongoose'),
 
 const max = 5;    
 
+exports.changeName = function(req, res) {
+    if(!req.body.date || !req.body.newName){
+        return res.status(404).json({success: false, message: 'Parameters not specified'});
+    } else {
+        var token = getToken(req.headers);
+        if(token) {
+            var decoded = jwt.decode(token, config.secret);
+            User.findOne({
+                name: decoded.username
+            }, function(err, user){
+                const route = user.usersRoutes.find(r => r.date === req.body.date);
+                route.name = req.body.newName;
+                user.save(err => {
+                    if(err){
+                        return res.status(500).json({success: false, message: 'Cant save the name'});
+                    } else {
+                        return res.json({success: true, message: 'Name changed'});
+                    }
+                });
+            });
+        }
+    }
+}
+
+exports.deleteRun = function(req, res) {
+    if(!req.body.date){
+        return res.status(404).json({success: false, message: 'Parameters not specified'});        
+    } else {
+        var token = getToken(req.headers);
+        if(token) {
+            var decoded = jwt.decode(token, config.secret);
+            User.findOne({
+                name: decoded.username
+            }, function(err, user){
+                const route = user.usersRoutes.find(r => r.date === req.body.date);
+                const index = user.usersRoutes.indexOf(route);
+                if(index > -1){
+                    user.usersRoutes.splice(index, 1);
+                    user.save(err => {
+                        if(err){
+                            return res.status(500).json({success: false, message: 'Cant save the name'});                        
+                        } else {
+                            return res.json({success: true, message: 'Item deleted'});                        
+                        }
+                    })
+                }else {
+                    return res.status(404).json({success: false, message: 'Route to be deleted was not found'});
+                }
+            })
+        }
+    }
+}
+
 exports.signUp = function(req, res) {
     if(!req.body.username || !req.body.password){
-        return res.json({success: false, message: 'Please pass name and password.'});
+        return res.status(404).json({success: false, message: 'Please pass name and password.'});
     } else {
         var newUser =  new User({
             username: req.body.username,
@@ -96,7 +149,7 @@ exports.addRoute = function(req, res) {
 
 exports.getRoute = function(req, res) {
     if(req.query.routeId === undefined)
-        return res.json({success: false, message: 'No routes found'});
+        return res.status(404).json({success: false, message: 'No routes found'});
     Route.findOne({routeId: req.query.routeId}, function(err, route) {
         if(err)
             res.status(500).json({success: false, message: 'Server error'});
@@ -136,7 +189,7 @@ exports.getAllUsers = function(req, res) {
 exports.getUsersRoutes = function(req, res) {
     User.findOne({username: req.params.username}, function(err, user){
         if(err)
-            return res.json({success: false, message: 'No user found'});
+            return res.status(404).json({success: false, message: 'No user found'});
         let skipNumber = Number.parseInt(req.query.skip);
         if(skipNumber === undefined)
             skipNumber = 0;
@@ -181,7 +234,7 @@ exports.getUsersRoutes = function(req, res) {
 exports.postAnotherRun = function(req, res) {
     User.findOne({username: req.params.username}, function(err, user){
         if(err)
-            return res.json({success: false, message: 'No user found'});
+            return res.status(404).json({success: false, message: 'No user found'});
         user.usersRoutes.push({
             routeId: req.body.routeId,
             name: req.body.name,

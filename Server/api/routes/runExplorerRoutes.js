@@ -11,7 +11,9 @@ module.exports = function(app) {
 
   app.route('/Routes/:username', passport.authenticate('jwt', {session: false}))
     .get(controller.getUsersRoutes)
-    .post(controller.postAnotherRun);
+    .post(controller.postAnotherRun)
+    .put(controller.changeName)
+    .delete(controller.deleteRun);
 
   app.route('/Search', passport.authenticate('jwt', {session: false}))
     .get(controller.search);
@@ -24,7 +26,7 @@ module.exports = function(app) {
 
   app.route('/')
     .get(function(req, res){
-        res.json({success: true, msg: 'Run Explorer server'});
+        res.json({success: true, msg: 'Server is working'});
     });
 };
 
