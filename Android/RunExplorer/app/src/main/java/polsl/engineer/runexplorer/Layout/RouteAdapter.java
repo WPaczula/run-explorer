@@ -1,12 +1,16 @@
 package polsl.engineer.runexplorer.Layout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,6 +118,47 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
                 });
             }
         });
+        holder.renameRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Change name");
+
+                final EditText input = new EditText(context);
+                input.requestFocus();
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String m_Text = input.getText().toString();
+                        Call<Message> renameCallback = endpoints.renameRun(token, username, routeData.get(position).getDate(), m_Text);
+                        renameCallback.enqueue(new Callback<Message>() {
+                            @Override
+                            public void onResponse(Call<Message> call, Response<Message> response) {
+                                if(response.isSuccessful()){
+                                    routeData.get(position).setName(m_Text);
+                                    notifyItemRangeChanged(position, routeData.size());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Message> call, Throwable t) {
+                                Toast.makeText(context, "Could not rename run", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     @Override
@@ -128,12 +173,14 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
         public TextView distance;
         public Button chooseRoute;
         public Button deleteRoute;
+        public Button renameRun;
         public String id;
 
         public ViewHolder(View itemView) {
             super(itemView);
             chooseRoute = (Button) itemView.findViewById(R.id.choose_route_card_btn);
             deleteRoute = (Button) itemView.findViewById(R.id.delete_route_card_bnt);
+            renameRun = (Button) itemView.findViewById(R.id.rename_route_card_bnt);
             name = (TextView) itemView.findViewById(R.id.name_route_card_tv);
             date = (TextView) itemView.findViewById(R.id.date_route_card_tv);
             time = (TextView) itemView.findViewById(R.id.time_route_card_tv);

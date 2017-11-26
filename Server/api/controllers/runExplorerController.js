@@ -19,7 +19,7 @@ exports.changeName = function(req, res) {
             User.findOne({
                 name: decoded.username
             }, function(err, user){
-                const route = user.usersRoutes.find(r => r.date === req.body.date);
+                const route = user.usersRoutes.find(r => r.date == req.body.date);
                 route.name = req.body.newName;
                 user.save(err => {
                     if(err){
@@ -43,7 +43,7 @@ exports.deleteRun = function(req, res) {
             User.findOne({
                 name: decoded.username
             }, function(err, user){
-                const route = user.usersRoutes.find(r => r.date === req.body.date);
+                const route = user.usersRoutes.find(r => r.date == req.body.date);
                 const index = user.usersRoutes.indexOf(route);
                 if(index > -1){
                     user.usersRoutes.splice(index, 1);

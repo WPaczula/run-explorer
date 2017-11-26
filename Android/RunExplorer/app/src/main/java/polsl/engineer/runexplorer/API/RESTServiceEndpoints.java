@@ -76,4 +76,11 @@ public interface RESTServiceEndpoints {
     Call<Message> deleteRun(@Header("Authorization") String token,
                             @Path("username") String username,
                             @Field("date") Long date);
+
+    @FormUrlEncoded
+    @HTTP(method = "PUT", path = "/Routes/{username}", hasBody = true)
+    Call<Message> renameRun(@Header("Authorization") String token,
+                            @Path("username") String username,
+                            @Field("date") Long date,
+                            @Field("newName") String newName);
 }
