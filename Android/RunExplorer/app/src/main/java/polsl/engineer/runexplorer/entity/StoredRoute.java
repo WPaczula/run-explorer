@@ -21,9 +21,9 @@ import org.greenrobot.greendao.DaoException;
 
 @Entity
 public class StoredRoute {
-    @Id
     @Generated
-    private long id;
+    @Id(autoincrement = true)
+    private Long id;
     private boolean isNew;
     private String routeId;
     private String name;
@@ -39,18 +39,7 @@ public class StoredRoute {
     /** Used for active entity operations. */
     @Generated(hash = 38357284)
     private transient StoredRouteDao myDao;
-    @Generated(hash = 1716355953)
-    public StoredRoute(long id, boolean isNew, String routeId, String name, int distance,
-            long date, int time, String times) {
-        this.id = id;
-        this.isNew = isNew;
-        this.routeId = routeId;
-        this.name = name;
-        this.distance = distance;
-        this.date = date;
-        this.time = time;
-        this.times = times;
-    }
+
     public StoredRoute(RouteData routeData){
         this.isNew = routeData.isNew();
         this.routeId = routeData.getId();
@@ -61,14 +50,25 @@ public class StoredRoute {
         this.times = new Gson().toJson(routeData.getTimes());
     }
 
+    @Generated(hash = 544931785)
+    public StoredRoute(Long id, boolean isNew, String routeId, String name, int distance, long date,
+            int time, String times) {
+        this.id = id;
+        this.isNew = isNew;
+        this.routeId = routeId;
+        this.name = name;
+        this.distance = distance;
+        this.date = date;
+        this.time = time;
+        this.times = times;
+    }
+
     @Generated(hash = 256042026)
     public StoredRoute() {
     }
-    public long getId() {
+
+    public Long getId() {
         return this.id;
-    }
-    public void setId(long id) {
-        this.id = id;
     }
     public boolean getIsNew() {
         return this.isNew;
@@ -172,6 +172,10 @@ public class StoredRoute {
         }
         myDao.update(this);
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 2024402413)
     public void __setDaoSession(DaoSession daoSession) {

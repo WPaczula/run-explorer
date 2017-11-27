@@ -44,7 +44,6 @@ import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.entity.CheckpointConverter;
 import polsl.engineer.runexplorer.entity.DaoMaster;
 import polsl.engineer.runexplorer.entity.DaoSession;
-import polsl.engineer.runexplorer.entity.StoredCheckpoint;
 import polsl.engineer.runexplorer.entity.StoredRoute;
 import polsl.engineer.runexplorer.entity.StoredRouteDao;
 import polsl.engineer.runexplorer.layout.TimeAdapter;
@@ -53,8 +52,6 @@ import polsl.engineer.runexplorer.utility.TimeConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static polsl.engineer.runexplorer.config.Connection.username;
 
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -178,12 +175,12 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                             saveToDatabase();
                         } else {
                             Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                            saveButton.setVisibility(View.GONE);
-                            backButton.setVisibility(View.VISIBLE);
                         }
                     } else {
                         saveToDatabase();
                     }
+                    saveButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -202,12 +199,12 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                             saveToDatabase();
                         } else {
                             Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                            saveButton.setVisibility(View.GONE);
-                            backButton.setVisibility(View.VISIBLE);
                         }
                     } else {
                         saveToDatabase();
                     }
+                    saveButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
                 }
 
                 @Override

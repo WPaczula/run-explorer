@@ -1,9 +1,11 @@
 package polsl.engineer.runexplorer.services;
 
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.Context;
-import android.view.View;
+import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
@@ -18,9 +20,9 @@ import polsl.engineer.runexplorer.API.data.Message;
 import polsl.engineer.runexplorer.API.data.NewRouteData;
 import polsl.engineer.runexplorer.API.data.NewRunData;
 import polsl.engineer.runexplorer.API.data.RouteData;
+import polsl.engineer.runexplorer.R;
 import polsl.engineer.runexplorer.config.Connection;
 import polsl.engineer.runexplorer.config.DB;
-import polsl.engineer.runexplorer.entity.CheckpointConverter;
 import polsl.engineer.runexplorer.entity.DaoMaster;
 import polsl.engineer.runexplorer.entity.DaoSession;
 import polsl.engineer.runexplorer.entity.StoredRoute;
@@ -36,29 +38,45 @@ public class DataSenderService extends IntentService {
         super("DataSenderService");
     }
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
+    private String token;
+    private String username;
+    private StoredRouteDao routeDao;
+
+    @Override
+    public void onCreate(){
+        super.onCreate();
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB.name);
+        Database db = helper.getWritableDb();
+        DaoSession daoSession = new DaoMaster(db).newSession();
+        routeDao = daoSession.getStoredRouteDao();
+        Hawk.init(this).build();
+        token = Hawk.get(Connection.tokenKey);
+        username = Hawk.get(Connection.username);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                .setContentTitle("Your routes are trying to be sent")
+                .build();
+        startForeground(100,
+                notification);
+    }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
-            Toast.makeText(this, "Trying to send data later", Toast.LENGTH_SHORT).show();
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB.name);
-            Database db = helper.getWritableDb();
-            DaoSession daoSession = new DaoMaster(db).newSession();
-            StoredRouteDao routeDao = daoSession.getStoredRouteDao();
-            String token = Hawk.get(Connection.tokenKey);
-            String usename = Hawk.get(Connection.username);
             List<StoredRoute> routes = routeDao.loadAll();
             while(routes.size() > 0){
                 for(StoredRoute route : routes){
-                    sendRoute(route, token, usename, routeDao);
+                    sendRoute(route, token, username, routeDao);
                 }
-                routes = routeDao.loadAll();
                 try {
-                    Thread.sleep(1000 * 60 * 5);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                routes = routeDao.loadAll();
             }
+            Toast.makeText(this, "Your routes have been sent", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -70,7 +88,7 @@ public class DataSenderService extends IntentService {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
                     if(response.isSuccessful()){
-                        if(!response.body().isSuccess()){
+                        if(response.body().isSuccess()){
                             dao.delete(storedRoute);
                         }
                     }
@@ -84,7 +102,7 @@ public class DataSenderService extends IntentService {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
                     if(response.isSuccessful()) {
-                        if (!response.body().isSuccess()) {
+                        if (response.body().isSuccess()) {
                             dao.delete(storedRoute);
                         }
                     }
