@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="polsl.engineer.runexplorer.Activities.RoutePreviewActivity"
+    tools:context="polsl.engineer.runexplorer.activities.RoutePreviewActivity"
     tools:layout="@layout/activity_route_preview">
     <TextView
         android:id="@+id/route_name_tv"

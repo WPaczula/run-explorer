@@ -1,10 +1,4 @@
-package polsl.engineer.runexplorer.Config;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import polsl.engineer.runexplorer.Activities.MyRoutesActivity;
-import polsl.engineer.runexplorer.Activities.RunActivity;
+package polsl.engineer.runexplorer.config;
 
 /**
  * Created by Wojtek on 22.11.2017.

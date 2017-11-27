@@ -1,21 +1,19 @@
-package polsl.engineer.runexplorer.API.Data;
+package polsl.engineer.runexplorer.API.data;
 
 import java.util.List;
-
-import polsl.engineer.runexplorer.API.Data.Checkpoint;
 
 /**
  * Created by Wojtek on 23.11.2017.
  */
 
 public class NewRouteData {
-    public NewRouteData(RouteData data, long date) {
+    public NewRouteData(RouteData data) {
         this.points = data.getCheckpoints();
         this.name = data.getName();
         this.time = data.getTime();
         this.distance = data.getDistance();
         this.times = data.getTimes();
-        this.date = date;
+        this.date = data.getDate();
     }
 
     private List<Checkpoint> points;

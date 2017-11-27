@@ -1,6 +1,6 @@
 package polsl.engineer.runexplorer.API;
 
-import polsl.engineer.runexplorer.Config.Connection;
+import polsl.engineer.runexplorer.config.Connection;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

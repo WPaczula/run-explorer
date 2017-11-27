@@ -226,9 +226,8 @@ var initSensors = function(mapInit) {
          */
         self.sensors.pause = function() {
         	StopWatch.pause();
+        	self.sensors.running = false;
         	SpeedDistanceChangeListener.exit();
-			GeolocationChangeListener.exit();
-			HeartRateChangeListener.exit();
         };
         
         /**

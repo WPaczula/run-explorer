@@ -1,19 +1,17 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polsl.engineer.runexplorer.API.Data.Message;
-import polsl.engineer.runexplorer.API.Data.User;
+import polsl.engineer.runexplorer.API.data.Message;
+import polsl.engineer.runexplorer.API.data.User;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
 import polsl.engineer.runexplorer.R;

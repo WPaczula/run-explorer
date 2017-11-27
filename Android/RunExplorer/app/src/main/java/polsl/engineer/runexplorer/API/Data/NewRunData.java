@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.API.Data;
+package polsl.engineer.runexplorer.API.data;
 
 import java.util.List;
 

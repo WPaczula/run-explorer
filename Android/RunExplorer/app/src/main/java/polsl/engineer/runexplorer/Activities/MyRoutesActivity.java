@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,20 +11,18 @@ import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import polsl.engineer.runexplorer.API.Data.RouteTitleData;
-import polsl.engineer.runexplorer.API.Data.RouteListData;
+import polsl.engineer.runexplorer.API.data.RouteTitleData;
+import polsl.engineer.runexplorer.API.data.RouteListData;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
-import polsl.engineer.runexplorer.Config.Connection;
+import polsl.engineer.runexplorer.config.Connection;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Layout.RouteAdapter;
+import polsl.engineer.runexplorer.layout.RouteAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

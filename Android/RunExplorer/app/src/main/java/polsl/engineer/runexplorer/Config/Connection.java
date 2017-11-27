@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Config;
+package polsl.engineer.runexplorer.config;
 
 /**
  * Created by Wojtek on 20.11.2017.

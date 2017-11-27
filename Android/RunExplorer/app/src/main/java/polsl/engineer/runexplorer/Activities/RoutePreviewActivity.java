@@ -1,17 +1,13 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,27 +22,39 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 
+import org.greenrobot.greendao.database.Database;
+
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polsl.engineer.runexplorer.API.Data.Message;
-import polsl.engineer.runexplorer.API.Data.NewRouteData;
-import polsl.engineer.runexplorer.API.Data.NewRunData;
-import polsl.engineer.runexplorer.API.Data.RouteData;
-import polsl.engineer.runexplorer.API.Data.SetPathAction;
+import polsl.engineer.runexplorer.API.data.Message;
+import polsl.engineer.runexplorer.API.data.NewRouteData;
+import polsl.engineer.runexplorer.API.data.NewRunData;
+import polsl.engineer.runexplorer.API.data.RouteData;
+import polsl.engineer.runexplorer.API.data.SetPathAction;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
-import polsl.engineer.runexplorer.Config.Connection;
-import polsl.engineer.runexplorer.Config.Extra;
+import polsl.engineer.runexplorer.config.Connection;
+import polsl.engineer.runexplorer.config.DB;
+import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Layout.TimeAdapter;
-import polsl.engineer.runexplorer.Utility.TimeConverter;
+import polsl.engineer.runexplorer.entity.CheckpointConverter;
+import polsl.engineer.runexplorer.entity.DaoMaster;
+import polsl.engineer.runexplorer.entity.DaoSession;
+import polsl.engineer.runexplorer.entity.StoredCheckpoint;
+import polsl.engineer.runexplorer.entity.StoredRoute;
+import polsl.engineer.runexplorer.entity.StoredRouteDao;
+import polsl.engineer.runexplorer.layout.TimeAdapter;
+import polsl.engineer.runexplorer.services.DataSenderService;
+import polsl.engineer.runexplorer.utility.TimeConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static polsl.engineer.runexplorer.config.Connection.username;
 
 public class RoutePreviewActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -140,20 +148,47 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
 
     @OnClick(R.id.save_route_btn)
     public void saveRoute(View view){
-        String token = Hawk.get(Connection.tokenKey);
-        String username = Hawk.get(Connection.username);
+        final String token = Hawk.get(Connection.tokenKey);
+        final String username = Hawk.get(Connection.username);
+        routeData.setDate(Calendar.getInstance().getTime().getTime());
+        sendRoute(token, username);
+    }
+
+    private void saveToDatabase(){
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB.name);
+        Database db = helper.getWritableDb();
+        DaoSession daoSession = new DaoMaster(db).newSession();
+        StoredRouteDao routeDao = daoSession.getStoredRouteDao();
+        StoredRoute storedRoute = new StoredRoute(routeData);
+        routeDao.insert(storedRoute);
+        CheckpointConverter.insertToDB(daoSession.getStoredCheckpointDao(), routeData.getCheckpoints(), storedRoute.getId());
+
+        Intent intent = new Intent(this, DataSenderService.class);
+        startService(intent);
+    }
+
+    private void sendRoute(String token, String username){
         if(routeData.isNew()){
-            Call<Message> addRouteCallback = endpoints.saveRoute(token, new NewRouteData(routeData, Calendar.getInstance().getTime().getTime()));
+            Call<Message> addRouteCallback = endpoints.saveRoute(token, new NewRouteData(routeData));
             addRouteCallback.enqueue(new Callback<Message>() {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
-                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    saveButton.setVisibility(View.GONE);
-                    backButton.setVisibility(View.VISIBLE);
+                    if(response.isSuccessful()){
+                        if(!response.body().isSuccess()){
+                            saveToDatabase();
+                        } else {
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            saveButton.setVisibility(View.GONE);
+                            backButton.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        saveToDatabase();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<Message> call, Throwable t) {
+                    saveToDatabase();
                     Toast.makeText(getApplicationContext(), "Cant save run", Toast.LENGTH_LONG).show();
                 }
             });
@@ -162,13 +197,22 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
             addRunCallback.enqueue(new Callback<Message>() {
                 @Override
                 public void onResponse(Call<Message> call, Response<Message> response) {
-                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    saveButton.setVisibility(View.GONE);
-                    backButton.setVisibility(View.VISIBLE);
+                    if(response.isSuccessful()) {
+                        if(!response.body().isSuccess()){
+                            saveToDatabase();
+                        } else {
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            saveButton.setVisibility(View.GONE);
+                            backButton.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        saveToDatabase();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<Message> call, Throwable t) {
+                    saveToDatabase();
                     Toast.makeText(getApplicationContext(), "Cant save run", Toast.LENGTH_LONG).show();
                 }
             });

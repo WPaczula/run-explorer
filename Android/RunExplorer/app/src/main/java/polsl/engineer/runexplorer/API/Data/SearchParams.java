@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.API.Data;
+package polsl.engineer.runexplorer.API.data;
 
 /**
  * Created by Wojtek on 23.11.2017.

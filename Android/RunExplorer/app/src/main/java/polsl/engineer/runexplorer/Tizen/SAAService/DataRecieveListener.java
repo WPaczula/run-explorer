@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Tizen.SAAService;
+package polsl.engineer.runexplorer.tizen.SAAService;
 
 /**
  * Created by Wojtek on 19.11.2017.

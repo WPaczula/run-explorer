@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="polsl.engineer.runexplorer.Activities.MyRoutesActivity">
+    tools:context="polsl.engineer.runexplorer.activities.MyRoutesActivity">
     <TextView
         android:id="@+id/no_my_rotes_tv"
         android:layout_centerHorizontal="true"

@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -13,7 +14,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +30,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polsl.engineer.runexplorer.API.Data.SearchParams;
-import polsl.engineer.runexplorer.Config.Extra;
+import polsl.engineer.runexplorer.API.data.SearchParams;
+import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
 
 public class RouteSearchActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, SeekBar.OnSeekBarChangeListener {
@@ -99,23 +97,37 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
             Toast.makeText(this, "Cant find you, did you forget to turn GPS on?", Toast.LENGTH_LONG).show();
             return;
         }
-        mMap.setMyLocationEnabled(true);
-        LocationManager locationManager = (LocationManager)
-                getSystemService(this.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
+        int off;
+        try {
+            off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+            if(off==0){
+                Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(onGPS);
+                Toast.makeText(getApplicationContext(), "Turn the gps on to allow search next time", Toast.LENGTH_LONG).show();
+            } else {
+                mMap.setMyLocationEnabled(true);
+                LocationManager locationManager = (LocationManager)
+                        getSystemService(this.LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
 
-        Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
+                Location location = locationManager.getLastKnownLocation(locationManager
+                        .getBestProvider(criteria, false));
+                if(location != null){
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
 
-        final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15);
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                mMap.animateCamera(cameraUpdate);
+                    final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15);
+                    mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                        @Override
+                        public void onMapLoaded() {
+                            mMap.animateCamera(cameraUpdate);
+                        }
+                    });
+                }
             }
-        });
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

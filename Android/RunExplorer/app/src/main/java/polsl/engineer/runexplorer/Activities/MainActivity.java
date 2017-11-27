@@ -1,23 +1,18 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Optional;
-import polsl.engineer.runexplorer.API.Data.Checkpoint;
-import polsl.engineer.runexplorer.API.Data.SetPathAction;
-import polsl.engineer.runexplorer.Config.Extra;
+import polsl.engineer.runexplorer.API.data.Checkpoint;
+import polsl.engineer.runexplorer.API.data.SetPathAction;
+import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
 
 public class MainActivity extends AppCompatActivity {

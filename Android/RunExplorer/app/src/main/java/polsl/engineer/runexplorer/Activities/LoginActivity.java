@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +12,11 @@ import com.orhanobut.hawk.Hawk;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polsl.engineer.runexplorer.API.Data.JWT;
-import polsl.engineer.runexplorer.API.Data.User;
+import polsl.engineer.runexplorer.API.data.JWT;
+import polsl.engineer.runexplorer.API.data.User;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
-import polsl.engineer.runexplorer.Config.Connection;
+import polsl.engineer.runexplorer.config.Connection;
 import polsl.engineer.runexplorer.R;
 import retrofit2.Call;
 import retrofit2.Callback;

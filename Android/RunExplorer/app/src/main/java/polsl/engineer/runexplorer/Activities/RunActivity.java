@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Activities;
+package polsl.engineer.runexplorer.activities;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,19 +12,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.sql.Date;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import polsl.engineer.runexplorer.API.Data.Checkpoint;
-import polsl.engineer.runexplorer.API.Data.RouteData;
-import polsl.engineer.runexplorer.Config.Connection;
-import polsl.engineer.runexplorer.Config.Extra;
+import polsl.engineer.runexplorer.API.data.RouteData;
+import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Tizen.Data.TizenRouteData;
-import polsl.engineer.runexplorer.Tizen.SAAService.ConsumerService;
-import polsl.engineer.runexplorer.Tizen.SAAService.DataRecieveListener;
+import polsl.engineer.runexplorer.tizen.data.TizenRouteData;
+import polsl.engineer.runexplorer.tizen.SAAService.ConsumerService;
+import polsl.engineer.runexplorer.tizen.SAAService.DataRecieveListener;
 
 public class RunActivity extends AppCompatActivity implements DataRecieveListener {
 

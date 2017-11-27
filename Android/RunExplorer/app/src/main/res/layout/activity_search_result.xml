@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="polsl.engineer.runexplorer.Activities.SearchResultActivity">
+    tools:context="polsl.engineer.runexplorer.activities.SearchResultActivity">
     <TextView
         android:id="@+id/no_found_routes_tv"
         android:layout_width="wrap_content"

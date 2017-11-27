@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Layout;
+package polsl.engineer.runexplorer.layout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Utility.TimeConverter;
+import polsl.engineer.runexplorer.utility.TimeConverter;
 
 /**
  * Created by Wojtek on 19.11.2017.

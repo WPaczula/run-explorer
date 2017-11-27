@@ -1,4 +1,6 @@
-package polsl.engineer.runexplorer.API.Data;
+package polsl.engineer.runexplorer.API.data;
+
+import polsl.engineer.runexplorer.entity.StoredCheckpoint;
 
 /**
  * Created by Wojtek on 21.11.2017.
@@ -7,6 +9,11 @@ package polsl.engineer.runexplorer.API.Data;
 public class Checkpoint {
     private double lat;
     private double lng;
+
+    public Checkpoint(StoredCheckpoint checkpoint){
+        this.lat = checkpoint.getLat();
+        this.lng = checkpoint.getLng();
+    }
 
     public double getLat() {
         return lat;

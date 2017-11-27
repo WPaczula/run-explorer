@@ -1,19 +1,14 @@
 package polsl.engineer.runexplorer.API;
 
-import java.util.List;
-
-import polsl.engineer.runexplorer.API.Data.ChangeNameParams;
-import polsl.engineer.runexplorer.API.Data.JWT;
-import polsl.engineer.runexplorer.API.Data.Message;
-import polsl.engineer.runexplorer.API.Data.NewRunData;
-import polsl.engineer.runexplorer.API.Data.RouteData;
-import polsl.engineer.runexplorer.API.Data.RouteTitleData;
-import polsl.engineer.runexplorer.API.Data.User;
-import polsl.engineer.runexplorer.API.Data.RouteListData;
-import polsl.engineer.runexplorer.API.Data.NewRouteData;
+import polsl.engineer.runexplorer.API.data.JWT;
+import polsl.engineer.runexplorer.API.data.Message;
+import polsl.engineer.runexplorer.API.data.NewRunData;
+import polsl.engineer.runexplorer.API.data.RouteData;
+import polsl.engineer.runexplorer.API.data.User;
+import polsl.engineer.runexplorer.API.data.RouteListData;
+import polsl.engineer.runexplorer.API.data.NewRouteData;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -29,6 +24,9 @@ import retrofit2.http.Query;
  */
 
 public interface RESTServiceEndpoints {
+    @GET("/")
+    Call<Message> checkConnection();
+
     @Headers("content-type: application/json")
     @POST("/Authenticate")
     Call<JWT> authenticate(@Body User user);

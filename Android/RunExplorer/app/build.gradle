@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -35,6 +38,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.orhanobut:hawk:2.0.1'
+    compile 'org.greenrobot:greendao:3.2.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

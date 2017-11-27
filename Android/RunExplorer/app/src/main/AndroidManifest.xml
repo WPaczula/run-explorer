@@ -13,18 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".activities.MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activities.RoutePreviewActivity"
+            android:name=".activities.RoutePreviewActivity"
             android:label="@string/title_activity_route_preview">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="polsl.engineer.runexplorer.Activities.MainActivity" />
+                android:value="polsl.engineer.runexplorer.activities.MainActivity" />
         </activity>
 
         <meta-data
@@ -35,7 +35,7 @@
             android:value="wgt" />
 
         <service
-            android:name=".Tizen.SAAService.ConsumerService"
+            android:name=".tizen.SAAService.ConsumerService"
             android:enabled="true"
             android:exported="true" />
 
@@ -50,20 +50,24 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Activities.RunActivity" />
-        <activity android:name=".Activities.MyRoutesActivity" />
+        <activity android:name=".activities.RunActivity" />
+        <activity android:name=".activities.MyRoutesActivity" />
         <activity
-            android:name=".Activities.RouteSearchActivity"
+            android:name=".activities.RouteSearchActivity"
             android:label="@string/title_activity_route_search" />
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.SearchResultActivity"></activity>
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.SearchResultActivity" />
+
+        <service
+            android:name=".services.DataSenderService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

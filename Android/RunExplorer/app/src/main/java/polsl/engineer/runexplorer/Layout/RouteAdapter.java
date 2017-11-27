@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Layout;
+package polsl.engineer.runexplorer.layout;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,16 +21,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import polsl.engineer.runexplorer.API.Data.Message;
-import polsl.engineer.runexplorer.API.Data.RouteData;
-import polsl.engineer.runexplorer.API.Data.RouteTitleData;
+import polsl.engineer.runexplorer.API.data.Message;
+import polsl.engineer.runexplorer.API.data.RouteData;
+import polsl.engineer.runexplorer.API.data.RouteTitleData;
 import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
-import polsl.engineer.runexplorer.Activities.RoutePreviewActivity;
-import polsl.engineer.runexplorer.Config.Connection;
-import polsl.engineer.runexplorer.Config.Extra;
+import polsl.engineer.runexplorer.activities.RoutePreviewActivity;
+import polsl.engineer.runexplorer.config.Connection;
+import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.Utility.TimeConverter;
+import polsl.engineer.runexplorer.utility.TimeConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

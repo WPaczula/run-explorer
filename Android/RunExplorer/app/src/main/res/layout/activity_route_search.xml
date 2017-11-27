@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="polsl.engineer.runexplorer.Activities.RoutePreviewActivity"
+    tools:context="polsl.engineer.runexplorer.activities.RoutePreviewActivity"
     tools:layout="@layout/activity_route_preview">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

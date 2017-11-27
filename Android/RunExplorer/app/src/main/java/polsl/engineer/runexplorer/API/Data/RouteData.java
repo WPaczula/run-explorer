@@ -1,11 +1,16 @@
-package polsl.engineer.runexplorer.API.Data;
+package polsl.engineer.runexplorer.API.data;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import polsl.engineer.runexplorer.Tizen.Data.TizenRouteData;
+import polsl.engineer.runexplorer.entity.CheckpointConverter;
+import polsl.engineer.runexplorer.entity.StoredRoute;
+import polsl.engineer.runexplorer.tizen.data.TizenRouteData;
 
 /**
  * Created by Wojtek on 22.11.2017.
@@ -30,6 +35,17 @@ public class RouteData {
         this.times = tizenRouteData.getTimes();
         this.date = date;
         this.checkpoints = tizenRouteData.getCheckpoints();
+    }
+
+    public RouteData(StoredRoute storedRoute){
+        this.isNew = storedRoute.getIsNew();
+        this.name = storedRoute.getName();
+        this.distance = storedRoute.getDistance();
+        this.id = storedRoute.getRouteId();
+        this.time = storedRoute.getTime();
+        Type listType = new TypeToken<ArrayList<Integer>>(){}.getType();
+        this.times = new Gson().fromJson(storedRoute.getTimes(), listType);
+        this.checkpoints = CheckpointConverter.getCheckpoints(storedRoute.getCheckpoints());
     }
 
     public long getDate() {

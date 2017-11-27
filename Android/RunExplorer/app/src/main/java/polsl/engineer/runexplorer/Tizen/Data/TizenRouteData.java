@@ -1,8 +1,8 @@
-package polsl.engineer.runexplorer.Tizen.Data;
+package polsl.engineer.runexplorer.tizen.data;
 
 import java.util.List;
 
-import polsl.engineer.runexplorer.API.Data.Checkpoint;
+import polsl.engineer.runexplorer.API.data.Checkpoint;
 
 /**
  * Created by Wojtek on 21.11.2017.

@@ -1,4 +1,4 @@
-package polsl.engineer.runexplorer.Utility;
+package polsl.engineer.runexplorer.utility;
 
 import android.annotation.SuppressLint;
 
