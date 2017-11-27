@@ -14,6 +14,7 @@ import polsl.engineer.runexplorer.API.data.Checkpoint;
 import polsl.engineer.runexplorer.API.data.SetPathAction;
 import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
+import polsl.engineer.runexplorer.services.DataSenderService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = new Intent(this, DataSenderService.class);
+        startService(intent);
         Hawk.init(this).build();
     }
 }

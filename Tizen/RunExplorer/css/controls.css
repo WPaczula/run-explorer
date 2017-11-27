@@ -1,0 +1,100 @@
+  
+  .play-btn {
+    width: 220px;
+    height: 220px;
+    background: radial-gradient( #BDBDBD 50%, rgba(255, 255, 255, 0.15) 52%);
+    border-radius: 50%;
+    display: block;
+    margin: 65px auto 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .start {
+    width: 0;
+    height: 0;
+    border-top: 30px solid transparent;
+    border-left: 62px solid #FFF000;
+    border-bottom: 33px solid transparent;
+    position: relative;
+    top: 37%;
+    left: 40%;
+  }
+
+  .stop {
+    position: relative;
+    padding: 35px;
+    width: 21px;
+    height: 10px;
+    top: 77px;
+    background: #FFF000;
+    left: 74px;
+  }
+
+  .invisible{
+    display: none;
+  }
+
+  /* pulse wave */
+  
+  .play-btn:before {
+    content: '';
+    position: absolute;
+    width: 285px;
+    height: 285px;
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation: pulsate1 2s;
+    animation: pulsate1 2s;
+    -webkit-animation-direction: forwards;
+    animation-direction: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: steps;
+    animation-timing-function: steps;
+    opacity: 1;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    top: -15%;
+    left: -15%;
+    background: rgba(198, 16, 0, 0);
+  }
+
+  @-webkit-keyframes pulsate1 {
+    0% {
+      -webkit-transform: scale(0.6, 0.6);
+      transform: scale(0.6, 0.6);
+      opacity: 1
+    }
+    100% {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+      opacity: 0
+    }
+  }
+  
+  @keyframes pulsate1 {
+    0% {
+      -webkit-transform: scale(0.6, 0.6);
+      transform: scale(0.6, 0.6);
+      opacity: 1
+    }
+    100% {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+      opacity: 0
+    }
+  }
+  
+  @-webkit-keyframes pulsate2 {
+    0% {
+      -webkit-transform: scale(0.1, 0.1);
+      transform: scale(0.1, 0.1);
+      opacity: 1
+    }
+    100% {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+      opacity: 0
+    }
+  }

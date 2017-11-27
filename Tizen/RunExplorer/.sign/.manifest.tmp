@@ -27,10 +27,10 @@
 .metadata/.plugins/org.eclipse.wst.jsdt.ui/OpenTypeHistory.xml__DEL__Gp5IiP70MtbMV5EP6zRxmHYRcULf2/0T1tWAHtXvEWY=
 .metadata/.plugins/org.eclipse.wst.jsdt.ui/QualifiedTypeNameHistory.xml__DEL__tBu5/K7Np4pv2KSPxFKUGASzyWcnuYMwMqfPuv3JCF0=
 .metadata/version.ini__DEL__dZk2YWvCdaorQO1v3T9vkQ23/kmIbLJQqJkNmp6g3UA=
+assets/heart_beat.png__DEL__rqyj29zrsc+90+mqP6Y6R0Nf6xVLyKFTkWmnzQIOWQA=
+assets/speed.png__DEL__MhLlu1xGJy2RMhmucYxs1whZVEDL202pOZi4eysClko=
 config.xml__DEL__cGQtpQyd31Q6XYhkUJjeRd9YSs6Fa6SSA4wE8L/K1V0=
-css/style.css__DEL__h2LMtsU6GMhBVTuu9JQi3NpMpqQqIxoKpPQ7bRXlj10=
 icon.png__DEL__vPjxjOppORd6hn9Bw4sh06gqtDoJzoFbV/8e9FyIdvk=
-index.html__DEL__v+x4MGEWJ7h7QkRn6ruGNhbyejaydc90SBmYlWS1I3E=
 js/app.js__DEL__Yet0af5hPaWd6RTWk/LFJmd0EmlnRGzbE7fco824O0M=
 js/connect/connect.js__DEL__77A+pA64oDKal8qHcObCOMx31m96SlYflp1r+6IL97c=
 js/run/controls.js__DEL__lyS0JHe5LjFvuRNt2jjCy7MOwOUzKAU3n2dawOsWo9U=
@@ -318,4 +318,9 @@ lib/tau/wearable/theme/default/tau.min.css__DEL__qnnCAIPGsW3IDww1aliQWt68MoJpWlp
 lib/tau/wearable/theme/default/tau.min.template__DEL__pMbNqgPMw2Wi+7A6WpjsUttxF24ELM4vVvJHlNCew3E=
 lib/tau/wearable/theme/default/tau.template__DEL__6G1+BW7cnojrMTmoZuo0V6ytOpdJfXfIOLJDBQh9x04=
 res/xml/accesoryservices.xml__DEL__midVk6nj0uG/6U03Avyc47LxQU1rVLxAAulbmsESiTM=
-author-signature.xml__DEL__N5l8kV2IXEX2uZWC0+eb10/iAYGCWkJB1D2GcQX6Ttc=
+author-signature.xml__DEL__ZCZc8w/fugVIBWy+76rPFX2YkuDfwTP4m4FpVS51vy4=
+css/controls.css__DEL__cBM+aokL5mj3J9nhDVOWRdCZEQcVsg0mqBGSDdH5Nus=
+css/style.css__DEL__Ozxg9ELquZPGQuTjc0l3MOWDT/XB5imw5VUuxDpbAyU=
+css/main.css__DEL__qJKoVU5bC2ZKbQq4DFBQD+vEvPZL8vV5P52C/ellCgE=
+index.html__DEL__tAI6mOrxxonUCrMnF76hciip4g0cmoPTo6VDfMZdobM=
+css/connect.css__DEL__1c0F0P4ZI1TSCBnJbS2oafWadqv8L7XninvGKUfSdHQ=

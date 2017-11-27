@@ -1,10 +1,7 @@
-* {
-    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
-}
-
-body {
+.ui-page.ui-page-active {
+	font-family: Impact
     margin: 0px auto;
-    background-color:#222;
+    background-color: #455A64;
 }
 
 #content-speed #content-location #content-error {

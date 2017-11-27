@@ -8,38 +8,52 @@
 		 crossorigin=""/>
         <link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.min.css">
         <link rel="stylesheet" media="all and (-tizen-geometric-shape: circle)" href="lib/tau/wearable/theme/default/tau.circle.min.css">
-        <link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/connect.css">
+		<link rel="stylesheet" href="css/controls.css">
+		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
 		<div id="connection-page" class="ui-page ui-page-active" data-enable-page-scroll="false">
-			<header class="ui-header">
-                <h3 class="ui-title">Controls</h3>
-            </header>
             <div class="ui-content">
-            	Waiting for connection
-            </div>
+				<div class="waiting-message">
+				Waiting for route...
+				</div>
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				  </div>
+			</div>
             <div id="toast" class="ui-popup ui-popup-toast">
 				<div id="toast-content" class="ui-popup-content"></div>
 			</div>
 		</div>
 		<div id="controls-page" class="ui-page" data-enable-page-scroll="false">
-			<header class="ui-header">
-                <h3 class="ui-title">Controls</h3>
-            </header>
-            <div class="ui-content">
-                <button id="start-button">START</button>
-                <button id="pause-button">PAUSE</button>
+            <div class="ui-content buttons-container">
+				<a id="start-button" class="play-btn">
+					<div class="start"></div>
+				</a>
+				<a id="stop-button" class="play-btn invisible">
+					<div class="stop"></div>
+				</a>
             </div>
 		</div>
 		<div id="main-page" class="ui-page" data-enable-page-scroll="false">
-			<header class="ui-header">
-                <h3 class="ui-title">Sensors</h3>
-            </header>
-            <div class="ui-content">
-                <div id="content-speed">Pace: 0km/h</div>
-                <div id="content-stopwatch">00:00:00</div>
-                <div id="content-distance">Distance: 0km</div>
-                <div id="content-heartrate">HR: 0</div>
+            <div class="ui-content showing">
+				<div id="content-distance" class="line distance">0km</div>					
+				<hr/>
+				<div id="content-stopwatch" class="line clock">00:00:00</div>				
+				<hr/>
+				<div class="container">
+					<div id="content-heartrate" class="line">
+						<img src="./assets/heart_beat.png" class="icon">							
+						0
+					</div>
+					<div id="content-speed" class="line">
+						0 km/h
+						<img src="./assets/speed.png" class="icon">
+					</div>
+				</div>
                 <div id="content-error"></div>
             </div>
             
@@ -53,12 +67,5 @@
 		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
 	   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
 	   crossorigin=""></script>
-		<script type="text/javascript" src="js/connect/connect.js"></script>
-        <script type="text/javascript" src="js/run/sensors.js"></script>
-        <script type="text/javascript" src="js/run/map.js"></script>
-        <script type="text/javascript" src="js/run/controls.js"></script>
-        <script type="text/javascript" src="js/ui.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
-        
 	</body>
 </html>
