@@ -67,6 +67,7 @@
 
         <service
             android:name=".services.DataSenderService"
+            android:process=":Sender"
             android:exported="false"></service>
     </application>
 

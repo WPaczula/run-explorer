@@ -153,19 +153,18 @@ var initSensors = function(mapInit) {
             if(SpeedDistanceChangeListener.bootDistance === 0)
             	SpeedDistanceChangeListener.bootDistance = info.accumulativeDistance;
             self.data.main.distance = Math.round(info.accumulativeDistance - SpeedDistanceChangeListener.bootDistance);
-            
-            if(self.data.main.distance > segmentDistance){
-            	self.data.main.checkpoints.push({
-            		lat: self.data.main.position.lat,
-            		lng: self.data.main.position.lng,
-            		});
-            	segmentDistance += segmentDistance;
-            }
-            if(self.data.main.distance > segmentTime){
-            	self.data.main.times.push(self.data.main.time);
-            	lastSegmentTime = self.data.main.time;
-            	segmentTime += segmentTime;
-            }
+            	if(self.data.main.distance > segmentDistance){
+                	self.data.main.checkpoints.push({
+                		lat: self.data.main.position.lat,
+                		lng: self.data.main.position.lng,
+                		});
+                	segmentDistance += segmentDistance;
+                }
+                if(self.data.main.distance > segmentTime){
+                	self.data.main.times.push(self.data.main.time);
+                	lastSegmentTime = self.data.main.time;
+                	segmentTime += segmentTime;
+                }
             console.log("SpeedDistance: ", info);
             self.ui.mainpage.speed.innerHTML = "Pace: " + self.data.main.speed + "km/h";
             self.ui.mainpage.distance.innerHTML = "Distance: " + round(self.data.main.distance / 1000) + "km";

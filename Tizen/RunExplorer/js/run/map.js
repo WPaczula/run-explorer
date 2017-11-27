@@ -101,21 +101,23 @@ var initMap = function() {
 	}
 	
 	self.map.init = function(){
-		self.data.map.myMap = L.map(self.ui.mappage.map, normalizePosition(self.data.main.position), 17);
-		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-	    }).addTo(self.data.map.myMap);
-		if(pathLatLng.length === 0){
-			routesCheckpointsMarkersPassed = convertPositionsForInvisibleMarkersOnMap([self.data.main.position], self.data.map.myMap);
+		if(window.L != undefined){
+			self.data.map.myMap = L.map(self.ui.mappage.map, normalizePosition(self.data.main.position), 17);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+		    }).addTo(self.data.map.myMap);
+			if(pathLatLng.length === 0){
+				routesCheckpointsMarkersPassed = convertPositionsForInvisibleMarkersOnMap([self.data.main.position], self.data.map.myMap);
+			}
+			routesCheckpointsMarkers = convertPositionsForInvisibleMarkersOnMap(pathLatLng, self.data.map.myMap);
+			routeToBeat = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkers, blue, 0);
+			routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
+			self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position);
+			self.data.map.myMap.setView(normalizePosition(self.data.main.position), 17);
+			moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
+			self.map.updatePosition = (pathLatLng.length !== 0) ? followThePath : makeOwnPath;
+			self.map.ready = true;
 		}
-		routesCheckpointsMarkers = convertPositionsForInvisibleMarkersOnMap(pathLatLng, self.data.map.myMap);
-		routeToBeat = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkers, blue, 0);
-		routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
-		self.data.map.currentPositionMarker = createMarker(self.data.map.myMap, self.data.main.position);
-		self.data.map.myMap.setView(normalizePosition(self.data.main.position), 17);
-		moveCameraToMarker(self.data.map.myMap, normalizePosition(self.data.main.position));
-		self.map.updatePosition = (pathLatLng.length !== 0) ? followThePath : makeOwnPath;
-		self.map.ready = true;
 	};
 	
 	self.map.resize = function() {
