@@ -2,6 +2,7 @@
 	font-family: Impact
     margin: 0px auto;
     background-color: #455A64;
+    background: linear-gradient(#455A64, #171F23);
 }
 
 #content-speed #content-location #content-error {

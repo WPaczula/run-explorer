@@ -166,8 +166,8 @@ var initSensors = function(mapInit) {
                 	segmentTime += segmentTime;
                 }
             console.log("SpeedDistance: ", info);
-            self.ui.mainpage.speed.innerHTML = "Pace: " + self.data.main.speed + "km/h";
-            self.ui.mainpage.distance.innerHTML = "Distance: " + round(self.data.main.distance / 1000) + "km";
+            self.ui.mainpage.speed.textContent = self.data.main.speed + " km/h";
+            self.ui.mainpage.distance.textContent = round(self.data.main.distance / 1000) + "km";
         };
         
         /**
@@ -196,7 +196,7 @@ var initSensors = function(mapInit) {
          */
         HeartRateChangeListener.onChange = function(heartRateInfo){
     		self.data.main.heartRate = heartRateInfo.heartRate;
-        	self.ui.mainpage.heartRate.innerHTML = "HR: " + (self.data.main.heartRate > 0 ? self.data.main.heartRate : 0);
+        	self.ui.mainpage.heartRate.textContent = (self.data.main.heartRate > 0 ? self.data.main.heartRate: 0) + " per min" ;
         };
         
         /**

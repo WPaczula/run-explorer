@@ -29,34 +29,34 @@
 			</div>
 		</div>
 		<div id="controls-page" class="ui-page" data-enable-page-scroll="false">
-            <div class="ui-content buttons-container">
+            <div class="ui-content">
 				<a id="start-button" class="play-btn">
 					<div class="start"></div>
 				</a>
-				<a id="stop-button" class="play-btn invisible">
+				<a id="pause-button" class="play-btn invisible">
 					<div class="stop"></div>
 				</a>
             </div>
 		</div>
 		<div id="main-page" class="ui-page" data-enable-page-scroll="false">
             <div class="ui-content showing">
-				<div id="content-distance" class="line distance">0km</div>					
+				<div id="content-distance" class="line distance">0 km</div>					
 				<hr/>
 				<div id="content-stopwatch" class="line clock">00:00:00</div>				
 				<hr/>
 				<div class="container">
-					<div id="content-heartrate" class="line">
-						<img src="./assets/heart_beat.png" class="icon">							
-						0
+					<div class="line minor">								
+						<span id="content-heartrate">0 per min</span>
+						<img src="./assets/heart_beat.png" class="icon heart"/>
 					</div>
-					<div id="content-speed" class="line">
-						0 km/h
-						<img src="./assets/speed.png" class="icon">
+					<div class="line minor">
+						<span id="content-speed">0 km/h</span>
+						<img src="./assets/speed.png" class="icon"/>
 					</div>
+					
 				</div>
                 <div id="content-error"></div>
             </div>
-            
 		</div>
 		<div id="map-page" class="ui-page"  data-enable-page-scroll="false">
 			<div id="no-info">No location found yet</div>
@@ -67,5 +67,11 @@
 		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
 	   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
 	   crossorigin=""></script>
+	   <script type="text/javascript" src="js/connect/connect.js"></script>
+       <script type="text/javascript" src="js/run/sensors.js"></script>
+       <script type="text/javascript" src="js/run/map.js"></script>
+       <script type="text/javascript" src="js/run/controls.js"></script>
+       <script type="text/javascript" src="js/ui.js"></script>
+       <script type="text/javascript" src="js/app.js"></script>
 	</body>
 </html>

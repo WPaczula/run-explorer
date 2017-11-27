@@ -4,8 +4,8 @@ var initMap = function() {
 		routesCheckpointsMarkersPassed = [],
 		routeToBeat,
 		routeBet,
-		blue = "#0000FF",
-		green = "#00FF00",
+		blue = "#455A64",
+		green = "#FFF000",
 		pathLatLng = [];
 	var routeData = localStorage.getItem('route');
 	if(routeData !== undefined){

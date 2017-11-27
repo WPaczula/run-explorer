@@ -3,11 +3,15 @@ var initControls = function(){
 	
 	function pause(){
 		self.sensors.pause();
+		self.ui.controlspage.pauseButton.className = "invisible"
+		self.ui.controlspage.startButton.className = "play-btn"
 	}
 	
 	function start(){
 		self.sensors.start();
 		tau.changePage("#" + self.MAIN_PAGE);
+		self.ui.controlspage.pauseButton.className = "play-btn"
+		self.ui.controlspage.startButton.className = "invisible"
 	}
 	
 	function stop(){
