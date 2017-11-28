@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/choose_route_card_btn"
+        android:visible="true"
+        android:title="@string/choose_route"/>
+    <item
+        android:id="@+id/delete_route_card_bnt"
+        android:visible="true"
+        android:title="@string/delete"/>
+    <item
+        android:id="@+id/rename_route_card_bnt"
+        android:visible="true"
+        android:title="@string/rename"/>
+</menu>

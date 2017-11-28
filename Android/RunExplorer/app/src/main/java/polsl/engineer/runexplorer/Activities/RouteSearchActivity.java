@@ -103,27 +103,26 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
             if(off==0){
                 Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(onGPS);
-                Toast.makeText(getApplicationContext(), "Turn the gps on to allow search next time", Toast.LENGTH_LONG).show();
-            } else {
-                mMap.setMyLocationEnabled(true);
-                LocationManager locationManager = (LocationManager)
-                        getSystemService(this.LOCATION_SERVICE);
-                Criteria criteria = new Criteria();
+            }
+            
+            mMap.setMyLocationEnabled(true);
+            LocationManager locationManager = (LocationManager)
+                    getSystemService(this.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
 
-                Location location = locationManager.getLastKnownLocation(locationManager
-                        .getBestProvider(criteria, false));
-                if(location != null){
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
+            Location location = locationManager.getLastKnownLocation(locationManager
+                    .getBestProvider(criteria, false));
+            if(location != null){
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
 
-                    final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15);
-                    mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-                        @Override
-                        public void onMapLoaded() {
-                            mMap.animateCamera(cameraUpdate);
-                        }
-                    });
-                }
+                final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15);
+                mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
+                        mMap.animateCamera(cameraUpdate);
+                    }
+                });
             }
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();

@@ -76,14 +76,17 @@ public class MyRoutesActivity extends AppCompatActivity{
         getUserRoutesCall.enqueue(new Callback<RouteListData>() {
             @Override
             public void onResponse(Call<RouteListData> call, Response<RouteListData> response) {
-                totalRoutesCount = response.body().getTotalCount();
-                if(totalRoutesCount > 0){
-                    noRoutesTextView.setVisibility(View.GONE);
-                } else {
-                    noRoutesTextView.setVisibility(View.VISIBLE);
+                if(response.isSuccessful()){
+                    totalRoutesCount = response.body().getTotalCount();
+                    if(totalRoutesCount > 0){
+                        noRoutesTextView.setVisibility(View.GONE);
+                    } else {
+                        noRoutesTextView.setVisibility(View.VISIBLE);
+                    }
+                    routeList.addAll(response.body().getRoutes());
+                    adapter.notifyDataSetChanged();
                 }
-                routeList.addAll(response.body().getRoutes());
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override

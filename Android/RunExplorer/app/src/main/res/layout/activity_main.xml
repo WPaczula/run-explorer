@@ -5,34 +5,77 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/gradient_background"
     tools:context="polsl.engineer.runexplorer.activities.MainActivity">
+
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="80sp"
+        android:src="@drawable/ic_icon" />
 
     <Button
         android:id="@+id/route_list_btn"
+        android:background="@drawable/button_shape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/route_preview"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="7"
         android:onClick="routeLists"/>
 
     <Button
         android:id="@+id/route_search_btn"
+        android:background="@drawable/button_shape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/search"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="7"
         android:onClick="searchRoute"/>
 
     <Button
         android:id="@+id/new_route_btn"
+        android:background="@drawable/button_shape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/new_route_btn"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="7"
         android:onClick="newRoute"/>
 
     <Button
         android:id="@+id/logout_btn"
+        android:background="@drawable/button_shape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/logout_btn"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="7"
         android:onClick="logout"/>
 
 

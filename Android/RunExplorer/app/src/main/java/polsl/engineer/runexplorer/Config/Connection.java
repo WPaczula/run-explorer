@@ -5,7 +5,7 @@ package polsl.engineer.runexplorer.config;
  */
 
 public class Connection {
-    public static String Url = "http://5a817783.ngrok.io";
+    public static String Url = "http://b2f52044.ngrok.io";
     public static String tokenKey = "token";
     public static String username = "username";
 }

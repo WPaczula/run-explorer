@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_vertical_margin"
     android:weightSum="16"
+    android:background="@drawable/gradient_background"
     tools:context="polsl.engineer.runexplorer.activities.RegisterActivity">
 
     <ImageView
@@ -26,6 +27,9 @@
 
         <EditText
             android:id="@+id/rlogin_et"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textColorLink="@color/primaryText"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
             android:drawableStart="@drawable/ic_login"
@@ -34,6 +38,9 @@
 
         <EditText
             android:id="@+id/rpassword_et"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textColorLink="@color/primaryText"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_below="@id/rlogin_et"
@@ -44,6 +51,9 @@
 
         <EditText
             android:id="@+id/confirm_password_et"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textColorLink="@color/primaryText"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_below="@id/rpassword_et"
@@ -58,12 +68,21 @@
         android:layout_gravity="top"
         android:layout_weight="5">
 
+
         <Button
             android:id="@+id/register_btn"
-            android:layout_width="match_parent"
+            android:text="@string/register_btn"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/register_btn" />
+            android:background="@drawable/button_shape"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="7"
+            />
     </RelativeLayout>
 
 </LinearLayout>

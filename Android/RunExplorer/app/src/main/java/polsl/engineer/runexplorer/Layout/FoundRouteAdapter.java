@@ -61,32 +61,6 @@ public class FoundRouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHol
         holder.date.setText(dayFormat.format(routeData.get(position).getDate()));
         holder.time.setText(TimeConverter.convertToTimeString(routeData.get(position).getSeconds()));
         holder.distance.setText((String.valueOf(routeData.get(position).getDistance()/1000f) + "km"));
-        holder.chooseRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = routeData.get(position).getId();
-                Call<RouteData> getRouteCall = endpoints.getRoute(token, id, null);
-                getRouteCall.enqueue(new Callback<RouteData>() {
-                    @Override
-                    public void onResponse(Call<RouteData> call, Response<RouteData> response) {
-                        Intent intent = new Intent(context, RoutePreviewActivity.class);
-                        Gson gson = new Gson();
-                        RouteData data = response.body();
-                        data.setId(holder.id);
-                        String jsonData = gson.toJson(data);
-                        intent.putExtra(Extra.routeJSON, jsonData);
-                        intent.putExtra(Extra.isBeforeRun, true);
-                        context.startActivity(intent);
-                    }
-
-                    @Override
-                    public void onFailure(Call<RouteData> call, Throwable t) {
-                        Toast.makeText(context, "Can't read route data", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-            }
-        });
     }
 
     @Override

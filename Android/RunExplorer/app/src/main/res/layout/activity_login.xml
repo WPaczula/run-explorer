@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_vertical_margin"
     android:weightSum="16"
+    android:background="@drawable/gradient_background"
     tools:context="polsl.engineer.runexplorer.activities.LoginActivity">
 
     <ImageView
@@ -27,6 +28,9 @@
 
         <EditText
             android:id="@+id/username_et"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textColorLink="@color/primaryText"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
             android:drawableStart="@drawable/ic_login"
@@ -35,6 +39,9 @@
 
         <EditText
             android:id="@+id/password_et"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textColorLink="@color/primaryText"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
             android:layout_below="@id/username_et"
@@ -51,15 +58,23 @@
 
         <Button
             android:id="@+id/login_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:text="@string/login_btn_text"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:text="@string/login_btn_text" />
-
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="6"
+            />
 
         <TextView
             android:id="@+id/register_tv"
+            android:textColor="@color/primaryText"
+            android:layout_marginTop="11dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_btn"
