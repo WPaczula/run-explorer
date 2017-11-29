@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ import retrofit2.Response;
  * Created by Wojtek on 26.11.2017.
  */
 
-public class FoundRouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
+public class FoundRouteAdapter extends RecyclerView.Adapter<FoundRouteAdapter.ViewHolder>{
     public FoundRouteAdapter(Context context, List<RouteTitleData> routeData) {
         this.context = context;
         this.routeData = routeData;
@@ -49,18 +50,48 @@ public class FoundRouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHol
     private DateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
     @Override
-    public RouteAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.route_card, parent, false);
-        return new RouteAdapter.ViewHolder(itemView);
+    public FoundRouteAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.found_route_card, parent, false);
+        return new FoundRouteAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final RouteAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final FoundRouteAdapter.ViewHolder holder, final int position) {
         holder.id = routeData.get(position).getId();
         holder.name.setText(routeData.get(position).getName());
         holder.date.setText(dayFormat.format(routeData.get(position).getDate()));
         holder.time.setText(TimeConverter.convertToTimeString(routeData.get(position).getSeconds()));
         holder.distance.setText((String.valueOf(routeData.get(position).getDistance()/1000f) + "km"));
+        holder.previewRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = routeData.get(position).getId();
+                Call<RouteData> getRouteCall = endpoints.getRoute(token, id, routeData.get(position).getDate());
+                getRouteCall.enqueue(new Callback<RouteData>() {
+                    @Override
+                    public void onResponse(Call<RouteData> call, Response<RouteData> response) {
+                        if(response.isSuccessful()){
+                            Intent intent = new Intent(context, RoutePreviewActivity.class);
+                            Gson gson = new Gson();
+                            RouteData data = response.body();
+                            data.setId(holder.id);
+                            String jsonData = gson.toJson(data);
+                            intent.putExtra(Extra.routeJSON, jsonData);
+                            intent.putExtra(Extra.isBeforeRun, true);
+                            context.startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(context, "Can't preview route", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RouteData> call, Throwable t) {
+                        Toast.makeText(context, "Can't read route data", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -73,12 +104,12 @@ public class FoundRouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHol
         public TextView date;
         public TextView time;
         public TextView distance;
-        public Button chooseRoute;
+        public ImageView previewRoute;
         public String id;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            chooseRoute = (Button) itemView.findViewById(R.id.choose_found_route_btn);
+            previewRoute = (ImageView) itemView.findViewById(R.id.preview_image);
             name = (TextView) itemView.findViewById(R.id.name_found_card_tv);
             date = (TextView) itemView.findViewById(R.id.date_found_card_tv);
             time = (TextView) itemView.findViewById(R.id.time_found_card_tv);

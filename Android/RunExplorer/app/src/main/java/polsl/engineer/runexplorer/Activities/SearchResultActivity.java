@@ -24,6 +24,7 @@ import polsl.engineer.runexplorer.API.RESTServiceEndpoints;
 import polsl.engineer.runexplorer.API.RetrofitClient;
 import polsl.engineer.runexplorer.config.Connection;
 import polsl.engineer.runexplorer.config.Extra;
+import polsl.engineer.runexplorer.layout.FoundRouteAdapter;
 import polsl.engineer.runexplorer.layout.RouteAdapter;
 import polsl.engineer.runexplorer.R;
 import retrofit2.Call;
@@ -39,7 +40,6 @@ public class SearchResultActivity extends AppCompatActivity {
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
     private int totalRoutesCount=0;
     private String token;
-    private String username;
     private List<RouteTitleData> routeList = new ArrayList<>();
 
     @Override
@@ -55,12 +55,11 @@ public class SearchResultActivity extends AppCompatActivity {
         String paramsJSON = intent.getStringExtra(Extra.searchParams);
         final SearchParams params = gson.fromJson(paramsJSON, SearchParams.class);
         token = Hawk.get(Connection.tokenKey);
-        username = Hawk.get(Connection.username);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        final RouteAdapter adapter = new RouteAdapter(this, routeList);
+        final FoundRouteAdapter adapter = new FoundRouteAdapter(this, routeList);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -73,7 +72,7 @@ public class SearchResultActivity extends AppCompatActivity {
         getSearchResults(adapter, 0, params);
     }
 
-    private void getSearchResults(final RouteAdapter adapter, int skip, SearchParams params){
+    private void getSearchResults(final FoundRouteAdapter adapter, int skip, SearchParams params){
         Call<RouteListData> getSearchResults = endpoints.search(token,
                                                                 params.getMaxDistance(),
                                                                 params.getMinDistance(),
@@ -85,19 +84,25 @@ public class SearchResultActivity extends AppCompatActivity {
         getSearchResults.enqueue(new Callback<RouteListData>() {
             @Override
             public void onResponse(Call<RouteListData> call, Response<RouteListData> response) {
-                totalRoutesCount = response.body().getTotalCount();
-                if(totalRoutesCount > 0){
-                    noRoutesFoundTextView.setVisibility(View.GONE);
-                } else {
+                if(response.isSuccessful()){
+                    totalRoutesCount = response.body().getTotalCount();
+                    if(totalRoutesCount > 0){
+                        noRoutesFoundTextView.setVisibility(View.GONE);
+                    } else {
+                        noRoutesFoundTextView.setVisibility(View.VISIBLE);
+                    }
+                    routeList.addAll(response.body().getRoutes());
+                    adapter.notifyDataSetChanged();
+                }else {
                     noRoutesFoundTextView.setVisibility(View.VISIBLE);
                 }
-                routeList.addAll(response.body().getRoutes());
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override
             public void onFailure(Call<RouteListData> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Cant load routes", Toast.LENGTH_LONG).show();
+                noRoutesFoundTextView.setVisibility(View.VISIBLE);
             }
         });
     }
