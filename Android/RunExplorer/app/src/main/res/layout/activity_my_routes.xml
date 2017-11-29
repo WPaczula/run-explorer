@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context="polsl.engineer.runexplorer.activities.MyRoutesActivity">
     <TextView
         android:id="@+id/no_my_rotes_tv"
@@ -10,7 +11,11 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_routes_found"/>
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:text="@string/no_routes_found"
+        android:textColor="#FFF000"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:scrollbars="vertical"

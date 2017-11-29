@@ -4,8 +4,8 @@
     android:id="@+id/time_cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/tv_vertical_padding"
-    android:layout_marginBottom="@dimen/tv_vertical_padding"
+    android:layout_marginTop="@dimen/tv_horizontal_padding"
+    android:layout_marginBottom="@dimen/tv_horizontal_padding"
     android:layout_gravity="center">
     <LinearLayout
         android:layout_width="match_parent"

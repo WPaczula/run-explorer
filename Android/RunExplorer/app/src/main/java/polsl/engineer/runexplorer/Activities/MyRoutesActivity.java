@@ -85,12 +85,14 @@ public class MyRoutesActivity extends AppCompatActivity{
                     }
                     routeList.addAll(response.body().getRoutes());
                     adapter.notifyDataSetChanged();
+                }else {
+                    noRoutesTextView.setVisibility(View.VISIBLE);
                 }
-
             }
 
             @Override
             public void onFailure(Call<RouteListData> call, Throwable t) {
+                noRoutesTextView.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "Cant load routes", Toast.LENGTH_LONG).show();
             }
         });

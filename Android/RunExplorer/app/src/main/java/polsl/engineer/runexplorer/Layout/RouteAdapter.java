@@ -3,6 +3,7 @@ package polsl.engineer.runexplorer.layout;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -70,101 +71,106 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
         holder.time.setText(TimeConverter.convertToTimeString(routeData.get(position).getSeconds()));
         holder.distance.setText((String.valueOf(routeData.get(position).getDistance() / 1000f) + "km"));
         holder.options.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  PopupMenu menu = new PopupMenu(context, holder.options);
-                  menu.inflate(R.menu.my_routes_menu);
-                  menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                      @Override
-                      public boolean onMenuItemClick(MenuItem item) {
-                          switch (item.getItemId()) {
-                              case R.id.choose_route_card_btn:
-                                  String id = routeData.get(position).getId();
-                                  Call<RouteData> getRouteCall = endpoints.getRoute(token, id, routeData.get(position).getDate());
-                                  getRouteCall.enqueue(new Callback<RouteData>() {
-                                      @Override
-                                      public void onResponse(Call<RouteData> call, Response<RouteData> response) {
-                                          Intent intent = new Intent(context, RoutePreviewActivity.class);
-                                          Gson gson = new Gson();
-                                          RouteData data = response.body();
-                                          data.setId(holder.id);
-                                          String jsonData = gson.toJson(data);
-                                          intent.putExtra(Extra.routeJSON, jsonData);
-                                          intent.putExtra(Extra.isBeforeRun, true);
-                                          context.startActivity(intent);
-                                      }
+            @Override
+            public void onClick(View v) {
+                PopupMenu menu = new PopupMenu(context, holder.options);
+                menu.inflate(R.menu.my_routes_menu);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.choose_route_card_btn:
+                                String id = routeData.get(position).getId();
+                                Call<RouteData> getRouteCall = endpoints.getRoute(token, id, routeData.get(position).getDate());
+                                getRouteCall.enqueue(new Callback<RouteData>() {
+                                    @Override
+                                    public void onResponse(Call<RouteData> call, Response<RouteData> response) {
+                                        Intent intent = new Intent(context, RoutePreviewActivity.class);
+                                        Gson gson = new Gson();
+                                        RouteData data = response.body();
+                                        data.setId(holder.id);
+                                        String jsonData = gson.toJson(data);
+                                        intent.putExtra(Extra.routeJSON, jsonData);
+                                        intent.putExtra(Extra.isBeforeRun, true);
+                                        context.startActivity(intent);
+                                    }
 
-                                      @Override
-                                      public void onFailure(Call<RouteData> call, Throwable t) {
-                                          Toast.makeText(context, "Can't read route data", Toast.LENGTH_LONG).show();
-                                      }
-                                  });
-                                  break;
-                              case R.id.delete_route_card_bnt:
-                                  Call<Message> deleteRunCall = endpoints.deleteRun(token, username, routeData.get(position).getDate());
-                                  deleteRunCall.enqueue(new Callback<Message>() {
-                                      @Override
-                                      public void onResponse(Call<Message> call, Response<Message> response) {
-                                          if (response.isSuccessful()) {
-                                              Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                              routeData.remove(position);
-                                              adapterContext.notifyDataSetChanged();
-                                          } else {
-                                              Toast.makeText(context, "Could not delete the run", Toast.LENGTH_LONG).show();
-                                          }
-                                      }
+                                    @Override
+                                    public void onFailure(Call<RouteData> call, Throwable t) {
+                                        Toast.makeText(context, "Can't read route data", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                break;
+                            case R.id.delete_route_card_bnt:
+                                Call<Message> deleteRunCall = endpoints.deleteRun(token, username, routeData.get(position).getDate());
+                                deleteRunCall.enqueue(new Callback<Message>() {
+                                    @Override
+                                    public void onResponse(Call<Message> call, Response<Message> response) {
+                                        if (response.isSuccessful()) {
+                                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                            routeData.remove(position);
+                                            adapterContext.notifyDataSetChanged();
+                                        } else {
+                                            Toast.makeText(context, "Could not delete the run", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
 
-                                      @Override
-                                      public void onFailure(Call<Message> call, Throwable t) {
-                                          Toast.makeText(context, "Could not delete the run", Toast.LENGTH_LONG).show();
-                                      }
-                                  });
-                                  break;
-                              case R.id.rename_route_card_bnt:
-                                  AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                  builder.setTitle("Change name");
+                                    @Override
+                                    public void onFailure(Call<Message> call, Throwable t) {
+                                        Toast.makeText(context, "Could not delete the run", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                break;
+                            case R.id.rename_route_card_bnt:
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setTitle("Change name");
+                                final EditText input = new EditText(context);
+                                input.requestFocus();
+                                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                                input.setHint("Click here to change name");
+                                input.setHighlightColor(ContextCompat.getColor(context, R.color.black));
+                                input.setTextColor(ContextCompat.getColor(context, R.color.black));
+                                input.setLinkTextColor(ContextCompat.getColor(context, R.color.black));
+                                input.setHintTextColor(ContextCompat.getColor(context, R.color.primaryText));
 
-                                  final EditText input = new EditText(context);
-                                  input.requestFocus();
-                                  input.setInputType(InputType.TYPE_CLASS_TEXT);
-                                  builder.setView(input);
+                                builder.setView(input);
 
-                                  builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                      @Override
-                                      public void onClick(DialogInterface dialog, int which) {
-                                          final String m_Text = input.getText().toString();
-                                          Call<Message> renameCallback = endpoints.renameRun(token, username, routeData.get(position).getDate(), m_Text);
-                                          renameCallback.enqueue(new Callback<Message>() {
-                                              @Override
-                                              public void onResponse(Call<Message> call, Response<Message> response) {
-                                                  if (response.isSuccessful()) {
-                                                      routeData.get(position).setName(m_Text);
-                                                      notifyItemRangeChanged(position, routeData.size());
-                                                  }
-                                              }
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        final String m_Text = input.getText().toString();
+                                        Call<Message> renameCallback = endpoints.renameRun(token, username, routeData.get(position).getDate(), m_Text);
+                                        renameCallback.enqueue(new Callback<Message>() {
+                                            @Override
+                                            public void onResponse(Call<Message> call, Response<Message> response) {
+                                                if (response.isSuccessful()) {
+                                                    routeData.get(position).setName(m_Text);
+                                                    notifyItemRangeChanged(position, routeData.size());
+                                                }
+                                            }
 
-                                              @Override
-                                              public void onFailure(Call<Message> call, Throwable t) {
-                                                  Toast.makeText(context, "Could not rename run", Toast.LENGTH_LONG).show();
-                                              }
-                                          });
-                                      }
-                                  });
-                                  builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                      @Override
-                                      public void onClick(DialogInterface dialog, int which) {
-                                          dialog.cancel();
-                                      }
-                                  });
-                                  builder.show();
-                                  break;
-                          }
-                          return true;
-                      }
-                  });
-              }
-          }
-        );
+                                            @Override
+                                            public void onFailure(Call<Message> call, Throwable t) {
+                                                Toast.makeText(context, "Could not rename run", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
+                                });
+                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                menu.show();
+            }
+        });
     }
 
     @Override

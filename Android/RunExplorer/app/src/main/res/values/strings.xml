@@ -36,5 +36,5 @@
     <string name="connect">Connect</string>
     <string name="delete">Delete</string>
     <string name="no_routes_found">No routes found</string>
-    <string name="rename">rename</string>
+    <string name="rename">Rename</string>
 </resources>
