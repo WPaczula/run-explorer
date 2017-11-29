@@ -48,7 +48,7 @@ public class FoundRouteAdapter extends RecyclerView.Adapter<FoundRouteAdapter.Vi
     private String username;
     private Context context;
     private List<RouteTitleData> routeData;
-    private DateFormat dayFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    private DateFormat dayFormat = new SimpleDateFormat("dd.MM yyyy HH:mm:ss");
 
     @Override
     public FoundRouteAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,7 +67,7 @@ public class FoundRouteAdapter extends RecyclerView.Adapter<FoundRouteAdapter.Vi
             @Override
             public void onClick(View v) {
                 String id = routeData.get(position).getId();
-                Call<RouteData> getRouteCall = endpoints.getRoute(token, id, routeData.get(position).getDate());
+                Call<RouteData> getRouteCall = endpoints.getRoute(token, id, null);
                 getRouteCall.enqueue(new Callback<RouteData>() {
                     @Override
                     public void onResponse(Call<RouteData> call, Response<RouteData> response) {
