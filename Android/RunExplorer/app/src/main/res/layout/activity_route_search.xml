@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/gradient_background"
     tools:context="polsl.engineer.runexplorer.activities.RoutePreviewActivity"
     tools:layout="@layout/activity_route_preview">
 
@@ -11,11 +12,12 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"/>
+        android:layout_weight="6"/>
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/accentColor"
         android:id="@+id/radius_sb">
     </SeekBar>
     <LinearLayout
@@ -29,35 +31,46 @@
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="2"
+                android:textColor="@color/primaryText"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
                 android:text="@string/radius_tv"/>
             <TextView
                 android:id="@+id/radius_value_tv"
                 android:layout_width="0dp"
-                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/primaryText"
+                android:textSize="20sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-
+                android:textSize="20sp"
+                android:textColor="@color/primaryText"
                 android:text="@string/distance_search"/>
             <EditText
                 android:id="@+id/distance_min_value_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:textColor="@color/primaryText"
+                android:textColorHint="@color/primaryText"
+                android:textColorLink="@color/primaryText"
                 android:inputType="numberDecimal"
                 android:gravity="center"
                 android:hint="@string/min"/>
@@ -66,6 +79,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:textColor="@color/primaryText"
+                android:textColorHint="@color/primaryText"
+                android:textColorLink="@color/primaryText"
                 android:inputType="numberDecimal"
                 android:gravity="center"
                 android:hint="@string/max"/>
@@ -73,17 +89,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:textSize="20sp"
+                android:textColor="@color/primaryText"
                 android:text="@string/user"/>
             <EditText
                 android:id="@+id/user_et"
                 android:layout_width="0dp"
                 android:gravity="center"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:textColorHint="@color/primaryText"
+                android:textColorLink="@color/primaryText"
                 android:hint="@string/username_hint"
                 android:layout_weight="4"
                 />
@@ -92,12 +114,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center">
         <Button
+            android:layout_margin="10dp"
             android:id="@+id/search_route_btn"
-            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="6"
             android:text="@string/search"
             android:layout_gravity="center"/>
     </LinearLayout>

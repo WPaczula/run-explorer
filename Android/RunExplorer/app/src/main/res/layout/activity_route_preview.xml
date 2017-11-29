@@ -4,56 +4,76 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/gradient_background"
     tools:context="polsl.engineer.runexplorer.activities.RoutePreviewActivity"
     tools:layout="@layout/activity_route_preview">
     <TextView
         android:id="@+id/route_name_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="XXXXXXXXXX"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/accentColor"/>
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/preview_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"/>
+        android:layout_weight="5"/>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_height="0dp"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_gravity="bottom"
+        android:gravity="center"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         >
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/distance_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/distance"/>
-            <TextView
-                android:id="@+id/distance_value_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:textSize="20sp"
+                android:textColor="@color/primaryText"
+                android:text="@string/distance"
+                android:layout_marginEnd="10dp"/>
             <TextView
                 android:id="@+id/time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/primaryText"
+                android:layout_marginEnd="10dp"
                 android:text="@string/time"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/distance_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/primaryText"
+                android:text="XXXXXXXXXXXXXXXXX"/>
             <TextView
                 android:id="@+id/time_value_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/primaryText"
+                android:text="XXXXXXXXXXXXXXXXX"/>
         </LinearLayout>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
@@ -69,22 +89,43 @@
         android:gravity="center">
         <Button
             android:id="@+id/challenge_route_btn"
-            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="6"
             android:text="@string/send_route_data"
             android:visibility="gone"
             android:layout_gravity="center" />
         <Button
             android:id="@+id/save_route_btn"
-            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="6"
             android:text="@string/save_route_data"
             android:visibility="gone"
             android:layout_gravity="center" />
         <Button
             android:id="@+id/back_btn"
-            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="6"
             android:text="@string/back_btn"
             android:visibility="gone"
             android:layout_gravity="center" />

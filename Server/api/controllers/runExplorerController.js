@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     config = require('../../config/database'),
     generateId = mongoose.Types.ObjectId;
 
-const max = 5;    
+const max = 10;    
 
 exports.changeName = function(req, res) {
     if(!req.body.date || !req.body.newName){
