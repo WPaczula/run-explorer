@@ -120,6 +120,9 @@ var initMap = function() {
 		moveCameraToMarker(self.data.map.myMap, 
 				self.data.map.currentPositionMarker.getLatLng()
 				);
+		routesCheckpointsMarkersPassed = convertPositionsForInvisibleMarkersOnMap(self.data.main.checkpoints, self.data.map.myMap);
+		self.data.map.myMap.removeLayer(routeBet);
+		routeBet = drawARouteBetweenMarkersOnMap(self.data.map.myMap, routesCheckpointsMarkersPassed, green, 1);
 	};
 	
 	self.map.showPosition = function(map, position){

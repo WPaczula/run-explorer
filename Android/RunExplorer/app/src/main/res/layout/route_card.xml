@@ -6,6 +6,7 @@
     app:cardBackgroundColor="@color/accentColor"
     android:layout_margin="15dp">
     <LinearLayout
+        android:id="@+id/route_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -87,17 +88,6 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/list_options"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="1sp"
-            android:background="@android:color/white"
-            android:gravity="center"
-            android:text="&#8942;"
-            android:textAppearance="?android:textAppearanceLarge" />
-
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

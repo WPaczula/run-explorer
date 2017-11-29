@@ -70,7 +70,7 @@ public class DataSenderService extends IntentService {
                     sendRoute(route, token, username, routeDao);
                 }
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(5*60*1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

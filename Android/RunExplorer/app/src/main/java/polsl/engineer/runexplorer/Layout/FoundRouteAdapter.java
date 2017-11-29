@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,12 +105,12 @@ public class FoundRouteAdapter extends RecyclerView.Adapter<FoundRouteAdapter.Vi
         public TextView date;
         public TextView time;
         public TextView distance;
-        public ImageView previewRoute;
+        public LinearLayout previewRoute;
         public String id;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            previewRoute = (ImageView) itemView.findViewById(R.id.preview_image);
+            previewRoute = (LinearLayout) itemView.findViewById(R.id.found_result_card);
             name = (TextView) itemView.findViewById(R.id.name_found_card_tv);
             date = (TextView) itemView.findViewById(R.id.date_found_card_tv);
             time = (TextView) itemView.findViewById(R.id.time_found_card_tv);

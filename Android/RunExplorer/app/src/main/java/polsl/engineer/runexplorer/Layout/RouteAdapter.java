@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -183,12 +184,12 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
         public TextView date;
         public TextView time;
         public TextView distance;
-        public TextView options;
+        public LinearLayout options;
         public String id;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            options = (TextView) itemView.findViewById(R.id.list_options);
+            options = (LinearLayout) itemView.findViewById(R.id.route_card);
             name = (TextView) itemView.findViewById(R.id.name_route_card_tv);
             date = (TextView) itemView.findViewById(R.id.date_route_card_tv);
             time = (TextView) itemView.findViewById(R.id.time_route_card_tv);

@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Hawk.init(this).build();
         Intent intent = new Intent(this, DataSenderService.class);
         startService(intent);
-        Hawk.init(this).build();
     }
 }
