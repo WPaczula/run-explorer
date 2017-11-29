@@ -6,11 +6,7 @@ var initMap = function() {
 		routeBet,
 		blue = "#455A64",
 		green = "#FFF000",
-		pathLatLng = [];
-	var routeData = localStorage.getItem('route');
-	if(routeData !== undefined){
-		pathLatLng = JSON.parse(routeData);
-	}
+		pathLatLng = self.data.map.pathLatLng;
 	
 	function createMarker(map, position){
 		var marker = L.marker(position).addTo(map);

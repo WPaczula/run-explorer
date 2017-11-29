@@ -56,36 +56,37 @@ var initConnection = function(){
 	            console.log(dataObject);
             	if(dataObject.type === 'start'){
             		console.log('start');
-            		localStorage.setItem('route', JSON.stringify(dataObject.route));
+            		self.data.map.pathLatLng = dataObject.route;
             		self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], 'Route set');
     	            tau.changePage('#' + self.CONTROLS_PAGE);
             	} else if(dataObject.type === 'stop'){
             		console.log('stop command given');
             		var timeArray = JSON.stringify({
-//            			checkpoints: self.data.main.checkpoints,
-//            			times: self.data.main.times,
-//            			distance: self.data.main.distance,
-//            			time: self.data.main.time,
-//            			shouldBeSavedAsNew: !self.data.map.completedGivenRoute,
-            			checkpoints: [{lat:50.249596,lng:18.566320},
-            			              {lat:50.249912,lng:18.566585},
-            			              {lat:50.250214,lng:18.566835},
-            			              {lat:50.250564,lng:18.567073},
-            			              {lat:50.250738,lng:18.567341},
-            			              {lat:50.250683,lng:18.567989},
-            			              {lat:50.250632,lng:18.568616},
-            			              {lat:50.250701,lng:18.569203},
-            			              {lat:50.251173,lng:18.569625},
-            			              {lat:50.251557,lng:18.569965},
-            			              {lat:50.251876,lng:18.570234}
-            			              ],
-            			times: [30, 51, 12, 52, 21, 52, 32, 12, 43, 44, 30, 51, 12, 52, 21, 52, 32, 12, 43, 44, 30, 51, 12, 52, 21, 52, 32, 12, 43, 44],
-            			distance: 3000,
-            			time: 720,
-            			shouldBeSavedAsNew: true,
+            			checkpoints: self.data.main.checkpoints,
+            			times: self.data.main.times,
+            			distance: self.data.main.distance,
+            			time: self.data.main.time,
+            			shouldBeSavedAsNew: !self.data.map.completedGivenRoute,
+//            			checkpoints: [{lat:50.249596,lng:18.566320},
+//            			              {lat:50.249912,lng:18.566585},
+//            			              {lat:50.250214,lng:18.566835},
+//            			              {lat:50.250564,lng:18.567073},
+//            			              {lat:50.250738,lng:18.567341},
+//            			              {lat:50.250683,lng:18.567989},
+//            			              {lat:50.250632,lng:18.568616},
+//            			              {lat:50.250701,lng:18.569203},
+//            			              {lat:50.251173,lng:18.569625},
+//            			              {lat:50.251557,lng:18.569965},
+//            			              {lat:50.251876,lng:18.570234}
+//            			              ],
+//            			times: [30, 51, 12, 52, 21, 52, 32, 12, 43, 44, 30, 51, 12, 52, 21, 52, 32, 12, 43, 44, 30, 51, 12, 52, 21, 52, 32, 12, 43, 44],
+//            			distance: 3000,
+//            			time: 720,
+//            			shouldBeSavedAsNew: true,
             		});
             		console.log(timeArray);
             		self.controls.stop();
+            		localStorage.clear();
             		self.connection.SASocket.sendData(self.connection.SAAgent.channelIds[0], timeArray);
             		tizen.application.getCurrentApplication().exit();
             		console.log('stop operations executed');

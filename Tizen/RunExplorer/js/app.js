@@ -54,6 +54,7 @@
 					time: 0,
 				},
 				map:{
+					pathLatLng: undefined,
 					myMap: {},
 					currentPositionMarker: {},
 					completedGivenRoute: false,
