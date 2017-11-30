@@ -17,15 +17,14 @@
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/ic_run"
-            android:contentDescription="@string/start"/>
+            android:src="@drawable/ic_run"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="30sp"
             android:textColor="@color/accentColor"
-            android:text="@string/start"/>
+            android:text="@string/send_route_data"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,8 +36,7 @@
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/ic_reconnect"
-            android:contentDescription="@string/start"/>
+            android:src="@drawable/ic_reconnect"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

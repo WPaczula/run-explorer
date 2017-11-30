@@ -4,10 +4,10 @@
     <string name="route_preview">My Routes</string>
     <string name="distance">distance: </string>
     <string name="time">time: </string>
-    <string name="send_route_data">Run</string>
+    <string name="send_route_data">Run with watch</string>
     <string name="NoPeersFound">No peers found</string>
     <string name="ConnectionFailure">Connection failure</string>
-    <string name="start">Send route to watch</string>
+    <string name="send_route">Send route to watch</string>
     <string name="stop">stop</string>
     <string name="choose_route">Preview</string>
     <string name="timePer100">Time:</string>
@@ -21,7 +21,7 @@
     <string name="hint_repeat_password">repeat password</string>
     <string name="register_btn">register</string>
     <string name="logout_btn">logout</string>
-    <string name="new_route_btn">New route</string>
+    <string name="new_route_btn">Run with watch</string>
     <string name="name_title">name:</string>
     <string name="date_title">date:</string>
     <string name="time_title">time:</string>
