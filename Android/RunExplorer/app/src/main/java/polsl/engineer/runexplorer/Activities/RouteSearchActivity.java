@@ -170,9 +170,9 @@ public class RouteSearchActivity extends FragmentActivity implements OnMapReadyC
         Double lng = null;
         String username = null;
         if(!maxDistanceValue.getText().toString().isEmpty())
-            maxDistance = Integer.valueOf(maxDistanceValue.getText().toString());
+            maxDistance = Integer.valueOf(maxDistanceValue.getText().toString()) * 1000;
         if(!minDistanceValue.getText().toString().isEmpty())
-            minDistance = Integer.valueOf(minDistanceValue.getText().toString());
+            minDistance = Integer.valueOf(minDistanceValue.getText().toString()) * 1000;
         if(centerMarker != null){
             lat = centerMarker.getPosition().latitude;
             lng = centerMarker.getPosition().longitude;

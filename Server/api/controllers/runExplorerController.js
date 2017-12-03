@@ -17,7 +17,7 @@ exports.changeName = function(req, res) {
         if(token) {
             var decoded = jwt.decode(token, config.secret);
             User.findOne({
-                name: decoded.username
+                username: decoded.username
             }, function(err, user){
                 const route = user.usersRoutes.find(r => r.date == req.body.date);
                 route.name = req.body.newName;
@@ -41,7 +41,7 @@ exports.deleteRun = function(req, res) {
         if(token) {
             var decoded = jwt.decode(token, config.secret);
             User.findOne({
-                name: decoded.username
+                username: decoded.username
             }, function(err, user){
                 const route = user.usersRoutes.find(r => r.date == req.body.date);
                 const index = user.usersRoutes.indexOf(route);
@@ -90,7 +90,7 @@ exports.authenticate = function(req, res) {
         } else {
             user.comparePassword(req.body.password, function(err, isMatch){
                 if(isMatch && !err){
-                    var token = jwt.encode({name: user.username}, config.secret);
+                    var token = jwt.encode({username: user.username}, config.secret);
                     return res.json({success: true, token: 'JWT ' + token});
                 } else {
                     return res.status(403).json({success: false, message: 'Authentication failed. Wrong password'});
@@ -105,7 +105,7 @@ exports.addRoute = function(req, res) {
     if(token) {
         var decoded = jwt.decode(token, config.secret);
         User.findOne({
-            name: decoded.username
+            username: decoded.username
         }, function(err, user){
             if(err)
                 res.status(500).json({success: false, message: 'Server error'});
@@ -176,7 +176,7 @@ exports.getRoute = function(req, res) {
                 var token = getToken(req.headers);
                 if(token) {
                     var decoded = jwt.decode(token, config.secret);
-                    User.findOne({username: decoded.name}, function(err, user){
+                    User.findOne({username: decoded.username}, function(err, user){
                         if(err)
                             return res.status(500).json({success: false, message: 'Server error'});
                         const userRun = user.usersRoutes.find(r => r.date == req.query.date);

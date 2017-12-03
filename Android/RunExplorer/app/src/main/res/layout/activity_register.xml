@@ -12,10 +12,8 @@
     tools:context="polsl.engineer.runexplorer.activities.RegisterActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:scaleX="5"
-        android:scaleY="5"
-        android:layout_height="0dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_weight="9"
         android:src="@drawable/ic_icon" />

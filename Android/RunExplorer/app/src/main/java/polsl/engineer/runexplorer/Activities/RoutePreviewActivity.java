@@ -1,13 +1,19 @@
 package polsl.engineer.runexplorer.activities;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +75,10 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
     public Button backButton;
     @BindView(R.id.route_name_tv)
     public TextView nameValue;
+    @BindView(R.id.edit_button)
+    public ImageView editButton;
+    private String token;
+    private String username;
     private RouteData routeData;
     private Gson gson = new Gson();
     private RESTServiceEndpoints endpoints = RetrofitClient.getApiService();
@@ -96,17 +106,57 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.preview_map);
         mapFragment.getMapAsync(this);
 
+        token = Hawk.get(Connection.tokenKey);
+        username = Hawk.get(Connection.username);
         Intent intent = getIntent();
         String json = intent.getStringExtra(Extra.routeJSON);
         routeData = gson.fromJson(json, RouteData.class);
         boolean isBeforeRun = intent.getBooleanExtra(Extra.isBeforeRun, true);
         if(isBeforeRun){
             challengeButton.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.GONE);
         }else{
             saveButton.setVisibility(View.VISIBLE);
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeNameLocally();
+                }
+            });
         }
 
         initUI();
+    }
+
+    private void changeNameLocally(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change name");
+        final EditText input = new EditText(this);
+        input.requestFocus();
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Click here to change name");
+        input.setHighlightColor(ContextCompat.getColor(this, R.color.black));
+        input.setTextColor(ContextCompat.getColor(this, R.color.black));
+        input.setLinkTextColor(ContextCompat.getColor(this, R.color.black));
+        input.setHintTextColor(ContextCompat.getColor(this, R.color.primaryText));
+
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final String m_Text = input.getText().toString();
+                routeData.setName(m_Text);
+                nameValue.setText(m_Text);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     @Override
