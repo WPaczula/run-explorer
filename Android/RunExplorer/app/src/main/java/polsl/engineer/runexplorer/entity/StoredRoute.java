@@ -30,7 +30,8 @@ public class StoredRoute {
     private int distance;
     private long date;
     private int time;
-    private String times;
+    @ToMany(joinProperties = {@JoinProperty(name="id", referencedName = "routeId")})
+    private List<StoredTime> times;
     @ToMany(joinProperties = { @JoinProperty(name = "id", referencedName = "routeId")})
     private List<StoredCheckpoint> checkpoints;
     /** Used to resolve relations */
@@ -47,12 +48,11 @@ public class StoredRoute {
         this.distance = routeData.getDistance();
         this.date = routeData.getDate();
         this.time = routeData.getTime();
-        this.times = new Gson().toJson(routeData.getTimes());
     }
 
-    @Generated(hash = 544931785)
-    public StoredRoute(Long id, boolean isNew, String routeId, String name, int distance, long date,
-            int time, String times) {
+    @Generated(hash = 1942677780)
+    public StoredRoute(Long id, boolean isNew, String routeId, String name, int distance,
+            long date, int time) {
         this.id = id;
         this.isNew = isNew;
         this.routeId = routeId;
@@ -60,15 +60,15 @@ public class StoredRoute {
         this.distance = distance;
         this.date = date;
         this.time = time;
-        this.times = times;
     }
-
     @Generated(hash = 256042026)
     public StoredRoute() {
     }
-
     public Long getId() {
         return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     public boolean getIsNew() {
         return this.isNew;
@@ -106,11 +106,31 @@ public class StoredRoute {
     public void setTime(int time) {
         this.time = time;
     }
-    public String getTimes() {
-        return this.times;
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1953221027)
+    public List<StoredTime> getTimes() {
+        if (times == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            StoredTimeDao targetDao = daoSession.getStoredTimeDao();
+            List<StoredTime> timesNew = targetDao._queryStoredRoute_Times(id);
+            synchronized (this) {
+                if (times == null) {
+                    times = timesNew;
+                }
+            }
+        }
+        return times;
     }
-    public void setTimes(String times) {
-        this.times = times;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1093885576)
+    public synchronized void resetTimes() {
+        times = null;
     }
     /**
      * To-many relationship, resolved on first access (and after reset).
@@ -172,14 +192,11 @@ public class StoredRoute {
         }
         myDao.update(this);
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 2024402413)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getStoredRouteDao() : null;
     }
+
 }

@@ -41,7 +41,7 @@ import polsl.engineer.runexplorer.config.Connection;
 import polsl.engineer.runexplorer.config.DB;
 import polsl.engineer.runexplorer.config.Extra;
 import polsl.engineer.runexplorer.R;
-import polsl.engineer.runexplorer.entity.CheckpointConverter;
+import polsl.engineer.runexplorer.utility.CheckpointConverter;
 import polsl.engineer.runexplorer.entity.DaoMaster;
 import polsl.engineer.runexplorer.entity.DaoSession;
 import polsl.engineer.runexplorer.entity.StoredRoute;
@@ -49,6 +49,7 @@ import polsl.engineer.runexplorer.entity.StoredRouteDao;
 import polsl.engineer.runexplorer.layout.TimeAdapter;
 import polsl.engineer.runexplorer.services.DataSenderService;
 import polsl.engineer.runexplorer.utility.TimeConverter;
+import polsl.engineer.runexplorer.utility.TimesConverter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -156,9 +157,11 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
         Database db = helper.getWritableDb();
         DaoSession daoSession = new DaoMaster(db).newSession();
         StoredRouteDao routeDao = daoSession.getStoredRouteDao();
+
         StoredRoute storedRoute = new StoredRoute(routeData);
         routeDao.insert(storedRoute);
         CheckpointConverter.insertToDB(daoSession.getStoredCheckpointDao(), routeData.getCheckpoints(), storedRoute.getId());
+        TimesConverter.insertToDB(daoSession.getStoredTimeDao(), routeData.getTimes(), storedRoute.getId());
 
         Intent intent = new Intent(this, DataSenderService.class);
         startService(intent);
@@ -186,7 +189,9 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                 @Override
                 public void onFailure(Call<Message> call, Throwable t) {
                     saveToDatabase();
-                    Toast.makeText(getApplicationContext(), "Cant save run", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Cant save now, it will be sent later", Toast.LENGTH_LONG).show();
+                    saveButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
                 }
             });
         }else{
@@ -211,6 +216,8 @@ public class RoutePreviewActivity extends FragmentActivity implements OnMapReady
                 public void onFailure(Call<Message> call, Throwable t) {
                     saveToDatabase();
                     Toast.makeText(getApplicationContext(), "Cant save run", Toast.LENGTH_LONG).show();
+                    saveButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
                 }
             });
         }

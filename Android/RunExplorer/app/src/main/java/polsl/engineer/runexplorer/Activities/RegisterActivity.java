@@ -51,12 +51,16 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Cant register", Toast.LENGTH_LONG).show();
                     }
                 });
+            }else {
+                Toast.makeText(this, "Password is too shord (min 6 characters)", Toast.LENGTH_SHORT).show();
             }
+        }else {
+            Toast.makeText(this, "Passwords differ", Toast.LENGTH_LONG).show();
         }
     }
 
     private boolean passwordValid(String password){
-        return password.length() > 6;
+        return password.length() >= 6;
     }
 
     @Override

@@ -13,6 +13,8 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:scaleX="5"
+        android:scaleY="5"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"

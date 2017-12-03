@@ -31,6 +31,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.os.Debug.waitForDebugger;
+
 
 public class DataSenderService extends IntentService {
 
@@ -45,6 +47,7 @@ public class DataSenderService extends IntentService {
     @Override
     public void onCreate(){
         super.onCreate();
+        waitForDebugger();
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB.name);
         Database db = helper.getWritableDb();
         DaoSession daoSession = new DaoMaster(db).newSession();
@@ -70,7 +73,7 @@ public class DataSenderService extends IntentService {
                     sendRoute(route, token, username, routeDao);
                 }
                 try {
-                    Thread.sleep(5*60*1000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

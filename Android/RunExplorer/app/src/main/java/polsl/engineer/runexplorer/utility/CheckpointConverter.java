@@ -1,9 +1,11 @@
-package polsl.engineer.runexplorer.entity;
+package polsl.engineer.runexplorer.utility;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import polsl.engineer.runexplorer.API.data.Checkpoint;
+import polsl.engineer.runexplorer.entity.StoredCheckpoint;
+import polsl.engineer.runexplorer.entity.StoredCheckpointDao;
 
 /**
  * Created by Wojtek on 27.11.2017.
